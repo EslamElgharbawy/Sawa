@@ -84,7 +84,7 @@ export function AppSidebar() {
                         }`}
                       >
                         <item.icon
-                          className={`size-5! shrink-0 ${isActive ? "text-sky-500" : ""}`}
+                          className={`size-5! shrink-0 ${isActive ? "text-secondary" : ""}`}
                         />
                         <span className="font-semibold">{item.title}</span>
                       </SidebarMenuButton>

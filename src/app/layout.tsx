@@ -20,6 +20,10 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Sawa | يلا نذاكر سوا",
   description: "منصة للتعلم الجماعي وجلسات المذاكرة مع زملائك.",
+   icons: {
+    icon: "/sawa-logo 1.svg",
+    shortcut: "/sawa-logo 1.svg",
+  },
 };
 
 export default function RootLayout({

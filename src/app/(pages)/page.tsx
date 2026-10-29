@@ -1,4 +1,5 @@
-import { Sparkles } from "lucide-react";
+import { UpcomingMeetingCard } from "@/src/components/UpcomingMeetingCard/UpcomingMeetingCard";
+import { CalendarClock, Sparkles } from "lucide-react";
 
 const stats = [
   { value: 2, label: "جلسة قادمة" },
@@ -10,7 +11,7 @@ export default function Home() {
     <>
       <section
         dir="rtl"
-        className="relative flex min-h-80 flex-col-reverse justify-between gap-8 overflow-hidden rounded-4xl bg-linear-to-tl from-[#005966] to-[#0D383A] p-6 text-white shadow-[0_20px_50px_rgba(15,40,45,0.12)] sm:p-8 lg:flex-row lg:items-center lg:p-9 lg:mx-32"
+        className="relative flex min-h-80 flex-col-reverse justify-between gap-8 overflow-hidden rounded-4xl bg-linear-to-tl from-[#005966] to-[#0D383A] p-6 text-white shadow-[0_20px_50px_rgba(15,40,45,0.12)] sm:p-8 lg:flex-row lg:items-center lg:p-9 lg:mx-30"
       >
         {/* المحتوى الرئيسي */}
         <div className="flex flex-1 flex-col items-start justify-center gap-4">
@@ -53,6 +54,24 @@ export default function Home() {
               </span>
             </div>
           ))}
+        </div>
+      </section>
+      <section className="mt-10 mx-30">
+        <h2 className="flex items-center gap-3 text-xl font-bold text-primary mb-5">
+          <CalendarClock size={22} className="text-secondary" /> جلساتك القادمة
+        </h2>
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <UpcomingMeetingCard />
+          <UpcomingMeetingCard />
+        </div>
+      </section>
+      <section className="mt-10 mx-30">
+        <h2 className="flex items-center gap-3 text-xl font-bold text-primary mb-5">
+          <Sparkles size={22} className="text-secondary" /> اقتراحات لك
+        </h2>
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <UpcomingMeetingCard />
+          <UpcomingMeetingCard />
         </div>
       </section>
     </>

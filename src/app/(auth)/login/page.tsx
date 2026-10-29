@@ -40,13 +40,13 @@ export default function LoginPage() {
 
           <div className="flex flex-col">
             <Link href="/login" className="inline-flex items-center gap-3">
-              <div className="flex size-16 items-center justify-center rounded-2xl border border-white/15 bg-white/10 shadow-inner">
+              <div className="flex size-17 items-center justify-center rounded-2xl border border-white/15 bg-white/10 shadow-inner">
                 <Image
                   src={SawaLogo2}
                   alt="Sawa Logo"
                   width={100}
                   height={100}
-                  className="size-16 object-cover"
+                  className="size-17 object-cover"
                 />
               </div>
 
