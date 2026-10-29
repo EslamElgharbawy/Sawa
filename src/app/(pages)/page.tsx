@@ -1,4 +1,5 @@
-import { UpcomingMeetingCard } from "@/src/components/UpcomingMeetingCard/UpcomingMeetingCard";
+import { RecommendedSessionCard } from "@/src/components/Sessions/RecommendedSessionCard";
+import { SessionCard } from "@/src/components/Sessions/SessionCard";
 import { CalendarClock, Sparkles } from "lucide-react";
 
 const stats = [
@@ -61,8 +62,24 @@ export default function Home() {
           <CalendarClock size={22} className="text-secondary" /> جلساتك القادمة
         </h2>
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <UpcomingMeetingCard />
-          <UpcomingMeetingCard />
+          <SessionCard
+            subject="رياضيات"
+            time="اليوم - 7:00 م"
+            status="مؤكدة"
+            meetingType="مذاكرة"
+            participants={3}
+            description="تفاعل ونقاش"
+            buttonText="دخول الاجتماع"
+          />
+          <SessionCard
+            subject="رياضيات"
+            time="اليوم - 7:00 م"
+            status="مؤكدة"
+            meetingType="مذاكرة"
+            participants={3}
+            description="تفاعل ونقاش"
+            buttonText="دخول الاجتماع"
+          />
         </div>
       </section>
       <section className="mt-10 mx-30">
@@ -70,8 +87,9 @@ export default function Home() {
           <Sparkles size={22} className="text-secondary" /> اقتراحات لك
         </h2>
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <UpcomingMeetingCard />
-          <UpcomingMeetingCard />
+          <RecommendedSessionCard />
+
+          <RecommendedSessionCard />
         </div>
       </section>
     </>
