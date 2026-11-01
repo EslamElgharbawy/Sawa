@@ -12,7 +12,10 @@ export type StudySubject =
   | "biology"
   | "history"
   | "geography"
-  | "other";
+  | "other"
+  | "integrated_science"
+  | "philosophy"
+  | "programming";
 
 export interface StudyMatchingFormData {
   subjects: StudySubject[];

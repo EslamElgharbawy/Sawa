@@ -1,4 +1,5 @@
 import { StudyGoal, StudyStyle, StudySubject } from "@/src/types/StudyMatching";
+import { FirstSecondarySubject } from "@/src/types/StudySubjects";
 
 export const SUBJECTS: {
   value: StudySubject;
@@ -14,6 +15,22 @@ export const SUBJECTS: {
   { value: "geography", label: "جغرافيا" },
   { value: "other", label: "أخرى" },
 ];
+
+export const FIRST_SECONDARY_SUBJECTS: {
+  value: FirstSecondarySubject;
+  label: string;
+}[] = [
+  { value: "arabic", label: "اللغة العربية" },
+  { value: "english", label: "اللغة الأجنبية الأولى" },
+  { value: "math", label: "الرياضيات" },
+  { value: "integrated_science", label: "العلوم المتكاملة" },
+  { value: "history", label: "التاريخ" },
+  { value: "philosophy", label: "الفلسفة والمنطق" },
+  { value: "religion", label: "التربية الدينية" },
+  { value: "second_language", label: "اللغة الأجنبية الثانية" },
+  { value: "programming", label: "البرمجة والذكاء الاصطناعي" },
+];
+
 
 export const STUDY_STYLES: {
   value: StudyStyle;

@@ -10,20 +10,45 @@ import {
   StepperSeparator,
 } from "@/components/ui/stepper";
 import StepSubjects from "@/src/components/StudyMatching/Steps/StepSubjects";
-import { StudySubject } from "@/src/types/StudyMatching";
+import StepPeople from "@/src/components/StudyMatching/Steps/StepPeople";
+import StepEducation from "@/src/components/StudyMatching/Steps/StepEducation";
+import {
+  AcademicTrack,
+  EducationLevel,
+  EducationSystem,
+} from "@/src/types/StudyEducation";
+import { SecondarySubject } from "@/src/types/StudySubjects";
 const steps = [
+  { value: "level", title: "إيه مرحلتك التعليمية؟" },
   { value: "subjects", title: "هتذاكر إيه؟" },
-  { value: "level", title: "مستواك إيه؟" },
+  { value: "people", title: "هتذاكر مع كام شخص؟" },
   { value: "schedule", title: "جدولك عامل إزاي؟" },
   { value: "preferences", title: "تفضيلاتك" },
   { value: "complete", title: "جاهزين نبدأ؟" },
 ];
 
 export default function StudyStepper() {
-  const [currentStep, setCurrentStep] = useState("subjects");
-  const [selectedSubjects, setSelectedSubjects] = useState<StudySubject[]>([]);
+  const [currentStep, setCurrentStep] = useState("level");
+  const [selectedSubjects, setSelectedSubjects] = useState<SecondarySubject[]>(
+    [],
+  );
+  const [peopleCount, setPeopleCount] = useState<number | null>(null);
+  const [educationLevel, setEducationLevel] = useState<EducationLevel | null>(
+    null,
+  );
+  const [educationSystem, setEducationSystem] =
+    useState<EducationSystem>("general");
+  const [academicTrack, setAcademicTrack] = useState<AcademicTrack | null>(
+    null,
+  );
 
   const currentIndex = steps.findIndex((step) => step.value === currentStep);
+
+  const isLevelStepDisabled =
+    educationLevel === null ||
+    ((educationLevel === "high_school_2" ||
+      educationLevel === "high_school_3") &&
+      academicTrack === null);
 
   const nextStep = () => {
     if (currentIndex < steps.length - 1) {
@@ -39,7 +64,7 @@ export default function StudyStepper() {
 
   return (
     <main dir="rtl" className="py-5 overflow-y-auto">
-      <div className="mx-auto w-full max-w-180">
+      <div className="mx-auto w-full max-w-190">
         {/* Header */}
         <header className="mb-7 text-center">
           <span className="inline-flex rounded-full bg-[#fff1c7] px-4 py-1.5 text-sm font-medium text-[#34545a]">
@@ -95,8 +120,23 @@ export default function StudyStepper() {
               <section className="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm sm:p-9">
                 {step.value === "subjects" ? (
                   <StepSubjects
+                    educationLevel={educationLevel}
                     selectedSubjects={selectedSubjects}
                     onChange={setSelectedSubjects}
+                  />
+                ) : step.value === "people" ? (
+                  <StepPeople
+                    peopleCount={peopleCount}
+                    onChange={setPeopleCount}
+                  />
+                ) : step.value === "level" ? (
+                  <StepEducation
+                    educationLevel={educationLevel}
+                    educationSystem={educationSystem}
+                    academicTrack={academicTrack}
+                    onEducationLevelChange={setEducationLevel}
+                    onEducationSystemChange={setEducationSystem}
+                    onAcademicTrackChange={setAcademicTrack}
                   />
                 ) : (
                   <p className="mt-2 text-slate-500">
@@ -118,7 +158,12 @@ export default function StudyStepper() {
                   <button
                     type="button"
                     onClick={nextStep}
-                    disabled={currentStep === "subjects" && selectedSubjects.length === 0}
+                    disabled={
+                      (currentStep === "level" && isLevelStepDisabled) ||
+                      (currentStep === "subjects" &&
+                        selectedSubjects.length === 0) ||
+                      (currentStep === "people" && peopleCount === null)
+                    }
                     className="flex-1 rounded-full cursor-pointer bg-[#17a6d1] py-3.5 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"
                   >
                     {currentIndex === steps.length - 1
