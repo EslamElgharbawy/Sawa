@@ -1,3 +1,4 @@
+// Education Level
 export type EducationLevel =
   | "high_school_1"
   | "high_school_2"
@@ -5,17 +6,28 @@ export type EducationLevel =
   | "university_student"
   | "skill_development";
 
+// Education System
 export type EducationSystem = "general" | "baccalaureate";
 
-export type AcademicTrack =
+// General Secondary
+export type GeneralSecondaryTrack =
   | "science"
   | "mathematics"
-  | "literary"
+  | "literary";
+
+// Baccalaureate
+export type BaccalaureateTrack =
   | "medical"
   | "engineering"
   | "business"
   | "arts";
 
+// All Academic Tracks
+export type AcademicTrack =
+  | GeneralSecondaryTrack
+  | BaccalaureateTrack;
+
+// Step Education Props
 export interface StepEducationProps {
   educationLevel: EducationLevel | null;
   educationSystem: EducationSystem;

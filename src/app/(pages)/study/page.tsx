@@ -121,6 +121,8 @@ export default function StudyStepper() {
                 {step.value === "subjects" ? (
                   <StepSubjects
                     educationLevel={educationLevel}
+                    educationSystem={educationSystem}
+                    academicTrack={academicTrack}
                     selectedSubjects={selectedSubjects}
                     onChange={setSelectedSubjects}
                   />

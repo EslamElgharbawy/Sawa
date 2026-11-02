@@ -64,7 +64,7 @@ export default function FirstSecondary({
               onClick={() => toggleSubject(subject.value)}
               className={`
                 group min-h-25 cursor-pointer space-y-4
-                flex-col rounded-[28px] border-2
+                rounded-[28px] border-2
                 p-4 text-right transition-all duration-300
                 hover:border-secondary/70
                 focus-visible:outline-none

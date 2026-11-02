@@ -1,21 +1,3 @@
-// Education Level
-export type EducationLevel =
-  | "high_school_1"
-  | "high_school_2"
-  | "high_school_3"
-  | "university_student"
-  | "skill_development";
-
-// Academic Track
-export type AcademicTrack =
-  | "science"
-  | "mathematics"
-  | "literary"
-  | "medical"
-  | "engineering"
-  | "business"
-  | "arts";
-
 // First Secondary
 export type FirstSecondarySubject =
   | "arabic"
@@ -36,8 +18,11 @@ export type SecondSecondarySubject =
   | "math"
   | "physics"
   | "chemistry"
+  | "geography"
   | "biology"
-  | "history";
+  | "history"
+  | "psychology"
+  | "first_language";
 
 // Third Secondary
 export type ThirdSecondarySubject =

@@ -1,5 +1,6 @@
+import { GeneralSecondaryTrack } from "@/src/types/StudyEducation";
 import { StudyGoal, StudyStyle, StudySubject } from "@/src/types/StudyMatching";
-import { FirstSecondarySubject } from "@/src/types/StudySubjects";
+import { FirstSecondarySubject, SecondSecondarySubject } from "@/src/types/StudySubjects";
 
 export const SUBJECTS: {
   value: StudySubject;
@@ -31,6 +32,36 @@ export const FIRST_SECONDARY_SUBJECTS: {
   { value: "programming", label: "البرمجة والذكاء الاصطناعي" },
 ];
 
+export const SECOND_SECONDARY_SUBJECTS: Record<
+  GeneralSecondaryTrack,
+  { value: SecondSecondarySubject; label: string }[]
+> = {
+  science: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "history", label: "التاريخ" },
+    { value: "math", label: "الرياضيات" },
+    { value: "chemistry", label: "الكيمياء" },
+    { value: "physics", label: "الفيزياء" },
+  ],
+ mathematics: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "history", label: "التاريخ" },
+    { value: "math", label: "الرياضيات" },
+    { value: "chemistry", label: "الكيمياء" },
+    { value: "physics", label: "الفيزياء" },
+  ],
+
+  literary: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "history", label: "التاريخ" },
+    { value: "geography", label: "الجغرافيا" },
+    { value: "psychology", label: "علم النفس والاجتماع" },
+    { value: "math", label: "الرياضيات" },
+  ],
+};
 
 export const STUDY_STYLES: {
   value: StudyStyle;
