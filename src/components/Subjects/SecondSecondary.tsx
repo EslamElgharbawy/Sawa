@@ -12,6 +12,7 @@ import {
   Atom,
   Dna,
   LucideIcon,
+  Briefcase,
 } from "lucide-react";
 import {
   SecondarySubject,
@@ -19,6 +20,8 @@ import {
 } from "@/src/types/StudySubjects";
 import { GeneralSecondaryTrack } from "@/src/types/StudyEducation";
 import useToggleSelection from "@/src/hooks/useToggleSelection";
+
+import { Code } from "lucide-react";
 
 const SUBJECT_ICONS: Record<SecondSecondarySubject, LucideIcon> = {
   arabic: BookOpen,
@@ -32,6 +35,10 @@ const SUBJECT_ICONS: Record<SecondSecondarySubject, LucideIcon> = {
   history: Landmark,
   egyptian_history: Landmark,
   psychology: Brain,
+  programming_ai: Code,
+  accounting: Calculator,
+  business_management: Briefcase,
+  second_language: Languages,
 };
 interface SecondSecondaryProps {
   selectedSubjects: SecondarySubject[];

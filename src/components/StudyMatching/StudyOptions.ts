@@ -75,9 +75,27 @@ export const BACCALAUREATE_SECONDARY_SUBJECTS: Record<
     { value: "math", label: "الرياضيات" },
   ],
 
-  engineering: [],
-  business: [],
-  arts: [],
+  engineering: [
+  { value: "arabic", label: "اللغة العربية" },
+  { value: "first_language", label: "اللغة الأجنبية الأولى" },
+  { value: "egyptian_history", label: "التاريخ المصري" },
+  { value: "chemistry", label: "الكيمياء" },
+  { value: "programming_ai", label: "البرمجة والذكاء الاصطناعي" },
+],
+  business: [
+  { value: "arabic", label: "اللغة العربية" },
+  { value: "first_language", label: "اللغة الأجنبية الأولى" },
+  { value: "egyptian_history", label: "التاريخ المصري" },
+  { value: "accounting", label: "المحاسبة" },
+  { value: "business_management", label: "إدارة الأعمال" },
+],
+  arts: [
+  { value: "arabic", label: "اللغة العربية" },
+  { value: "first_language", label: "اللغة الأجنبية الأولى" },
+  { value: "egyptian_history", label: "التاريخ المصري" },
+  { value: "psychology", label: "علم النفس" },
+  { value: "second_language", label: "اللغة الأجنبية الثانية" },
+],
 };
 
 export const STUDY_STYLES: {

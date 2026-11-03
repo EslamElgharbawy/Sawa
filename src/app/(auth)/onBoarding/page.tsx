@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useEffect, useState } from "react";
-export default function RegisterPage() {
+export default function OnBoarding() {
   const [studyFields, setStudyFields] = useState<string[]>([]);
   const [today, setToday] = useState("");
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Home,
   Sparkles,
@@ -37,7 +37,7 @@ const mainLinks = [
 
 export function AppSidebar() {
   const pathname = usePathname();
-
+const router = useRouter();
   return (
     <Sidebar
       side="right"
@@ -115,7 +115,7 @@ export function AppSidebar() {
               tooltip="تسجيل الخروج"
               className="text-rose-600 hover:bg-rose-50 hover:text-rose-700 h-12 cursor-pointer rounded-full transition-all duration-300"
               onClick={() => {
-                // اربط هنا وظيفة تسجيل الخروج الموجودة في مشروعك.
+                router.push("/login");
               }}
             >
               <LogOut className="size-5" />

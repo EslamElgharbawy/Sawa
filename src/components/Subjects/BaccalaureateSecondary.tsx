@@ -13,6 +13,8 @@ import {
   Atom,
   Dna,
   LucideIcon,
+  Code,
+  Briefcase,
 } from "lucide-react";
 
 import { SecondarySubject } from "@/src/types/StudySubjects";
@@ -33,6 +35,10 @@ const SUBJECT_ICONS: Partial<Record<SecondarySubject, LucideIcon>> = {
   history: Landmark,
   egyptian_history: Landmark,
   psychology: Brain,
+  programming_ai: Code,
+  accounting: Calculator,
+  business_management: Briefcase,
+  second_language: Languages,
 };
 
 interface Props {
