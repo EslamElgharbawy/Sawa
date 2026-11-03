@@ -273,7 +273,7 @@ export default function StepEducation({
                   <span className="font-bold">{track.title}</span>
 
                   {isSelected && (
-                    <Check size={18} className="mr-auto text-secondary" />
+                    <Check size={20} className="mr-auto text-secondary" />
                   )}
                 </button>
               );

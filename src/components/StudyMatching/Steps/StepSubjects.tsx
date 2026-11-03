@@ -1,12 +1,16 @@
 "use client";
 
-import {
-  SecondarySubject,
-} from "@/src/types/StudySubjects";
+import { SecondarySubject } from "@/src/types/StudySubjects";
 import FirstSecondary from "../../Subjects/FirstSecondary";
 import SecondSecondary from "../../Subjects/SecondSecondary";
 import ThirdSecondary from "../../Subjects/ThirdSecondary";
-import { AcademicTrack, EducationLevel, EducationSystem } from "@/src/types/StudyEducation";
+import {
+  AcademicTrack,
+  BaccalaureateTrack,
+  EducationLevel,
+  EducationSystem,
+} from "@/src/types/StudyEducation";
+import BaccalaureateSecondary from "../../Subjects/BaccalaureateSecondary";
 
 interface StepSubjectsProps {
   educationLevel: EducationLevel | null;
@@ -34,7 +38,11 @@ export default function StepSubjects({
         );
 
       case "high_school_2":
-        if (academicTrack !== "science" && academicTrack !== "literary" && academicTrack !== "mathematics") {
+        if (
+          academicTrack !== "science" &&
+          academicTrack !== "literary" &&
+          academicTrack !== "mathematics"
+        ) {
           return null;
         }
 
@@ -51,6 +59,28 @@ export default function StepSubjects({
   }
 
   if (educationSystem === "baccalaureate") {
+    switch (educationLevel) {
+      case "high_school_2":
+        if (
+          academicTrack === "medical" ||
+          academicTrack === "engineering" ||
+          academicTrack === "business" ||
+          academicTrack === "arts"
+        ) {
+          return (
+            <BaccalaureateSecondary
+              academicTrack={academicTrack}
+              selectedSubjects={selectedSubjects}
+              onChange={onChange}
+            />
+          );
+        }
+
+        return null;
+      case "high_school_3":
+        return <ThirdSecondary />;
+    }
+
     // هنا هنضيف كومبوننت مواد البكالوريا
   }
 }

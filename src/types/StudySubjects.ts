@@ -22,7 +22,8 @@ export type SecondSecondarySubject =
   | "biology"
   | "history"
   | "psychology"
-  | "first_language";
+  | "first_language"
+  | "egyptian_history";
 
 // Third Secondary
 export type ThirdSecondarySubject =

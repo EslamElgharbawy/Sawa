@@ -1,4 +1,4 @@
-import { GeneralSecondaryTrack } from "@/src/types/StudyEducation";
+import { BaccalaureateTrack, GeneralSecondaryTrack } from "@/src/types/StudyEducation";
 import { StudyGoal, StudyStyle, StudySubject } from "@/src/types/StudyMatching";
 import { FirstSecondarySubject, SecondSecondarySubject } from "@/src/types/StudySubjects";
 
@@ -32,7 +32,7 @@ export const FIRST_SECONDARY_SUBJECTS: {
   { value: "programming", label: "البرمجة والذكاء الاصطناعي" },
 ];
 
-export const SECOND_SECONDARY_SUBJECTS: Record<
+export const GENERAL_SECONDARY_SUBJECTS: Record<
   GeneralSecondaryTrack,
   { value: SecondSecondarySubject; label: string }[]
 > = {
@@ -61,6 +61,23 @@ export const SECOND_SECONDARY_SUBJECTS: Record<
     { value: "psychology", label: "علم النفس والاجتماع" },
     { value: "math", label: "الرياضيات" },
   ],
+};
+
+export const BACCALAUREATE_SECONDARY_SUBJECTS: Record<
+  BaccalaureateTrack,
+  { value: SecondSecondarySubject; label: string }[]
+> = {
+  medical: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "physics", label: "الفيزياء" },
+    { value: "math", label: "الرياضيات" },
+  ],
+
+  engineering: [],
+  business: [],
+  arts: [],
 };
 
 export const STUDY_STYLES: {

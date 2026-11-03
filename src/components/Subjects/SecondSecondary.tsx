@@ -1,4 +1,4 @@
-import { SECOND_SECONDARY_SUBJECTS } from "../StudyMatching/StudyOptions";
+import { GENERAL_SECONDARY_SUBJECTS } from "../StudyMatching/StudyOptions";
 import {
   Check,
   Circle,
@@ -18,6 +18,7 @@ import {
   SecondSecondarySubject,
 } from "@/src/types/StudySubjects";
 import { GeneralSecondaryTrack } from "@/src/types/StudyEducation";
+import useToggleSelection from "@/src/hooks/useToggleSelection";
 
 const SUBJECT_ICONS: Record<SecondSecondarySubject, LucideIcon> = {
   arabic: BookOpen,
@@ -29,6 +30,7 @@ const SUBJECT_ICONS: Record<SecondSecondarySubject, LucideIcon> = {
   biology: Dna,
   geography: Globe2,
   history: Landmark,
+  egyptian_history: Landmark,
   psychology: Brain,
 };
 interface SecondSecondaryProps {
@@ -41,16 +43,8 @@ export default function SecondSecondary({
   onChange,
   academicTrack,
 }: SecondSecondaryProps) {
-  const toggleSubject = (subject: SecondarySubject) => {
-    const isSelected = selectedSubjects.includes(subject);
-
-    onChange(
-      isSelected
-        ? selectedSubjects.filter((item) => item !== subject)
-        : [...selectedSubjects, subject],
-    );
-  };
-  const subjects = SECOND_SECONDARY_SUBJECTS[academicTrack];
+  const { toggleItem } = useToggleSelection(selectedSubjects, onChange);
+  const subjects = GENERAL_SECONDARY_SUBJECTS[academicTrack];
   return (
     <section dir="rtl" className="w-full">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
@@ -62,7 +56,7 @@ export default function SecondSecondary({
               key={subject.value}
               type="button"
               aria-pressed={isSelected}
-              onClick={() => toggleSubject(subject.value)}
+              onClick={() => toggleItem(subject.value)}
               className={`
                 group min-h-26 cursor-pointer space-y-4
                 rounded-[28px] border-2
