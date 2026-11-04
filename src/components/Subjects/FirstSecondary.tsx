@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Circle, LucideIcon } from "lucide-react";
+import { Check, Church, Circle, LucideIcon, Moon } from "lucide-react";
 import { FIRST_SECONDARY_SUBJECTS } from "../../components/StudyMatching/StudyOptions";
 import {
   FirstSecondarySubject,
@@ -27,7 +27,8 @@ const SUBJECT_ICONS: Record<FirstSecondarySubject, LucideIcon> = {
   history: Landmark,
   philosophy: Brain,
   programming: Code,
-  religion: BookHeart,
+  islamic_religion: Moon,
+  christian_religion: Church,
   second_language: Globe,
   physical_education: Dumbbell,
 };
@@ -79,27 +80,26 @@ export default function FirstSecondary({
             >
               <div className="flex justify-between items-center relative">
                 {/* Selection Indicator */}
-              <span className="absolute left-0 top-0 flex size-6 items-center justify-center">
-                {isSelected ? (
-                  <span className="flex size-6 items-center justify-center rounded-full bg-secondary text-white">
-                    <Check size={15} strokeWidth={3} />
-                  </span>
-                ) : (
-                  <Circle
-                    size={24}
-                    strokeWidth={1.8}
-                    className="text-slate-300"
-                  />
-                )}
-              </span>
+                <span className="absolute left-0 top-0 flex size-6 items-center justify-center">
+                  {isSelected ? (
+                    <span className="flex size-6 items-center justify-center rounded-full bg-secondary text-white">
+                      <Check size={15} strokeWidth={3} />
+                    </span>
+                  ) : (
+                    <Circle
+                      size={24}
+                      strokeWidth={1.8}
+                      className="text-slate-300"
+                    />
+                  )}
+                </span>
 
-              {/* Subject Icon */}
-              <SubjectIcon
-                size={22}
-                strokeWidth={1.9}
-                className="text-secondary"
-              />
-
+                {/* Subject Icon */}
+                <SubjectIcon
+                  size={22}
+                  strokeWidth={1.9}
+                  className="text-secondary"
+                />
               </div>
               {/* Subject Name */}
               <span className="mt-3 font-bold">{subject.label}</span>

@@ -7,7 +7,6 @@ import {
   StepperIndicator,
   StepperItem,
   StepperList,
-  StepperSeparator,
 } from "@/components/ui/stepper";
 import StepSubjects from "@/src/components/StudyMatching/Steps/StepSubjects";
 import StepPeople from "@/src/components/StudyMatching/Steps/StepPeople";
@@ -18,17 +17,13 @@ import {
   EducationSystem,
 } from "@/src/types/StudyEducation";
 import { SecondarySubject } from "@/src/types/StudySubjects";
-const steps = [
-  { value: "level", title: "إيه مرحلتك التعليمية؟" },
-  { value: "subjects", title: "هتذاكر إيه؟" },
-  { value: "people", title: "هتذاكر مع كام شخص؟" },
-  { value: "schedule", title: "جدولك عامل إزاي؟" },
-  { value: "preferences", title: "تفضيلاتك" },
-  { value: "complete", title: "جاهزين نبدأ؟" },
-];
+import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
+  const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(null);
   const [selectedSubjects, setSelectedSubjects] = useState<SecondarySubject[]>(
     [],
   );
@@ -42,14 +37,23 @@ export default function StudyStepper() {
     null,
   );
 
+  const UniversitySteps = () => {
+    if (educationLevel === "university_student") {
+      return [{ value: "universityDetails", title: "عرفنا بتدرس إيه؟" }];
+    }
+    return [];
+  };
+
+  const steps = [
+    { value: "level", title: "إيه مرحلتك التعليمية؟" },
+    ...UniversitySteps(),
+    { value: "subjects", title: "هتذاكر إيه؟" },
+    { value: "people", title: "هتذاكر مع كام شخص؟" },
+    { value: "schedule", title: "جدولك عامل إزاي؟" },
+    { value: "preferences", title: "تفضيلاتك" },
+    { value: "complete", title: "جاهزين نبدأ؟" },
+  ];
   const currentIndex = steps.findIndex((step) => step.value === currentStep);
-
-  const isLevelStepDisabled =
-    educationLevel === null ||
-    ((educationLevel === "high_school_2" ||
-      educationLevel === "high_school_3") &&
-      academicTrack === null);
-
   const nextStep = () => {
     if (currentIndex < steps.length - 1) {
       setCurrentStep(steps[currentIndex + 1].value);
@@ -61,6 +65,12 @@ export default function StudyStepper() {
       setCurrentStep(steps[currentIndex - 1].value);
     }
   };
+
+  const isLevelStepDisabled =
+    educationLevel === null ||
+    ((educationLevel === "high_school_2" ||
+      educationLevel === "high_school_3") &&
+      academicTrack === null);
 
   return (
     <main dir="rtl" className="py-5 overflow-y-auto">
@@ -83,6 +93,7 @@ export default function StudyStepper() {
 
         {/* Stepper */}
         <Stepper
+          key={steps.length}
           dir="rtl"
           value={currentStep}
           onValueChange={setCurrentStep}
@@ -106,10 +117,6 @@ export default function StudyStepper() {
                     }`}
                   />
                 </div>
-
-                {index < steps.length - 1 && (
-                  <StepperSeparator className="hidden" />
-                )}
               </StepperItem>
             ))}
           </StepperList>
@@ -125,6 +132,15 @@ export default function StudyStepper() {
                     academicTrack={academicTrack}
                     selectedSubjects={selectedSubjects}
                     onChange={setSelectedSubjects}
+                  />
+                ) : step.value === "universityDetails" ? (
+                  <StepUniversityDetails
+                    selectedFaculty={selectedFaculty}
+                    onFacultyChange={setSelectedFaculty}
+                    selectedDepartment={selectedDepartment}
+                    onDepartmentChange={setSelectedDepartment}
+                    selectedYear={selectedYear}
+                    onYearChange={setSelectedYear}
                   />
                 ) : step.value === "people" ? (
                   <StepPeople
@@ -164,6 +180,10 @@ export default function StudyStepper() {
                       (currentStep === "level" && isLevelStepDisabled) ||
                       (currentStep === "subjects" &&
                         selectedSubjects.length === 0) ||
+                      (currentStep === "universityInfo" &&
+                        (!selectedFaculty ||
+                          !selectedDepartment ||
+                          !selectedYear)) ||
                       (currentStep === "people" && peopleCount === null)
                     }
                     className="flex-1 rounded-full cursor-pointer bg-[#17a6d1] py-3.5 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"

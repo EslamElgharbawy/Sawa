@@ -1,4 +1,4 @@
-import { GENERAL_SECONDARY_SUBJECTS } from "../StudyMatching/StudyOptions";
+import { SECONDARY_YEAR_TWO_SUBJECTS } from "../StudyMatching/StudyOptions";
 import {
   Check,
   Circle,
@@ -13,6 +13,8 @@ import {
   Dna,
   LucideIcon,
   Briefcase,
+  Church,
+  Moon,
 } from "lucide-react";
 import {
   SecondarySubject,
@@ -39,6 +41,8 @@ const SUBJECT_ICONS: Record<SecondSecondarySubject, LucideIcon> = {
   accounting: Calculator,
   business_management: Briefcase,
   second_language: Languages,
+  islamic_religion: Moon,
+  christian_religion: Church,
 };
 interface SecondSecondaryProps {
   selectedSubjects: SecondarySubject[];
@@ -51,7 +55,7 @@ export default function SecondSecondary({
   academicTrack,
 }: SecondSecondaryProps) {
   const { toggleItem } = useToggleSelection(selectedSubjects, onChange);
-  const subjects = GENERAL_SECONDARY_SUBJECTS[academicTrack];
+  const subjects = SECONDARY_YEAR_TWO_SUBJECTS[academicTrack];
   return (
     <section dir="rtl" className="w-full">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">

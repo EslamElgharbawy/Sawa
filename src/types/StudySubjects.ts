@@ -7,7 +7,8 @@ export type FirstSecondarySubject =
   | "history"
   | "philosophy"
   | "programming"
-  | "religion"
+  | "islamic_religion"
+  | "christian_religion"
   | "second_language"
   | "physical_education";
 
@@ -27,7 +28,9 @@ export type SecondSecondarySubject =
   | "programming_ai"
   | "accounting"
   | "business_management"
-  | "second_language";
+  | "second_language"
+  | "islamic_religion"
+  | "christian_religion";
 
 // Third Secondary
 export type ThirdSecondarySubject =
@@ -36,7 +39,20 @@ export type ThirdSecondarySubject =
   | "math"
   | "physics"
   | "chemistry"
-  | "biology";
+  | "geography"
+  | "biology"
+  | "history"
+  | "psychology"
+  | "first_language"
+  | "egyptian_history"
+  | "programming_ai"
+  | "accounting"
+  | "business_management"
+  | "second_language"
+  | "islamic_religion"
+  | "christian_religion"
+  | "national_education"
+  | "statistics";
 
 // All Secondary Subjects
 export type SecondarySubject =

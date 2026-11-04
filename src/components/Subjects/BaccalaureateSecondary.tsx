@@ -20,7 +20,7 @@ import {
 import { SecondarySubject } from "@/src/types/StudySubjects";
 import { BaccalaureateTrack } from "@/src/types/StudyEducation";
 
-import { BACCALAUREATE_SECONDARY_SUBJECTS } from "../StudyMatching/StudyOptions";
+import { BACCALAUREATE_YEAR_TWO_SUBJECTS   } from "../StudyMatching/StudyOptions";
 import useToggleSelection from "@/src/hooks/useToggleSelection";
 
 const SUBJECT_ICONS: Partial<Record<SecondarySubject, LucideIcon>> = {
@@ -52,8 +52,8 @@ export default function BaccalaureateSecondary({
   selectedSubjects,
   onChange,
 }: Props) {
-  const subjects = BACCALAUREATE_SECONDARY_SUBJECTS[academicTrack];
-
+  const subjects = BACCALAUREATE_YEAR_TWO_SUBJECTS  [academicTrack];
+  
  const { toggleItem } = useToggleSelection(
   selectedSubjects,
   onChange,

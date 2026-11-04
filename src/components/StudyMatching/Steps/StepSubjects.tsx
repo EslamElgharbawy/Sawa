@@ -6,7 +6,6 @@ import SecondSecondary from "../../Subjects/SecondSecondary";
 import ThirdSecondary from "../../Subjects/ThirdSecondary";
 import {
   AcademicTrack,
-  BaccalaureateTrack,
   EducationLevel,
   EducationSystem,
 } from "@/src/types/StudyEducation";
@@ -54,7 +53,20 @@ export default function StepSubjects({
           />
         );
       case "high_school_3":
-        return <ThirdSecondary />;
+        if (
+          academicTrack !== "science" &&
+          academicTrack !== "literary" &&
+          academicTrack !== "mathematics"
+        ) {
+          return null;
+        }
+        return (
+          <ThirdSecondary
+            selectedSubjects={selectedSubjects}
+            onChange={onChange}
+            academicTrack={academicTrack}
+          />
+        );
     }
   }
 
@@ -78,9 +90,20 @@ export default function StepSubjects({
 
         return null;
       case "high_school_3":
-        return <ThirdSecondary />;
+        if (
+          academicTrack === "medical" ||
+          academicTrack === "engineering" ||
+          academicTrack === "business" ||
+          academicTrack === "arts"
+        ) {
+          return (
+            <BaccalaureateSecondary
+              academicTrack={academicTrack}
+              selectedSubjects={selectedSubjects}
+              onChange={onChange}
+            />
+          );
+        }
     }
-
-    // هنا هنضيف كومبوننت مواد البكالوريا
   }
 }

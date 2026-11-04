@@ -1,6 +1,13 @@
-import { BaccalaureateTrack, GeneralSecondaryTrack } from "@/src/types/StudyEducation";
+import {
+  BaccalaureateTrack,
+  GeneralSecondaryTrack,
+} from "@/src/types/StudyEducation";
 import { StudyGoal, StudyStyle, StudySubject } from "@/src/types/StudyMatching";
-import { FirstSecondarySubject, SecondSecondarySubject } from "@/src/types/StudySubjects";
+import {
+  FirstSecondarySubject,
+  SecondSecondarySubject,
+  ThirdSecondarySubject,
+} from "@/src/types/StudySubjects";
 
 export const SUBJECTS: {
   value: StudySubject;
@@ -27,12 +34,13 @@ export const FIRST_SECONDARY_SUBJECTS: {
   { value: "integrated_science", label: "العلوم المتكاملة" },
   { value: "history", label: "التاريخ" },
   { value: "philosophy", label: "الفلسفة والمنطق" },
-  { value: "religion", label: "التربية الدينية" },
+  { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+  { value: "christian_religion", label: "التربية الدينية المسيحية" },
   { value: "second_language", label: "اللغة الأجنبية الثانية" },
   { value: "programming", label: "البرمجة والذكاء الاصطناعي" },
 ];
 
-export const GENERAL_SECONDARY_SUBJECTS: Record<
+export const SECONDARY_YEAR_TWO_SUBJECTS: Record<
   GeneralSecondaryTrack,
   { value: SecondSecondarySubject; label: string }[]
 > = {
@@ -43,14 +51,19 @@ export const GENERAL_SECONDARY_SUBJECTS: Record<
     { value: "math", label: "الرياضيات" },
     { value: "chemistry", label: "الكيمياء" },
     { value: "physics", label: "الفيزياء" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
- mathematics: [
+
+  mathematics: [
     { value: "arabic", label: "اللغة العربية" },
     { value: "first_language", label: "اللغة الأجنبية الأولى" },
     { value: "history", label: "التاريخ" },
     { value: "math", label: "الرياضيات" },
     { value: "chemistry", label: "الكيمياء" },
     { value: "physics", label: "الفيزياء" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
 
   literary: [
@@ -60,10 +73,12 @@ export const GENERAL_SECONDARY_SUBJECTS: Record<
     { value: "geography", label: "الجغرافيا" },
     { value: "psychology", label: "علم النفس والاجتماع" },
     { value: "math", label: "الرياضيات" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
 };
 
-export const BACCALAUREATE_SECONDARY_SUBJECTS: Record<
+export const BACCALAUREATE_YEAR_TWO_SUBJECTS: Record<
   BaccalaureateTrack,
   { value: SecondSecondarySubject; label: string }[]
 > = {
@@ -73,29 +88,125 @@ export const BACCALAUREATE_SECONDARY_SUBJECTS: Record<
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "physics", label: "الفيزياء" },
     { value: "math", label: "الرياضيات" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
 
   engineering: [
-  { value: "arabic", label: "اللغة العربية" },
-  { value: "first_language", label: "اللغة الأجنبية الأولى" },
-  { value: "egyptian_history", label: "التاريخ المصري" },
-  { value: "chemistry", label: "الكيمياء" },
-  { value: "programming_ai", label: "البرمجة والذكاء الاصطناعي" },
-],
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "chemistry", label: "الكيمياء" },
+    { value: "programming_ai", label: "البرمجة والذكاء الاصطناعي" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+  ],
+
   business: [
-  { value: "arabic", label: "اللغة العربية" },
-  { value: "first_language", label: "اللغة الأجنبية الأولى" },
-  { value: "egyptian_history", label: "التاريخ المصري" },
-  { value: "accounting", label: "المحاسبة" },
-  { value: "business_management", label: "إدارة الأعمال" },
-],
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "accounting", label: "المحاسبة" },
+    { value: "business_management", label: "إدارة الأعمال" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+  ],
+
   arts: [
-  { value: "arabic", label: "اللغة العربية" },
-  { value: "first_language", label: "اللغة الأجنبية الأولى" },
-  { value: "egyptian_history", label: "التاريخ المصري" },
-  { value: "psychology", label: "علم النفس" },
-  { value: "second_language", label: "اللغة الأجنبية الثانية" },
-],
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "psychology", label: "علم النفس" },
+    { value: "second_language", label: "اللغة الأجنبية الثانية" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+  ],
+};
+
+export const SECONDARY_YEAR_THREE_SUBJECTS: Record<
+  GeneralSecondaryTrack,
+  { value: ThirdSecondarySubject; label: string }[]
+> = {
+  science: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "biology", label: "الأحياء" },
+    { value: "chemistry", label: "الكيمياء" },
+    { value: "physics", label: "الفيزياء" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+    { value: "second_language", label: "اللغة الأجنبية الثانية" },
+    { value: "national_education", label: "التربية الوطنية" },
+  ],
+
+  mathematics: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "math", label: "الرياضيات" },
+    { value: "chemistry", label: "الكيمياء" },
+    { value: "physics", label: "الفيزياء" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+    { value: "second_language", label: "اللغة الأجنبية الثانية" },
+    { value: "national_education", label: "التربية الوطنية" },
+  ],
+
+  literary: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "history", label: "التاريخ" },
+    { value: "geography", label: "الجغرافيا" },
+    { value: "statistics", label: "الإحصاء" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+    { value: "second_language", label: "اللغة الأجنبية الثانية" },
+    { value: "national_education", label: "التربية الوطنية" },
+  ],
+};
+
+export const BACCALAUREATE_YEAR_THREE_SUBJECTS: Record<
+  BaccalaureateTrack,
+  { value: ThirdSecondarySubject; label: string }[]
+> = {
+  medical: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "physics", label: "الفيزياء" },
+    { value: "math", label: "الرياضيات" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+  ],
+
+  engineering: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "chemistry", label: "الكيمياء" },
+    { value: "programming_ai", label: "البرمجة والذكاء الاصطناعي" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+  ],
+
+  business: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "accounting", label: "المحاسبة" },
+    { value: "business_management", label: "إدارة الأعمال" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+  ],
+
+  arts: [
+    { value: "arabic", label: "اللغة العربية" },
+    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "egyptian_history", label: "التاريخ المصري" },
+    { value: "psychology", label: "علم النفس" },
+    { value: "second_language", label: "اللغة الأجنبية الثانية" },
+    { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
+    { value: "christian_religion", label: "التربية الدينية المسيحية" },
+  ],
 };
 
 export const STUDY_STYLES: {
