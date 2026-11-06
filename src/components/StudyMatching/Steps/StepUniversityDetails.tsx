@@ -1,5 +1,7 @@
+
 "use client";
 
+import { UniversityFaculty, UniversityYear } from "@/src/types/StudySubjects";
 import {
   Check,
   Circle,
@@ -13,30 +15,23 @@ import {
 } from "lucide-react";
 
 interface StepUniversityDetailsProps {
-  selectedFaculty: string;
-  onFacultyChange: (faculty: string) => void;
-  selectedDepartment: string;
-  onDepartmentChange: (department: string) => void;
-  selectedYear: string;
-  onYearChange: (year: string) => void;
+  selectedFaculty: UniversityFaculty | "";
+  onFacultyChange: (faculty: UniversityFaculty | "") => void;
+
+  selectedYear: UniversityYear | "";
+  onYearChange: (year: UniversityYear | "") => void;
 }
 
 interface YearOption {
-  id: string;
+  id: UniversityYear;
   title: string;
-}
-
-interface DepartmentOption {
-  id: string;
-  title: string;
-  years: YearOption[];
 }
 
 interface FacultyOption {
-  id: string;
+  id: UniversityFaculty;
   title: string;
   icon: LucideIcon;
-  departments: DepartmentOption[];
+  years: YearOption[];
 }
 
 const DEFAULT_YEARS: YearOption[] = [
@@ -45,11 +40,20 @@ const DEFAULT_YEARS: YearOption[] = [
   { id: "third", title: "تالتة" },
   { id: "fourth", title: "رابعة" },
 ];
+
 const ENGINEERING_YEARS: YearOption[] = [
-  { id: "first", title: "أولى" },
-  { id: "second", title: "تانية" },
-  { id: "third", title: "تالتة" },
-  { id: "fourth", title: "رابعة" },
+  ...DEFAULT_YEARS,
+  { id: "fifth", title: "خامسة" },
+];
+
+const MEDICINE_YEARS: YearOption[] = [
+  ...DEFAULT_YEARS,
+  { id: "fifth", title: "خامسة" },
+  { id: "sixth", title: "سادسة" },
+];
+
+const PHARMACY_YEARS: YearOption[] = [
+  ...DEFAULT_YEARS,
   { id: "fifth", title: "خامسة" },
 ];
 
@@ -58,90 +62,43 @@ const FACULTY_OPTIONS: FacultyOption[] = [
     id: "computers",
     title: "حاسبات ومعلومات",
     icon: Laptop,
-    departments: [
-      { id: "computer_science", title: "علوم حاسب", years: DEFAULT_YEARS },
-      { id: "information_systems", title: "نظم معلومات", years: DEFAULT_YEARS },
-      {
-        id: "information_technology",
-        title: "تكنولوجيا معلومات",
-        years: DEFAULT_YEARS,
-      },
-      {
-        id: "artificial_intelligence",
-        title: "ذكاء اصطناعي",
-        years: DEFAULT_YEARS,
-      },
-    ],
+    years: DEFAULT_YEARS,
   },
   {
     id: "engineering",
     title: "هندسة",
     icon: Cog,
-    departments: [
-      { id: "electrical", title: "هندسة كهرباء", years: ENGINEERING_YEARS },
-      { id: "mechanical", title: "هندسة ميكانيكا", years: ENGINEERING_YEARS },
-      { id: "civil", title: "هندسة مدني", years: ENGINEERING_YEARS },
-      { id: "architecture", title: "هندسة معمارية", years: ENGINEERING_YEARS },
-    ],
+    years: ENGINEERING_YEARS,
   },
   {
     id: "commerce",
     title: "تجارة",
     icon: BriefcaseBusiness,
-    departments: [
-      { id: "accounting", title: "محاسبة", years: DEFAULT_YEARS },
-      { id: "business", title: "إدارة أعمال", years: DEFAULT_YEARS },
-      { id: "economics", title: "اقتصاد", years: DEFAULT_YEARS },
-      { id: "statistics", title: "إحصاء", years: DEFAULT_YEARS },
-    ],
+    years: DEFAULT_YEARS,
   },
   {
     id: "medicine",
     title: "طب بشري",
     icon: Stethoscope,
-    departments: [
-      {
-        id: "general_medicine",
-        title: "طب بشري",
-        years: [
-          { id: "first", title: "أولى" },
-          { id: "second", title: "تانية" },
-          { id: "third", title: "تالتة" },
-          { id: "fourth", title: "رابعة" },
-          { id: "fifth", title: "خامسة" },
-          { id: "sixth", title: "سادسة" },
-        ],
-      },
-    ],
+    years: MEDICINE_YEARS,
   },
   {
     id: "pharmacy",
     title: "صيدلة",
     icon: Pill,
-    departments: [
-      {
-        id: "clinical_pharmacy",
-        title: "صيدلة إكلينيكية",
-        years: [...DEFAULT_YEARS, { id: "fifth", title: "خامسة" }],
-      },
-    ],
+    years: PHARMACY_YEARS,
   },
   {
     id: "law",
     title: "حقوق",
     icon: Scale,
-    departments: [
-      { id: "public_law", title: "قانون عام", years: DEFAULT_YEARS },
-      { id: "private_law", title: "قانون خاص", years: DEFAULT_YEARS },
-    ],
+    years: DEFAULT_YEARS,
   },
 ];
 
 export default function StepUniversityDetails({
   selectedFaculty,
   onFacultyChange,
-  selectedDepartment,
-  onDepartmentChange,
   selectedYear,
   onYearChange,
 }: StepUniversityDetailsProps) {
@@ -149,33 +106,19 @@ export default function StepUniversityDetails({
     (faculty) => faculty.id === selectedFaculty,
   );
 
-  // نجمع كل السنين الموجودة في أقسام الكلية بدون تكرار
-  const availableYears = currentFaculty
-    ? Array.from(
-        new Map(
-          currentFaculty.departments
-            .flatMap((department) => department.years)
-            .map((year) => [year.id, year]),
-        ).values(),
-      )
-    : [];
-
-  const handleFacultyChange = (facultyId: string) => {
+  const handleFacultyChange = (facultyId: UniversityFaculty | "") => {
     onFacultyChange(facultyId);
-    onDepartmentChange("");
-    onYearChange("");
-  };
-
-  const handleDepartmentChange = (departmentId: string) => {
-    onDepartmentChange(departmentId);
     onYearChange("");
   };
 
   return (
     <div dir="rtl" className="w-full space-y-7">
+
       {/* Faculty */}
       <div>
-        <h3 className="mb-4 font-bold text-primary">بتدرس في كلية إيه؟</h3>
+        <h3 className="mb-4 font-bold text-primary">
+          بتدرس في كلية إيه؟
+        </h3>
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
           {FACULTY_OPTIONS.map((faculty) => {
@@ -225,86 +168,54 @@ export default function StepUniversityDetails({
                   />
                 </div>
 
-                <span className="mt-3 block font-bold">{faculty.title}</span>
+                <span className="mt-3 block font-bold">
+                  {faculty.title}
+                </span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Departments + Academic Years */}
+      {/* Academic Years */}
       {currentFaculty && (
-        <div className="rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 sm:p-5 space-y-6">
-          {/* Departments */}
-          <div>
-            <h3 className="mb-4 text-sm font-bold text-primary">
-              اختار القسم أو التخصص:
-            </h3>
+        <div className="rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 sm:p-5">
+          <h3 className="mb-4 text-sm font-bold text-primary">
+            أنت في سنة كام؟
+          </h3>
 
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {currentFaculty.departments.map((department) => {
-                const isSelected = selectedDepartment === department.id;
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {currentFaculty.years.map((year) => {
+              const isSelected = selectedYear === year.id;
 
-                return (
-                  <button
-                    key={department.id}
-                    type="button"
-                    aria-pressed={isSelected}
-                    onClick={() => handleDepartmentChange(department.id)}
-                    className={`
-                      flex items-center justify-center gap-3
-                      rounded-xl border-2 p-3 text-right
-                      font-bold transition-all duration-300
-                      ${
-                        isSelected
-                          ? "border-secondary bg-white text-primary"
-                          : "border-slate-200 bg-white text-slate-500 hover:border-secondary/60"
-                      }
-                    `}
-                  >
-                    <span>{department.title}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+              return (
+                <button
+                  key={year.id}
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() => onYearChange(year.id)}
+                  className={`
+                    flex items-center justify-between gap-2
+                    rounded-xl border-2 bg-white p-4 cursor-pointer
+                    font-bold transition-all duration-300
+                    ${
+                      isSelected
+                        ? "border-secondary text-primary"
+                        : "border-slate-200 text-slate-500 hover:border-secondary/60"
+                    }
+                  `}
+                >
+                  <span>{year.title}</span>
 
-          {/* Academic Years */}
-          <div>
-            <h3 className="mb-4 text-sm font-bold text-primary">
-              أنت في سنة كام؟
-            </h3>
-
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {availableYears.map((year) => {
-                const isSelected = selectedYear === year.id;
-
-                return (
-                  <button
-                    key={year.id}
-                    type="button"
-                    aria-pressed={isSelected}
-                    onClick={() => onYearChange(year.id)}
-                    className={`
-                      flex items-center justify-between gap-2
-                      rounded-xl border-2 bg-white p-4
-                      font-bold transition-all duration-300
-                      ${
-                        isSelected
-                          ? "border-secondary text-primary"
-                          : "border-slate-200 text-slate-500 hover:border-secondary/60"
-                      }
-                    `}
-                  >
-                    <span>{year.title}</span>
-
-                    {isSelected && (
-                      <Check size={20} className="shrink-0 text-secondary" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+                  {isSelected && (
+                    <Check
+                      size={20}
+                      className="shrink-0 text-secondary"
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}

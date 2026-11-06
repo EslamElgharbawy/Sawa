@@ -16,14 +16,23 @@ import {
   EducationLevel,
   EducationSystem,
 } from "@/src/types/StudyEducation";
-import { SecondarySubject } from "@/src/types/StudySubjects";
+import {
+  SecondarySubject,
+  UniversityFaculty,
+  UniversityYear,
+} from "@/src/types/StudySubjects";
 import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
+import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
-  const [selectedFaculty, setSelectedFaculty] = useState(null);
-  const [selectedDepartment, setSelectedDepartment] = useState(null);
-  const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedFaculty, setSelectedFaculty] = useState<
+    UniversityFaculty | ""
+  >("");
+
+  const [selectedYear, setSelectedYear] = useState<UniversityYear | "">("");
+
+  const [universitySubjects, setUniversitySubjects] = useState<string[]>([]);
   const [selectedSubjects, setSelectedSubjects] = useState<SecondarySubject[]>(
     [],
   );
@@ -126,19 +135,28 @@ export default function StudyStepper() {
             <StepperContent key={step.value} value={step.value}>
               <section className="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm sm:p-9">
                 {step.value === "subjects" ? (
-                  <StepSubjects
-                    educationLevel={educationLevel}
-                    educationSystem={educationSystem}
-                    academicTrack={academicTrack}
-                    selectedSubjects={selectedSubjects}
-                    onChange={setSelectedSubjects}
-                  />
+                  educationLevel === "university_student" ? (
+                    selectedFaculty && selectedYear ? (
+                      <UniversitySubjects
+                        selectedFaculty={selectedFaculty}
+                        selectedYear={selectedYear}
+                        selectedSubjects={universitySubjects}
+                        onChange={setUniversitySubjects}
+                      />
+                    ) : null
+                  ) : (
+                    <StepSubjects
+                      educationLevel={educationLevel}
+                      educationSystem={educationSystem}
+                      academicTrack={academicTrack}
+                      selectedSubjects={selectedSubjects}
+                      onChange={setSelectedSubjects}
+                    />
+                  )
                 ) : step.value === "universityDetails" ? (
                   <StepUniversityDetails
                     selectedFaculty={selectedFaculty}
                     onFacultyChange={setSelectedFaculty}
-                    selectedDepartment={selectedDepartment}
-                    onDepartmentChange={setSelectedDepartment}
                     selectedYear={selectedYear}
                     onYearChange={setSelectedYear}
                   />
@@ -179,11 +197,11 @@ export default function StudyStepper() {
                     disabled={
                       (currentStep === "level" && isLevelStepDisabled) ||
                       (currentStep === "subjects" &&
-                        selectedSubjects.length === 0) ||
-                      (currentStep === "universityInfo" &&
-                        (!selectedFaculty ||
-                          !selectedDepartment ||
-                          !selectedYear)) ||
+                        (educationLevel === "university_student"
+                          ? universitySubjects.length === 0
+                          : selectedSubjects.length === 0)) ||
+                      (currentStep === "universityDetails" &&
+                        (!selectedFaculty || !selectedYear)) ||
                       (currentStep === "people" && peopleCount === null)
                     }
                     className="flex-1 rounded-full cursor-pointer bg-[#17a6d1] py-3.5 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"

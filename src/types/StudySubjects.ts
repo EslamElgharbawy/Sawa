@@ -54,6 +54,35 @@ export type ThirdSecondarySubject =
   | "national_education"
   | "statistics";
 
+// University Faculties
+export type UniversityFaculty =
+  | "computers"
+  | "engineering"
+  | "commerce"
+  | "medicine"
+  | "pharmacy"
+  | "law";
+
+// University Years
+export type UniversityYear =
+  | "first"
+  | "second"
+  | "third"
+  | "fourth"
+  | "fifth"
+  | "sixth";
+
+// University Subjects
+export type UniversitySubject = string;
+
+// University Subject Database
+export type SubjectDatabase = Partial<
+  Record<
+    UniversityFaculty,
+    Partial<Record<UniversityYear, string[]>>
+  >
+>;
+
 // All Secondary Subjects
 export type SecondarySubject =
   | FirstSecondarySubject

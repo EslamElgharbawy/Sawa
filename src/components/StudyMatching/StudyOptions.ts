@@ -6,6 +6,7 @@ import { StudyGoal, StudyStyle, StudySubject } from "@/src/types/StudyMatching";
 import {
   FirstSecondarySubject,
   SecondSecondarySubject,
+  SubjectDatabase,
   ThirdSecondarySubject,
 } from "@/src/types/StudySubjects";
 
@@ -207,6 +208,271 @@ export const BACCALAUREATE_YEAR_THREE_SUBJECTS: Record<
     { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
     { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
+};
+
+// ========================================
+// University Subjects
+// ========================================
+
+export const UNIVERSITY_SUBJECTS: SubjectDatabase = {
+  // Computers
+  computers: {
+    first: [
+      "Programming Fundamentals",
+      "Introduction to Computer Science",
+      "Discrete Mathematics",
+      "Calculus",
+      "Digital Logic",
+      "Computer Fundamentals",
+      "Physics",
+      "Statistics",
+    ],
+    second: [
+      "Data Structures",
+      "Algorithms",
+      "Database Systems",
+      "Object Oriented Programming",
+      "Computer Organization",
+      "Operating Systems",
+      "Linear Algebra",
+      "Probability",
+    ],
+    third: [
+      "Computer Networks",
+      "Software Engineering",
+      "Artificial Intelligence",
+      "Theory of Computation",
+      "Web Development",
+      "Information Systems",
+      "Computer Graphics",
+      "Compiler Design",
+    ],
+    fourth: [
+      "Machine Learning",
+      "Distributed Systems",
+      "Information Security",
+      "Cloud Computing",
+      "Data Mining",
+      "Mobile Application Development",
+      "Graduation Project",
+    ],
+  },
+
+  // Engineering
+  engineering: {
+    first: [
+      "Engineering Mathematics I",
+      "Physics",
+      "Chemistry",
+      "Engineering Drawing",
+      "Mechanics",
+      "Technical Writing",
+      "Computer Programming",
+      "Electrical Engineering Fundamentals",
+    ],
+    second: [
+      "Engineering Mathematics II",
+      "Thermodynamics",
+      "Electrical Circuits",
+      "Materials Science",
+      "Fluid Mechanics",
+      "Engineering Mechanics",
+      "Numerical Methods",
+    ],
+    third: [
+      "Control Systems",
+      "Numerical Methods",
+      "Engineering Design",
+      "Electrical Machines",
+      "Structural Analysis",
+      "Heat Transfer",
+      "Engineering Economics",
+    ],
+    fourth: [
+      "Advanced Engineering Design",
+      "Project Management",
+      "Engineering Economics",
+      "Engineering Applications",
+      "Technical Electives",
+      "Graduation Project",
+    ],
+    fifth: [
+      "Advanced Engineering Topics",
+      "Engineering Management",
+      "Specialization Courses",
+      "Graduation Project",
+    ],
+  },
+
+  // Commerce
+  commerce: {
+    first: [
+      "Principles of Accounting",
+      "Principles of Economics",
+      "Business Administration",
+      "Business Mathematics",
+      "Statistics",
+      "Introduction to Law",
+      "Computer Applications",
+    ],
+    second: [
+      "Financial Accounting",
+      "Marketing Principles",
+      "Cost Accounting",
+      "Business Statistics",
+      "Commercial Law",
+      "Microeconomics",
+      "Management Principles",
+    ],
+    third: [
+      "Financial Management",
+      "Management Accounting",
+      "Auditing",
+      "Human Resources Management",
+      "Marketing Management",
+      "Macroeconomics",
+      "Tax Accounting",
+    ],
+    fourth: [
+      "Advanced Accounting",
+      "Investment Management",
+      "Strategic Management",
+      "Tax Accounting",
+      "Financial Analysis",
+      "International Business",
+      "Graduation Project",
+    ],
+  },
+
+  // Medicine
+  medicine: {
+    first: [
+      "Anatomy",
+      "Histology",
+      "Biochemistry",
+      "Physiology",
+      "Medical Terminology",
+      "Cell Biology",
+    ],
+    second: [
+      "Anatomy",
+      "Physiology",
+      "Biochemistry",
+      "Pathology",
+      "Microbiology",
+      "Immunology",
+    ],
+    third: [
+      "Pathology",
+      "Pharmacology",
+      "Microbiology",
+      "Parasitology",
+      "Immunology",
+      "Forensic Medicine",
+    ],
+    fourth: [
+      "Internal Medicine",
+      "General Surgery",
+      "Pediatrics",
+      "Obstetrics and Gynecology",
+      "Clinical Pharmacology",
+    ],
+    fifth: [
+      "Internal Medicine",
+      "Surgery",
+      "Pediatrics",
+      "Clinical Rotations",
+      "Ophthalmology",
+      "ENT",
+    ],
+    sixth: [
+      "Internal Medicine",
+      "Surgery",
+      "Emergency Medicine",
+      "Clinical Training",
+      "Community Medicine",
+    ],
+  },
+
+  // Pharmacy
+  pharmacy: {
+    first: [
+      "General Chemistry",
+      "Organic Chemistry",
+      "Biology",
+      "Physics",
+      "Pharmaceutical Mathematics",
+      "Pharmaceutical Terminology",
+    ],
+    second: [
+      "Pharmaceutical Chemistry",
+      "Pharmacognosy",
+      "Physiology",
+      "Biochemistry",
+      "Microbiology",
+      "Pharmaceutics",
+    ],
+    third: [
+      "Pharmacology",
+      "Pharmaceutics",
+      "Medicinal Chemistry",
+      "Pharmacognosy",
+      "Pathophysiology",
+      "Pharmaceutical Analysis",
+    ],
+    fourth: [
+      "Clinical Pharmacy",
+      "Toxicology",
+      "Pharmacotherapy",
+      "Drug Delivery Systems",
+      "Pharmaceutical Biotechnology",
+      "Hospital Pharmacy",
+    ],
+    fifth: [
+      "Clinical Pharmacy",
+      "Hospital Pharmacy",
+      "Pharmacotherapy",
+      "Pharmaceutical Research",
+      "Clinical Toxicology",
+      "Graduation Project",
+    ],
+  },
+
+  // Law
+  law: {
+    first: [
+      "Introduction to Law",
+      "Constitutional Law",
+      "Civil Law",
+      "Criminal Law",
+      "Legal History",
+      "Public International Law",
+    ],
+    second: [
+      "Administrative Law",
+      "International Public Law",
+      "Civil Law",
+      "Criminal Law",
+      "Commercial Law",
+      "Islamic Jurisprudence",
+    ],
+    third: [
+      "International Private Law",
+      "Labor Law",
+      "Criminal Procedure",
+      "Civil Procedure",
+      "Commercial Law",
+      "Administrative Judiciary",
+    ],
+    fourth: [
+      "International Law",
+      "Public Finance",
+      "Advanced Civil Law",
+      "Criminal Procedure",
+      "International Organizations",
+      "Graduation Project",
+    ],
+  },
 };
 
 export const STUDY_STYLES: {
