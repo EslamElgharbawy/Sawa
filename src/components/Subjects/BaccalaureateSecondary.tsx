@@ -73,7 +73,7 @@ export default function BaccalaureateSecondary({
               aria-pressed={isSelected}
               onClick={() => toggleItem(subject.value)}
               className={`
-                group min-h-26 cursor-pointer space-y-4
+                group min-h-28 cursor-pointer space-y-4
                 rounded-[28px] border-2 p-4 text-right
                 transition-all duration-300
                 hover:border-secondary/70

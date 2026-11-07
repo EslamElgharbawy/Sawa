@@ -142,7 +142,6 @@ export default function UniversitySubjects({
                   bg-white p-2 shadow-lg
                 "
               >
-
                 {filteredSuggestions.map((subject) => (
                   <button
                     key={subject}
@@ -190,12 +189,13 @@ export default function UniversitySubjects({
           disabled={!subjectInput.trim()}
           className="
             flex shrink-0 cursor-pointer items-center
-            justify-center gap-2 rounded-2xl
-            bg-[#17A6D1] px-6 py-3.5
-            font-bold text-white transition-all text-sm
-            hover:bg-[#1395BC]
-            disabled:cursor-not-allowed
-            disabled:opacity-50
+    justify-center gap-2 rounded-2xl
+    bg-[#17A6D1] px-6 py-3.5
+    font-bold text-white transition-all text-sm
+    hover:bg-[#1395BC]
+    disabled:cursor-not-allowed
+    disabled:opacity-50
+    disabled:hover:bg-[#17A6D1]
           "
         >
           <Plus size={20} strokeWidth={2.5} />
@@ -210,20 +210,22 @@ export default function UniversitySubjects({
             المواد المختارة:
           </span>
 
-           <button
-    type="button"
-    onClick={() => onChange([])}
-    disabled={selectedSubjects.length === 0}
-    className="
+          <button
+            type="button"
+            onClick={() => onChange([])}
+            disabled={selectedSubjects.length === 0}
+            className="
       cursor-pointer text-xs font-bold
       text-red-500 transition-colors
       hover:text-red-700
       disabled:cursor-not-allowed
       disabled:opacity-40
+       disabled:text-slate-400
+    disabled:hover:text-slate-400
     "
-  >
-    مسح الكل
-  </button>
+          >
+            مسح الكل
+          </button>
         </div>
 
         <div

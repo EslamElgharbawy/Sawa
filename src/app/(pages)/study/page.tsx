@@ -23,6 +23,7 @@ import {
 } from "@/src/types/StudySubjects";
 import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
 import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
+import SkillDevelopment from "@/src/components/Subjects/SkillDevelopment";
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
@@ -40,6 +41,7 @@ export default function StudyStepper() {
   const [educationLevel, setEducationLevel] = useState<EducationLevel | null>(
     null,
   );
+  const [selectedSkills, setSelectedSkills] = useState<string | null>(null);
   const [educationSystem, setEducationSystem] =
     useState<EducationSystem>("general");
   const [academicTrack, setAcademicTrack] = useState<AcademicTrack | null>(
@@ -133,7 +135,7 @@ export default function StudyStepper() {
           {/* Remaining steps */}
           {steps.map((step) => (
             <StepperContent key={step.value} value={step.value}>
-              <section className="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm sm:p-9">
+              <section className="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm xl:p-9">
                 {step.value === "subjects" ? (
                   educationLevel === "university_student" ? (
                     selectedFaculty && selectedYear ? (
@@ -144,6 +146,11 @@ export default function StudyStepper() {
                         onChange={setUniversitySubjects}
                       />
                     ) : null
+                  ) : educationLevel === "skill_development" ? (
+                    <SkillDevelopment
+                      selectedSkills={selectedSkills}
+                      onChange={setSelectedSkills}
+                    />
                   ) : (
                     <StepSubjects
                       educationLevel={educationLevel}
@@ -199,7 +206,9 @@ export default function StudyStepper() {
                       (currentStep === "subjects" &&
                         (educationLevel === "university_student"
                           ? universitySubjects.length === 0
-                          : selectedSubjects.length === 0)) ||
+                          : educationLevel === "skill_development"
+                            ? !selectedSkills
+                            : selectedSubjects.length === 0)) ||
                       (currentStep === "universityDetails" &&
                         (!selectedFaculty || !selectedYear)) ||
                       (currentStep === "people" && peopleCount === null)

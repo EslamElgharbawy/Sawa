@@ -130,7 +130,7 @@ export default function StepEducation({
   return (
     <div dir="rtl" className="w-full">
       {/* Education Levels */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 xl:grid-cols-3">
         {EDUCATION_OPTIONS.map((option) => {
           const Icon = option.icon;
           const isSelected = educationLevel === option.id;
@@ -145,11 +145,11 @@ export default function StepEducation({
                 relative flex min-h-37.5 cursor-pointer flex-col
                 justify-between rounded-2xl border-2 p-4 text-right
                 transition-all duration-300
-                ${option.id === "skill_development" ? "sm:col-span-2" : ""}
+                ${option.id === "skill_development" ? "xl:col-span-2" : ""}
                 ${
                   isSelected
                     ? "border-secondary bg-[#DDF5FF] text-primary"
-                    : "border-slate-300 bg-white text-slate-500 hover:border-secondary/60"
+                    : "border-slate-300 bg-white text-slate-500 hover:border-secondary/60 "
                 }
               `}
             >
@@ -198,13 +198,13 @@ export default function StepEducation({
 
       {/* Academic Track */}
       {showAcademicTrack && (
-        <div className="mt-7 rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 sm:p-5">
+        <div className="mt-7 rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 lg:p-5">
           <div className="mb-5">
             <h3 className="mb-3 text-sm font-bold text-primary">
               اختار النظام التعليمي:
             </h3>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid xl:grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => handleSystemChange("general")}
@@ -247,7 +247,7 @@ export default function StepEducation({
             <p className="text-xs text-slate-500">اختار المسار المناسب ليك</p>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
             {TRACK_OPTIONS.map((track) => {
               const TrackIcon = track.icon;
               const isSelected = isTrackSelected(track.id);

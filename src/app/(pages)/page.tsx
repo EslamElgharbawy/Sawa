@@ -1,6 +1,7 @@
 import { RecommendedSessionCard } from "@/src/components/Sessions/RecommendedSessionCard";
 import { SessionCard } from "@/src/components/Sessions/SessionCard";
 import { CalendarClock, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const stats = [
   { value: 2, label: "جلسة قادمة" },
@@ -31,13 +32,14 @@ export default function Home() {
             الدراسي.
           </p>
 
-          <button
+          <Link
             type="button"
+            href="/study"    
             className="mt-3 inline-flex h-14 cursor-pointer items-center justify-center gap-3 rounded-3xl bg-[#FFCA32] px-8 text-base font-bold text-[#123C3E] transition hover:bg-[#FFD65C] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFCA32]"
           >
             <Sparkles className="size-5" />
             يلا نذاكر
-          </button>
+          </Link>
         </div>
 
         {/* الإحصائيات */}
