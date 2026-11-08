@@ -6,7 +6,7 @@ import type {
   UniversityFaculty,
   UniversityYear,
 } from "@/src/types/StudySubjects";
-import { UNIVERSITY_SUBJECTS } from "../StudyMatching/StudyOptions";
+import { UNIVERSITY_SUBJECTS } from "../../app/data/StudyOptions";
 
 interface UniversitySubjectsProps {
   selectedFaculty: UniversityFaculty;

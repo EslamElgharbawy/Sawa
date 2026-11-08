@@ -24,6 +24,7 @@ import {
 import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
 import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
 import SkillDevelopment from "@/src/components/Subjects/SkillDevelopment";
+import FirstSecondry from "@/src/components/Topics/FirstSecondry";
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
@@ -37,6 +38,9 @@ export default function StudyStepper() {
   const [selectedSubjects, setSelectedSubjects] = useState<SecondarySubject[]>(
     [],
   );
+  const [selectedTopics, setSelectedTopics] = useState<
+    Partial<Record<SecondarySubject, string[]>>
+  >({});
   const [peopleCount, setPeopleCount] = useState<number | null>(null);
   const [educationLevel, setEducationLevel] = useState<EducationLevel | null>(
     null,
@@ -48,20 +52,28 @@ export default function StudyStepper() {
     null,
   );
 
-  const UniversitySteps = () => {
+  const UniversityStep = () => {
     if (educationLevel === "university_student") {
       return [{ value: "universityDetails", title: "عرفنا بتدرس إيه؟" }];
     }
     return [];
   };
 
+  const TopicsStep = () => {
+    if (educationLevel === "high_school_1") {
+      return [{ value: "topics", title: "هتذاكر إيه في كل مادة؟" }];
+    }
+
+    return [];
+  };
+
   const steps = [
     { value: "level", title: "إيه مرحلتك التعليمية؟" },
-    ...UniversitySteps(),
+    ...UniversityStep(),
     { value: "subjects", title: "هتذاكر إيه؟" },
-    { value: "people", title: "هتذاكر مع كام شخص؟" },
-    { value: "schedule", title: "جدولك عامل إزاي؟" },
+    ...TopicsStep(),
     { value: "preferences", title: "تفضيلاتك" },
+    { value: "people", title: "هتذاكر مع كام شخص؟" },
     { value: "complete", title: "جاهزين نبدأ؟" },
   ];
   const currentIndex = steps.findIndex((step) => step.value === currentStep);
@@ -167,6 +179,13 @@ export default function StudyStepper() {
                     selectedYear={selectedYear}
                     onYearChange={setSelectedYear}
                   />
+                ) : step.value === "topics" ? (
+                  <FirstSecondry
+                    educationLevel={educationLevel!}
+                    selectedSubjects={selectedSubjects}
+                    selectedTopics={selectedTopics}
+                    onTopicsChange={setSelectedTopics}
+                  />
                 ) : step.value === "people" ? (
                   <StepPeople
                     peopleCount={peopleCount}
@@ -211,6 +230,11 @@ export default function StudyStepper() {
                             : selectedSubjects.length === 0)) ||
                       (currentStep === "universityDetails" &&
                         (!selectedFaculty || !selectedYear)) ||
+                      (currentStep === "topics" &&
+                        !selectedSubjects.every(
+                          (subject) =>
+                            (selectedTopics[subject] ?? []).length > 0,
+                        )) ||
                       (currentStep === "people" && peopleCount === null)
                     }
                     className="flex-1 rounded-full cursor-pointer bg-[#17a6d1] py-3.5 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"

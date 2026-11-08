@@ -10,7 +10,6 @@ export type FirstSecondarySubject =
   | "islamic_religion"
   | "christian_religion"
   | "second_language"
-  | "physical_education";
 
 // Second Secondary
 export type SecondSecondarySubject =

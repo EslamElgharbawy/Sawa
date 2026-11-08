@@ -1,4 +1,4 @@
-import { SECONDARY_YEAR_TWO_SUBJECTS } from "../StudyMatching/StudyOptions";
+import { SECONDARY_YEAR_TWO_SUBJECTS } from "../../app/data/StudyOptions";
 import {
   Check,
   Circle,

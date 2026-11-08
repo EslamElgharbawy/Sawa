@@ -201,3 +201,6 @@
   --sidebar-border: #33485b;
   --sidebar-ring: #38bdf8;
 }
+html {
+  scrollbar-gutter: stable;
+}

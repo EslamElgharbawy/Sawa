@@ -20,7 +20,7 @@ import {
 import { SecondarySubject } from "@/src/types/StudySubjects";
 import { BaccalaureateTrack } from "@/src/types/StudyEducation";
 
-import { BACCALAUREATE_YEAR_THREE_SUBJECTS   } from "../StudyMatching/StudyOptions";
+import { BACCALAUREATE_YEAR_THREE_SUBJECTS   } from "../../app/data/StudyOptions";
 import useToggleSelection from "@/src/hooks/useToggleSelection";
 
 const SUBJECT_ICONS: Partial<Record<SecondarySubject, LucideIcon>> = {

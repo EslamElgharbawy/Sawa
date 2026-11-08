@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Church, Circle, LucideIcon, Moon } from "lucide-react";
-import { FIRST_SECONDARY_SUBJECTS } from "../../components/StudyMatching/StudyOptions";
+import { FIRST_SECONDARY_SUBJECTS } from "../../app/data/StudyOptions";
 import {
   FirstSecondarySubject,
   SecondarySubject,
@@ -30,7 +30,6 @@ const SUBJECT_ICONS: Record<FirstSecondarySubject, LucideIcon> = {
   islamic_religion: Moon,
   christian_religion: Church,
   second_language: Globe,
-  physical_education: Dumbbell,
 };
 interface FirstSecondaryProps {
   selectedSubjects: SecondarySubject[];

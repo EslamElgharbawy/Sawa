@@ -25,7 +25,7 @@ import { GeneralSecondaryTrack } from "@/src/types/StudyEducation";
 import useToggleSelection from "@/src/hooks/useToggleSelection";
 
 import { Code } from "lucide-react";
-import { SECONDARY_YEAR_THREE_SUBJECTS } from "../StudyMatching/StudyOptions";
+import { SECONDARY_YEAR_THREE_SUBJECTS } from "../../app/data/StudyOptions";
 
 const SUBJECT_ICONS: Record<ThirdSecondarySubject, LucideIcon> = {
   arabic: BookOpen,
