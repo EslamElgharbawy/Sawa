@@ -17,14 +17,16 @@ import {
   EducationSystem,
 } from "@/src/types/StudyEducation";
 import {
+  BaccalaureateSecondLanguage,
   SecondarySubject,
+  StudyTopicsState,
   UniversityFaculty,
   UniversityYear,
 } from "@/src/types/StudySubjects";
 import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
 import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
 import SkillDevelopment from "@/src/components/Subjects/SkillDevelopment";
-import FirstSecondry from "@/src/components/Topics/FirstSecondry";
+import StudyTopics from "@/src/components/StudyTopics/StudyTopics";
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
@@ -38,9 +40,11 @@ export default function StudyStepper() {
   const [selectedSubjects, setSelectedSubjects] = useState<SecondarySubject[]>(
     [],
   );
-  const [selectedTopics, setSelectedTopics] = useState<
-    Partial<Record<SecondarySubject, string[]>>
-  >({});
+  const [selectedTopics, setSelectedTopics] = useState<StudyTopicsState>({});
+  const [selectedSecondLanguage, setSelectedSecondLanguage] = useState<
+    BaccalaureateSecondLanguage | undefined
+  >(undefined);
+
   const [peopleCount, setPeopleCount] = useState<number | null>(null);
   const [educationLevel, setEducationLevel] = useState<EducationLevel | null>(
     null,
@@ -60,12 +64,19 @@ export default function StudyStepper() {
   };
 
   const TopicsStep = () => {
-    if (educationLevel === "high_school_1") {
+    const isSecondary =
+      educationLevel === "high_school_1" ||
+      educationLevel === "high_school_2" ||
+      educationLevel === "high_school_3";
+
+    if (isSecondary) {
       return [{ value: "topics", title: "هتذاكر إيه في كل مادة؟" }];
     }
-
     return [];
   };
+  const topicsScopeKey = `${educationSystem}_${educationLevel}_${academicTrack ?? "default"}`;
+
+  const currentSelectedTopics = selectedTopics[topicsScopeKey] ?? {};
 
   const steps = [
     { value: "level", title: "إيه مرحلتك التعليمية؟" },
@@ -95,6 +106,11 @@ export default function StudyStepper() {
       educationLevel === "high_school_3") &&
       academicTrack === null);
 
+  const resetSubjectSelections = () => {
+    setSelectedSubjects([]);
+    setSelectedTopics({});
+    setSelectedSecondLanguage(undefined);
+  };
   return (
     <main dir="rtl" className="py-5 overflow-y-auto">
       <div className="mx-auto w-full max-w-190">
@@ -169,6 +185,8 @@ export default function StudyStepper() {
                       educationSystem={educationSystem}
                       academicTrack={academicTrack}
                       selectedSubjects={selectedSubjects}
+                      selectedSecondLanguage={selectedSecondLanguage}
+                      onSecondLanguageChange={setSelectedSecondLanguage}
                       onChange={setSelectedSubjects}
                     />
                   )
@@ -180,11 +198,19 @@ export default function StudyStepper() {
                     onYearChange={setSelectedYear}
                   />
                 ) : step.value === "topics" ? (
-                  <FirstSecondry
+                  <StudyTopics
                     educationLevel={educationLevel!}
+                    educationSystem={educationSystem}
+                    academicTrack={academicTrack}
+                    selectedSecondLanguage={selectedSecondLanguage}
                     selectedSubjects={selectedSubjects}
-                    selectedTopics={selectedTopics}
-                    onTopicsChange={setSelectedTopics}
+                    selectedTopics={currentSelectedTopics}
+                    onTopicsChange={(topics) =>
+                      setSelectedTopics((prev) => ({
+                        ...prev,
+                        [topicsScopeKey]: topics,
+                      }))
+                    }
                   />
                 ) : step.value === "people" ? (
                   <StepPeople
@@ -197,8 +223,21 @@ export default function StudyStepper() {
                     educationSystem={educationSystem}
                     academicTrack={academicTrack}
                     onEducationLevelChange={setEducationLevel}
-                    onEducationSystemChange={setEducationSystem}
-                    onAcademicTrackChange={setAcademicTrack}
+                    onEducationSystemChange={(system) => {
+                      if (system !== educationSystem) {
+                        resetSubjectSelections();
+                        setAcademicTrack(null);
+                      }
+
+                      setEducationSystem(system);
+                    }}
+                    onAcademicTrackChange={(track) => {
+                      if (track !== academicTrack) {
+                        resetSubjectSelections();
+                      }
+
+                      setAcademicTrack(track);
+                    }}
                   />
                 ) : (
                   <p className="mt-2 text-slate-500">
@@ -233,7 +272,7 @@ export default function StudyStepper() {
                       (currentStep === "topics" &&
                         !selectedSubjects.every(
                           (subject) =>
-                            (selectedTopics[subject] ?? []).length > 0,
+                            (currentSelectedTopics[subject] ?? []).length > 0,
                         )) ||
                       (currentStep === "people" && peopleCount === null)
                     }

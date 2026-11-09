@@ -1,3 +1,5 @@
+import { AcademicTrack, EducationLevel, EducationSystem } from "./StudyEducation";
+
 // First Secondary
 export type FirstSecondarySubject =
   | "arabic"
@@ -80,6 +82,41 @@ export type SubjectDatabase = Partial<
     UniversityFaculty,
     Partial<Record<UniversityYear, string[]>>
   >
+>;
+
+export type BaccalaureateSecondLanguage =
+  | "french"
+  | "german"
+  | "italian"
+  | "spanish"
+  | "chinese";
+  
+  export type FirstSecondarySecondLanguage =
+  | "french"
+  | "german"
+  | "italian"
+  | "spanish";
+
+// Study Topics
+export type StudyTopicsMap = Partial<
+  Record<SecondarySubject, string[]>
+>;
+
+export interface StudyTopicsProps {
+  educationLevel: EducationLevel;
+  educationSystem: EducationSystem;
+  academicTrack: AcademicTrack | null;
+  selectedSubjects: SecondarySubject[];
+  selectedTopics: StudyTopicsMap;
+  onTopicsChange: (topics: StudyTopicsMap) => void;
+}
+export type StudyTopicsBySubject = Partial<
+  Record<SecondarySubject, string[]>
+>;
+
+export type StudyTopicsState = Record<
+  string,
+  StudyTopicsBySubject
 >;
 
 // All Secondary Subjects

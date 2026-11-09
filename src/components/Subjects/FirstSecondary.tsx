@@ -3,6 +3,7 @@
 import { Check, Church, Circle, LucideIcon, Moon } from "lucide-react";
 import { FIRST_SECONDARY_SUBJECTS } from "../../app/data/StudyOptions";
 import {
+  BaccalaureateSecondLanguage,
   FirstSecondarySubject,
   SecondarySubject,
 } from "@/src/types/StudySubjects";
@@ -14,8 +15,6 @@ import {
   Landmark,
   Brain,
   Code,
-  BookHeart,
-  Dumbbell,
   Globe,
 } from "lucide-react";
 
@@ -34,11 +33,16 @@ const SUBJECT_ICONS: Record<FirstSecondarySubject, LucideIcon> = {
 interface FirstSecondaryProps {
   selectedSubjects: SecondarySubject[];
   onChange: (subjects: SecondarySubject[]) => void;
+  selectedSecondLanguage?: BaccalaureateSecondLanguage;
+  onSecondLanguageChange: (
+    language: BaccalaureateSecondLanguage | undefined,
+  ) => void;
 }
-
 export default function FirstSecondary({
   selectedSubjects,
   onChange,
+  selectedSecondLanguage,
+  onSecondLanguageChange,
 }: FirstSecondaryProps) {
   const toggleSubject = (subject: FirstSecondarySubject) => {
     const isSelected = selectedSubjects.includes(subject);
@@ -48,6 +52,10 @@ export default function FirstSecondary({
         ? selectedSubjects.filter((item) => item !== subject)
         : [...selectedSubjects, subject],
     );
+
+    if (subject === "second_language" && isSelected) {
+      onSecondLanguageChange(undefined);
+    }
   };
 
   return (
@@ -106,7 +114,53 @@ export default function FirstSecondary({
           );
         })}
       </div>
+{selectedSubjects.includes("second_language") && (
+  <div className="mt-7 rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 lg:p-5">
+    <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+      <h3 className="text-sm font-bold text-primary">
+        اختار اللغة الأجنبية الثانية:
+      </h3>
+      <p className="text-xs text-slate-500">اختار لغة واحدة</p>
+    </div>
 
+    <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
+      {(
+        [
+          ["french", "الفرنسية"],
+          ["german", "الألمانية"],
+          ["italian", "الإيطالية"],
+          ["spanish", "الإسبانية"],
+        ] as const
+      ).map(([value, label]) => {
+        const isSelected = selectedSecondLanguage === value;
+
+        return (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={isSelected}
+            onClick={() => onSecondLanguageChange(value)}
+            className={`
+              flex items-center gap-3 rounded-xl border-2 p-4
+              text-right transition-all duration-300 cursor-pointer
+              ${
+                isSelected
+                  ? "border-secondary bg-white text-primary"
+                  : "border-slate-200 bg-white text-slate-500 hover:border-secondary/60"
+              }
+            `}
+          >
+            <span className="font-bold">{label}</span>
+
+            {isSelected && (
+              <Check size={20} className="mr-auto text-secondary" />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  </div>
+)}
       {selectedSubjects.length === 0 && (
         <p className="mt-4 text-sm text-slate-500">
           اختار مادة واحدة على الأقل عشان نكمل.

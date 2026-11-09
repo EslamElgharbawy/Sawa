@@ -1,6 +1,9 @@
 "use client";
 
-import { SecondarySubject } from "@/src/types/StudySubjects";
+import {
+  BaccalaureateSecondLanguage,
+  SecondarySubject,
+} from "@/src/types/StudySubjects";
 import FirstSecondary from "../../Subjects/FirstSecondary";
 import SecondSecondary from "../../Subjects/SecondSecondary";
 import ThirdSecondary from "../../Subjects/ThirdSecondary";
@@ -16,6 +19,10 @@ interface StepSubjectsProps {
   educationSystem: EducationSystem;
   academicTrack: AcademicTrack | null;
   selectedSubjects: SecondarySubject[];
+  selectedSecondLanguage?: BaccalaureateSecondLanguage;
+  onSecondLanguageChange: (
+    language: BaccalaureateSecondLanguage | undefined,
+  ) => void;
   onChange: (subjects: SecondarySubject[]) => void;
 }
 
@@ -23,6 +30,8 @@ export default function StepSubjects({
   educationLevel,
   educationSystem,
   academicTrack,
+  selectedSecondLanguage,
+  onSecondLanguageChange,
   selectedSubjects,
   onChange,
 }: StepSubjectsProps) {
@@ -31,6 +40,8 @@ export default function StepSubjects({
       case "high_school_1":
         return (
           <FirstSecondary
+            selectedSecondLanguage={selectedSecondLanguage}
+            onSecondLanguageChange={onSecondLanguageChange}
             selectedSubjects={selectedSubjects}
             onChange={onChange}
           />
@@ -84,6 +95,8 @@ export default function StepSubjects({
               academicTrack={academicTrack}
               selectedSubjects={selectedSubjects}
               onChange={onChange}
+              selectedSecondLanguage={selectedSecondLanguage}
+              onSecondLanguageChange={onSecondLanguageChange}
             />
           );
         }
@@ -101,6 +114,8 @@ export default function StepSubjects({
               academicTrack={academicTrack}
               selectedSubjects={selectedSubjects}
               onChange={onChange}
+              selectedSecondLanguage={selectedSecondLanguage}
+              onSecondLanguageChange={onSecondLanguageChange}
             />
           );
         }

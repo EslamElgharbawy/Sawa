@@ -17,10 +17,10 @@ import {
   Briefcase,
 } from "lucide-react";
 
-import { SecondarySubject } from "@/src/types/StudySubjects";
+import { BaccalaureateSecondLanguage, SecondarySubject } from "@/src/types/StudySubjects";
 import { BaccalaureateTrack } from "@/src/types/StudyEducation";
 
-import { BACCALAUREATE_YEAR_TWO_SUBJECTS   } from "../../app/data/StudyOptions";
+import { BACCALAUREATE_YEAR_TWO_SUBJECTS } from "../../app/data/StudyOptions";
 import useToggleSelection from "@/src/hooks/useToggleSelection";
 
 const SUBJECT_ICONS: Partial<Record<SecondarySubject, LucideIcon>> = {
@@ -45,19 +45,22 @@ interface Props {
   academicTrack: BaccalaureateTrack;
   selectedSubjects: SecondarySubject[];
   onChange: (subjects: SecondarySubject[]) => void;
+  selectedSecondLanguage?: BaccalaureateSecondLanguage;
+  onSecondLanguageChange: (
+    language: BaccalaureateSecondLanguage | undefined,
+  ) => void;
 }
 
 export default function BaccalaureateSecondary({
   academicTrack,
   selectedSubjects,
   onChange,
+  selectedSecondLanguage,
+  onSecondLanguageChange,
 }: Props) {
-  const subjects = BACCALAUREATE_YEAR_TWO_SUBJECTS  [academicTrack];
-  
- const { toggleItem } = useToggleSelection(
-  selectedSubjects,
-  onChange,
-);
+  const subjects = BACCALAUREATE_YEAR_TWO_SUBJECTS[academicTrack];
+
+  const { toggleItem } = useToggleSelection(selectedSubjects, onChange);
 
   return (
     <section dir="rtl" className="w-full">
@@ -71,7 +74,16 @@ export default function BaccalaureateSecondary({
               key={subject.value}
               type="button"
               aria-pressed={isSelected}
-              onClick={() => toggleItem(subject.value)}
+              onClick={() => {
+                toggleItem(subject.value);
+
+                if (
+                  subject.value === "second_language" &&
+                  selectedSubjects.includes("second_language")
+                ) {
+                  onSecondLanguageChange(undefined);
+                }
+              }}
               className={`
                 group min-h-28 cursor-pointer space-y-4
                 rounded-[28px] border-2 p-4 text-right
@@ -114,7 +126,56 @@ export default function BaccalaureateSecondary({
           );
         })}
       </div>
+      {academicTrack === "arts" &&
+        selectedSubjects.includes("second_language") && (
+          <div className="mt-7 rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 lg:p-5">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-bold text-primary">
+                اختار اللغة الأجنبية الثانية:
+              </h3>
 
+              <p className="text-xs text-slate-500">اختار لغة واحدة</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
+              {(
+                [
+                  ["french", "الفرنسية"],
+                  ["german", "الألمانية"],
+                  ["italian", "الإيطالية"],
+                  ["spanish", "الإسبانية"],
+                  ["chinese", "الصينية"],
+                ] as const
+              ).map(([value, label]) => {
+                const isSelected = selectedSecondLanguage === value;
+
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => onSecondLanguageChange(value)}
+                    className={`
+                flex items-center gap-3 rounded-xl border-2 p-4
+                text-right transition-all duration-300 cursor-pointer
+                ${
+                  isSelected
+                    ? "border-secondary bg-white text-primary"
+                    : "border-slate-200 bg-white text-slate-500 hover:border-secondary/60"
+                }
+              `}
+                  >
+                    <span className="font-bold">{label}</span>
+
+                    {isSelected && (
+                      <Check size={20} className="mr-auto text-secondary" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       {selectedSubjects.length === 0 && (
         <p className="mt-4 text-sm text-slate-500">
           اختار مادة واحدة على الأقل عشان نكمل.
