@@ -43,6 +43,7 @@ const SUBJECT_ICONS: Record<ThirdSecondarySubject, LucideIcon> = {
   programming_ai: Code,
   accounting: Calculator,
   business_management: Briefcase,
+  economics: ChartNoAxesColumn,
   second_language: Languages,
   statistics: ChartNoAxesColumn,
   islamic_religion: Moon,

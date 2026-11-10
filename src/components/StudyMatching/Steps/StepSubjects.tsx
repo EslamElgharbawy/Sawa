@@ -12,7 +12,7 @@ import {
   EducationLevel,
   EducationSystem,
 } from "@/src/types/StudyEducation";
-import BaccalaureateSecondary from "../../Subjects/BaccalaureateSecondary";
+import BaccalaureateSecondary from "../../Subjects/BaccalaureateSecondSecondary";
 
 interface StepSubjectsProps {
   educationLevel: EducationLevel | null;
@@ -73,7 +73,7 @@ export default function StepSubjects({
         }
         return (
           <ThirdSecondary
-          selectedSecondLanguage={selectedSecondLanguage}
+            selectedSecondLanguage={selectedSecondLanguage}
             onSecondLanguageChange={onSecondLanguageChange}
             selectedSubjects={selectedSubjects}
             onChange={onChange}
@@ -104,23 +104,21 @@ export default function StepSubjects({
         }
 
         return null;
-      case "high_school_3":
-        if (
-          academicTrack === "medical" ||
-          academicTrack === "engineering" ||
-          academicTrack === "business" ||
-          academicTrack === "arts"
-        ) {
-          return (
-            <BaccalaureateSecondary
-              academicTrack={academicTrack}
-              selectedSubjects={selectedSubjects}
-              onChange={onChange}
-              selectedSecondLanguage={selectedSecondLanguage}
-              onSecondLanguageChange={onSecondLanguageChange}
-            />
-          );
-        }
+      // case "high_school_3":
+      //   if (
+      //     academicTrack === "medical" ||
+      //     academicTrack === "engineering" ||
+      //     academicTrack === "business" ||
+      //     academicTrack === "arts"
+      //   ) {
+      //     return (
+      //       <BaccalaureateThirdSecondary
+      //         academicTrack={academicTrack}
+      //         selectedSubjects={selectedSubjects}
+      //         onChange={onChange}
+      //       />
+      //     );
+      //   }
     }
   }
 }

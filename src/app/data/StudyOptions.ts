@@ -170,41 +170,29 @@ export const BACCALAUREATE_YEAR_THREE_SUBJECTS: Record<
   { value: ThirdSecondarySubject; label: string }[]
 > = {
   medical: [
-    { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغه الإنجليزية" },
-    { value: "egyptian_history", label: "التاريخ المصري" },
-    { value: "physics", label: "الفيزياء" },
-    { value: "math", label: "الرياضيات" },
+    { value: "biology", label: "الأحياء (مستوى متقدم)" },
+    { value: "chemistry", label: "الكيمياء (مستوى متقدم)" },
     { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
     { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
 
   engineering: [
-    { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغه الإنجليزية" },
-    { value: "egyptian_history", label: "التاريخ المصري" },
-    { value: "chemistry", label: "الكيمياء" },
-    { value: "programming_ai", label: "البرمجة والذكاء الاصطناعي" },
+    { value: "math", label: "الرياضيات (مستوى متقدم)" },
+    { value: "physics", label: "الفيزياء (مستوى متقدم)" },
     { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
     { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
 
   business: [
-    { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغه الإنجليزية" },
-    { value: "egyptian_history", label: "التاريخ المصري" },
-    { value: "accounting", label: "المحاسبة" },
-    { value: "business_management", label: "إدارة الأعمال" },
+    { value: "economics", label: "الاقتصاد (مستوى متقدم)" },
+    { value: "math", label: "الرياضيات" },
     { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
     { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],
 
   arts: [
-    { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغه الإنجليزية" },
-    { value: "egyptian_history", label: "التاريخ المصري" },
-    { value: "psychology", label: "علم النفس" },
-    { value: "second_language", label: "اللغة الأجنبية الثانية" },
+    { value: "geography", label: "الجغرافيا (مستوى متقدم)" },
+    { value: "statistics", label: "الإحصاء" },
     { value: "islamic_religion", label: "التربية الدينية الإسلامية" },
     { value: "christian_religion", label: "التربية الدينية المسيحية" },
   ],

@@ -114,6 +114,12 @@ export default function StepEducation({
   const handleEducationChange = (level: EducationLevel) => {
     onEducationLevelChange(level);
 
+    if (level === "high_school_3" && educationSystem === "baccalaureate") {
+      onEducationSystemChange("general");
+      onAcademicTrackChange(null);
+      return;
+    }
+
     if (level !== "high_school_2" && level !== "high_school_3") {
       onAcademicTrackChange(null);
       onEducationSystemChange("general");
@@ -130,7 +136,7 @@ export default function StepEducation({
   return (
     <div dir="rtl" className="w-full">
       {/* Education Levels */}
-      <div className="grid grid-cols-1 gap-3 xl:grid-cols-2 2xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 2xl:grid-cols-3">
         {EDUCATION_OPTIONS.map((option) => {
           const Icon = option.icon;
           const isSelected = educationLevel === option.id;
@@ -199,45 +205,49 @@ export default function StepEducation({
       {/* Academic Track */}
       {showAcademicTrack && (
         <div className="mt-7 rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 lg:p-5">
-          <div className="mb-5">
-            <h3 className="mb-3 text-sm font-bold text-primary">
-              اختار النظام التعليمي:
-            </h3>
+          {educationLevel !== "high_school_3" && (
+            <div className="mb-5">
+              <h3 className="mb-3 text-sm font-bold text-primary">
+                اختار النظام التعليمي:
+              </h3>
 
-            <div className="grid xl:grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => handleSystemChange("general")}
-                aria-pressed={educationSystem === "general"}
-                className={`
-                  rounded-xl border-2 p-3 font-bold transition-all duration-300 cursor-pointer
-                  ${
-                    educationSystem === "general"
-                      ? "border-secondary bg-white text-primary"
-                      : "border-slate-200 bg-white text-slate-500"
-                  }
-                `}
-              >
-                الثانوية العامة
-              </button>
+              <div className="grid xl:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleSystemChange("general")}
+                  aria-pressed={educationSystem === "general"}
+                  className={`
+          rounded-xl border-2 p-3 font-bold transition-all duration-300 cursor-pointer
+          ${
+            educationSystem === "general"
+              ? "border-secondary bg-white text-primary"
+              : "border-slate-200 bg-white text-slate-500"
+          }
+        `}
+                >
+                  الثانوية العامة
+                </button>
 
-              <button
-                type="button"
-                onClick={() => handleSystemChange("baccalaureate")}
-                aria-pressed={educationSystem === "baccalaureate"}
-                className={`
-                  rounded-xl border-2 p-3 font-bold transition-all duration-300 cursor-pointer
-                  ${
-                    educationSystem === "baccalaureate"
-                      ? "border-secondary bg-white text-primary"
-                      : "border-slate-200 bg-white text-slate-500"
-                  }
-                `}
-              >
-                البكالوريا المصرية
-              </button>
+                {educationLevel === "high_school_2" && (
+                  <button
+                    type="button"
+                    onClick={() => handleSystemChange("baccalaureate")}
+                    aria-pressed={educationSystem === "baccalaureate"}
+                    className={`
+            rounded-xl border-2 p-3 font-bold transition-all duration-300 cursor-pointer
+            ${
+              educationSystem === "baccalaureate"
+                ? "border-secondary bg-white text-primary"
+                : "border-slate-200 bg-white text-slate-500"
+            }
+          `}
+                  >
+                    البكالوريا المصرية
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
             <h3 className="text-sm font-bold text-primary">

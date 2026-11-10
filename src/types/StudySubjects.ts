@@ -1,4 +1,8 @@
-import { AcademicTrack, EducationLevel, EducationSystem } from "./StudyEducation";
+import {
+  AcademicTrack,
+  EducationLevel,
+  EducationSystem,
+} from "./StudyEducation";
 
 // First Secondary
 export type FirstSecondarySubject =
@@ -11,7 +15,7 @@ export type FirstSecondarySubject =
   | "programming"
   | "islamic_religion"
   | "christian_religion"
-  | "second_language"
+  | "second_language";
 
 // Second Secondary
 export type SecondSecondarySubject =
@@ -53,7 +57,8 @@ export type ThirdSecondarySubject =
   | "islamic_religion"
   | "christian_religion"
   | "national_education"
-  | "statistics";
+  | "statistics"
+  | "economics";
 
 // University Faculties
 export type UniversityFaculty =
@@ -78,10 +83,7 @@ export type UniversitySubject = string;
 
 // University Subject Database
 export type SubjectDatabase = Partial<
-  Record<
-    UniversityFaculty,
-    Partial<Record<UniversityYear, string[]>>
-  >
+  Record<UniversityFaculty, Partial<Record<UniversityYear, string[]>>>
 >;
 
 export type SecondLanguage =
@@ -91,17 +93,12 @@ export type SecondLanguage =
   | "spanish"
   | "chinese";
 
-export type FirstSecondarySecondLanguage = Exclude<
-  SecondLanguage,
-  "chinese"
->;
+export type FirstSecondarySecondLanguage = Exclude<SecondLanguage, "chinese">;
 
 export type BaccalaureateSecondLanguage = SecondLanguage;
 
 // Study Topics
-export type StudyTopicsMap = Partial<
-  Record<SecondarySubject, string[]>
->;
+export type StudyTopicsMap = Partial<Record<SecondarySubject, string[]>>;
 
 export interface StudyTopicsProps {
   educationLevel: EducationLevel;
@@ -111,14 +108,9 @@ export interface StudyTopicsProps {
   selectedTopics: StudyTopicsMap;
   onTopicsChange: (topics: StudyTopicsMap) => void;
 }
-export type StudyTopicsBySubject = Partial<
-  Record<SecondarySubject, string[]>
->;
+export type StudyTopicsBySubject = Partial<Record<SecondarySubject, string[]>>;
 
-export type StudyTopicsState = Record<
-  string,
-  StudyTopicsBySubject
->;
+export type StudyTopicsState = Record<string, StudyTopicsBySubject>;
 
 // All Secondary Subjects
 export type SecondarySubject =

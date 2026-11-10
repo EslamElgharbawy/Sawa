@@ -51,7 +51,7 @@ interface Props {
   ) => void;
 }
 
-export default function BaccalaureateSecondary({
+export default function BaccalaureateSecondSecondary({
   academicTrack,
   selectedSubjects,
   onChange,
