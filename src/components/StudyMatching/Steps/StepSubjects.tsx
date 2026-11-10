@@ -73,6 +73,8 @@ export default function StepSubjects({
         }
         return (
           <ThirdSecondary
+          selectedSecondLanguage={selectedSecondLanguage}
+            onSecondLanguageChange={onSecondLanguageChange}
             selectedSubjects={selectedSubjects}
             onChange={onChange}
             academicTrack={academicTrack}

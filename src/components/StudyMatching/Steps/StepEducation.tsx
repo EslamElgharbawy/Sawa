@@ -130,7 +130,7 @@ export default function StepEducation({
   return (
     <div dir="rtl" className="w-full">
       {/* Education Levels */}
-      <div className="grid grid-cols-1 gap-3 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 xl:grid-cols-2 2xl:grid-cols-3">
         {EDUCATION_OPTIONS.map((option) => {
           const Icon = option.icon;
           const isSelected = educationLevel === option.id;

@@ -58,7 +58,7 @@ export default function SecondSecondary({
   const subjects = SECONDARY_YEAR_TWO_SUBJECTS[academicTrack];
   return (
     <section dir="rtl" className="w-full">
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 2xl:grid-cols-3">
         {subjects.map((subject) => {
           const isSelected = selectedSubjects.includes(subject.value);
           const SubjectIcon = SUBJECT_ICONS[subject.value];

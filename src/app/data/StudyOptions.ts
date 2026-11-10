@@ -47,7 +47,7 @@ export const SECONDARY_YEAR_TWO_SUBJECTS: Record<
 > = {
   science: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "history", label: "التاريخ" },
     { value: "math", label: "الرياضيات" },
     { value: "chemistry", label: "الكيمياء" },
@@ -58,7 +58,7 @@ export const SECONDARY_YEAR_TWO_SUBJECTS: Record<
 
   mathematics: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "history", label: "التاريخ" },
     { value: "math", label: "الرياضيات" },
     { value: "chemistry", label: "الكيمياء" },
@@ -69,7 +69,7 @@ export const SECONDARY_YEAR_TWO_SUBJECTS: Record<
 
   literary: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "history", label: "التاريخ" },
     { value: "geography", label: "الجغرافيا" },
     { value: "psychology", label: "علم النفس والاجتماع" },
@@ -85,7 +85,7 @@ export const BACCALAUREATE_YEAR_TWO_SUBJECTS: Record<
 > = {
   medical: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "physics", label: "الفيزياء" },
     { value: "math", label: "الرياضيات" },
@@ -95,7 +95,7 @@ export const BACCALAUREATE_YEAR_TWO_SUBJECTS: Record<
 
   engineering: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "chemistry", label: "الكيمياء" },
     { value: "programming_ai", label: "البرمجة والذكاء الاصطناعي" },
@@ -105,7 +105,7 @@ export const BACCALAUREATE_YEAR_TWO_SUBJECTS: Record<
 
   business: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "accounting", label: "المحاسبة" },
     { value: "business_management", label: "إدارة الأعمال" },
@@ -115,7 +115,7 @@ export const BACCALAUREATE_YEAR_TWO_SUBJECTS: Record<
 
   arts: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "psychology", label: "علم النفس" },
     { value: "second_language", label: "اللغة الأجنبية الثانية" },
@@ -130,7 +130,7 @@ export const SECONDARY_YEAR_THREE_SUBJECTS: Record<
 > = {
   science: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغة الإنجليزية" },
     { value: "biology", label: "الأحياء" },
     { value: "chemistry", label: "الكيمياء" },
     { value: "physics", label: "الفيزياء" },
@@ -142,7 +142,7 @@ export const SECONDARY_YEAR_THREE_SUBJECTS: Record<
 
   mathematics: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "math", label: "الرياضيات" },
     { value: "chemistry", label: "الكيمياء" },
     { value: "physics", label: "الفيزياء" },
@@ -154,7 +154,7 @@ export const SECONDARY_YEAR_THREE_SUBJECTS: Record<
 
   literary: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "history", label: "التاريخ" },
     { value: "geography", label: "الجغرافيا" },
     { value: "statistics", label: "الإحصاء" },
@@ -171,7 +171,7 @@ export const BACCALAUREATE_YEAR_THREE_SUBJECTS: Record<
 > = {
   medical: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "physics", label: "الفيزياء" },
     { value: "math", label: "الرياضيات" },
@@ -181,7 +181,7 @@ export const BACCALAUREATE_YEAR_THREE_SUBJECTS: Record<
 
   engineering: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "chemistry", label: "الكيمياء" },
     { value: "programming_ai", label: "البرمجة والذكاء الاصطناعي" },
@@ -191,7 +191,7 @@ export const BACCALAUREATE_YEAR_THREE_SUBJECTS: Record<
 
   business: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "accounting", label: "المحاسبة" },
     { value: "business_management", label: "إدارة الأعمال" },
@@ -201,7 +201,7 @@ export const BACCALAUREATE_YEAR_THREE_SUBJECTS: Record<
 
   arts: [
     { value: "arabic", label: "اللغة العربية" },
-    { value: "first_language", label: "اللغة الأجنبية الأولى" },
+    { value: "first_language", label: "اللغه الإنجليزية" },
     { value: "egyptian_history", label: "التاريخ المصري" },
     { value: "psychology", label: "علم النفس" },
     { value: "second_language", label: "اللغة الأجنبية الثانية" },

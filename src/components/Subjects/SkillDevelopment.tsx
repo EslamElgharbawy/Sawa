@@ -109,7 +109,7 @@ const addSkill = () => {
   return (
     <div dir="rtl" className="w-full space-y-8">
       {/* Skill Options */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 2xl:grid-cols-3">
         {SKILL_OPTIONS.map((skill) => {
           const Icon = skill.icon;
           const isSelected = selectedSkills === skill.id;
@@ -165,7 +165,7 @@ const addSkill = () => {
           مش لاقي المجال اللي عايزه؟
         </h3>
 
-        <div className="flex items-center gap-3">
+        <div className="max-xl:space-y-3 xl:flex items-center gap-3">
           <input
             type="text"
             value={skillInput}
@@ -178,7 +178,7 @@ const addSkill = () => {
             }}
             placeholder="اكتب اسم المجال هنا..."
             className="
-              min-w-0 flex-1 rounded-2xl border-2
+              min-w-0 flex-1 rounded-2xl border-2 w-full
               border-slate-200 bg-white px-4 py-3.5
               text-sm text-primary outline-none
               transition-colors
@@ -192,7 +192,7 @@ const addSkill = () => {
             onClick={addSkill}
             disabled={!skillInput.trim()}
             className="
-              flex shrink-0 cursor-pointer items-center
+              flex shrink-0 cursor-pointer items-center max-xl:w-full
               justify-center gap-2 rounded-2xl
               bg-[#17A6D1] px-5 py-3.5
               text-sm font-bold text-white transition-all

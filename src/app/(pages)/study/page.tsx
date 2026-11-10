@@ -163,7 +163,7 @@ export default function StudyStepper() {
           {/* Remaining steps */}
           {steps.map((step) => (
             <StepperContent key={step.value} value={step.value}>
-              <section className="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm xl:p-9">
+              <section className="rounded-4xl border border-slate-200 bg-white p-5 shadow-sm xl:p-9">
                 {step.value === "subjects" ? (
                   educationLevel === "university_student" ? (
                     selectedFaculty && selectedYear ? (

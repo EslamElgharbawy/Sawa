@@ -6,7 +6,9 @@ import {
   BaccalaureateSecondLanguage,
   FirstSecondarySecondLanguage,
   FirstSecondarySubject,
+  SecondLanguage,
   SecondSecondarySubject,
+  ThirdSecondarySubject,
 } from "@/src/types/StudySubjects";
 
 export const FIRST_SECONDARY_TOPICS: Record<FirstSecondarySubject, string[]> = {
@@ -499,50 +501,231 @@ export const BACCALAUREATE_YEAR_TWO_TOPICS: Record<
   },
 };
 
-export const BACCALAUREATE_SECOND_LANGUAGE_TOPICS: Record<
-  BaccalaureateSecondLanguage,
-  string[]
+export const THIRD_SECONDARY_TOPICS: Record<
+  GeneralSecondaryTrack,
+  Partial<Record<ThirdSecondarySubject, string[]>>
 > = {
-  french: [
-    "Unité 1: Les repas et les habitudes alimentaires",
-    "Unité 2: Le look quotidien",
-    "Unité 3: Le temps libre",
-    "Unité 4: À la découverte de mon pays",
-    "Unité 5: Les saisons et la météo",
-    "Unité 6: La technologie dans notre vie",
-  ],
+  science: {
+    arabic: [
+      "القراءة",
+      "الأدب",
+      "النصوص",
+      "البلاغة",
+      "النحو",
+      "التعبير",
+      "القصة: الأيام لطه حسين",
+    ],
+    first_language: [
+      "Unit 1: Inside the World of Care",
+      "Unit 2: The Power of Machines",
+      "Unit 3: Protect Nature, Protect Future",
+      "Unit 4: Marine Life",
+      "Unit 5: From Muscles to Mindset",
+      "Unit 6: Let's Hang Out!",
+      "Unit 7: At the Airport",
+      "Unit 8: A Journey Through Time",
+      "Unit 9: The Universe's Mysteries",
+      "Unit 10: Peoples' Hospitality and Kindness",
+      "Unit 11: Literature",
+      "Unit 12: University Life",
+      "Story: The Count of Monte Cristo",
+    ],
+    biology: [
+      "الفصل الأول: الدعامة والحركة",
+      "الفصل الثاني: التنسيق الهرموني",
+      "الفصل الثالث: التكاثر",
+      "الفصل الرابع: المناعة",
+      "الفصل الخامس: الحمض النووي DNA",
+      "الفصل السادس: الأحماض النووية وتخليق البروتين",
+      "الفصل السابع: الأحياء وعلوم الأرض",
+    ],
+    chemistry: [
+      "الباب الأول: العناصر الانتقالية",
+      "الباب الثاني: التحليل الكيميائي",
+      "الباب الثالث: الاتزان الكيميائي",
+      "الباب الرابع: الكيمياء الكهربية",
+      "الباب الخامس: الكيمياء العضوية",
+    ],
+    physics: [
+      "الوحدة الأولى - الفصل الأول: التيار الكهربي وقانون أوم وقانونا كيرشوف",
+      "الوحدة الأولى - الفصل الثاني: التأثير المغناطيسي للتيار الكهربي وأجهزة القياس الكهربي",
+      "الوحدة الأولى - الفصل الثالث: الحث الكهرومغناطيسي",
+      "الوحدة الأولى - الفصل الرابع: دوائر التيار المتردد",
+      "الوحدة الثانية - الفصل الخامس: ازدواجية الموجة والجسيم",
+      "الوحدة الثانية - الفصل السادس: الأطياف الذرية",
+      "الوحدة الثانية - الفصل السابع: الليزر",
+      "الوحدة الثانية - الفصل الثامن: الإلكترونيات الحديثة",
+    ],
+    islamic_religion: [
+      "الوحدة الأولى: دروس وعبر",
+      "الوحدة الثانية: الإسلام والتنوع",
+      "الوحدة الثالثة: التسامح في الإسلام",
+      "الوحدة الرابعة: منزلة العقل في الإسلام",
+      "الوحدة الخامسة: التكافل في الإسلام",
+      "الوحدة السادسة: الإسلام والعفة",
+    ],
+    christian_religion: [
+      "الوحدة الأولى: العقيدة",
+      "الوحدة الثانية: العبادة",
+      "الوحدة الثالثة: القضايا المعاصرة من منظور مسيحي",
+      "الوحدة الرابعة: تاريخ الكنيسة",
+      "الوحدة الخامسة: القيم والعلاقات الإنسانية",
+    ],
+    national_education: [
+      "الفصل الأول: القانون والدستور",
+      "الفصل الثاني: الديمقراطية",
+      "الفصل الثالث: الأحزاب السياسية",
+      "الفصل الرابع: المشاركة السياسية",
+    ],
+    second_language: [],
+  },
 
-  german: [
-    "Lektion 5: Freunde",
-    "Lektion 6: Einkaufen",
-    "Lektion 7: Tiere",
-    "Lektion 8: Ferien und Reisen",
-  ],
+  mathematics: {
+    arabic: [
+      "القراءة",
+      "الأدب",
+      "النصوص",
+      "البلاغة",
+      "النحو",
+      "التعبير",
+      "القصة: الأيام لطه حسين",
+    ],
+    first_language: [
+      "Unit 1: Inside the World of Care",
+      "Unit 2: The Power of Machines",
+      "Unit 3: Protect Nature, Protect Future",
+      "Unit 4: Marine Life",
+      "Unit 5: From Muscles to Mindset",
+      "Unit 6: Let's Hang Out!",
+      "Unit 7: At the Airport",
+      "Unit 8: A Journey Through Time",
+      "Unit 9: The Universe's Mysteries",
+      "Unit 10: Peoples' Hospitality and Kindness",
+      "Unit 11: Literature",
+      "Unit 12: University Life",
+      "Story: The Count of Monte Cristo",
+    ],
+    math: [
+      "الجبر والهندسة الفراغية",
+      "التفاضل والتكامل",
+      "الاستاتيكا",
+      "الديناميكا",
+    ],
+    chemistry: [
+      "الباب الأول: العناصر الانتقالية",
+      "الباب الثاني: التحليل الكيميائي",
+      "الباب الثالث: الاتزان الكيميائي",
+      "الباب الرابع: الكيمياء الكهربية",
+      "الباب الخامس: الكيمياء العضوية",
+    ],
+    physics: [
+      "الوحدة الأولى - الفصل الأول: التيار الكهربي وقانون أوم وقانونا كيرشوف",
+      "الوحدة الأولى - الفصل الثاني: التأثير المغناطيسي للتيار الكهربي وأجهزة القياس الكهربي",
+      "الوحدة الأولى - الفصل الثالث: الحث الكهرومغناطيسي",
+      "الوحدة الأولى - الفصل الرابع: دوائر التيار المتردد",
+      "الوحدة الثانية - الفصل الخامس: ازدواجية الموجة والجسيم",
+      "الوحدة الثانية - الفصل السادس: الأطياف الذرية",
+      "الوحدة الثانية - الفصل السابع: الليزر",
+      "الوحدة الثانية - الفصل الثامن: الإلكترونيات الحديثة",
+    ],
+    islamic_religion: [
+      "الوحدة الأولى: دروس وعبر",
+      "الوحدة الثانية: الإسلام والتنوع",
+      "الوحدة الثالثة: التسامح في الإسلام",
+      "الوحدة الرابعة: منزلة العقل في الإسلام",
+      "الوحدة الخامسة: التكافل في الإسلام",
+      "الوحدة السادسة: الإسلام والعفة",
+    ],
+    christian_religion: [
+      "الوحدة الأولى: العقيدة",
+      "الوحدة الثانية: العبادة",
+      "الوحدة الثالثة: القضايا المعاصرة من منظور مسيحي",
+      "الوحدة الرابعة: تاريخ الكنيسة",
+      "الوحدة الخامسة: القيم والعلاقات الإنسانية",
+    ],
+    national_education: [
+      "الفصل الأول: القانون والدستور",
+      "الفصل الثاني: الديمقراطية",
+      "الفصل الثالث: الأحزاب السياسية",
+      "الفصل الرابع: المشاركة السياسية",
+    ],
+    second_language: [],
+  },
 
-  italian: [
-    "Unità 1: Dove abiti? E la mia casa",
-    "Unità 2: Il tempo libero",
-    "Unità 3: Che cosa mangiamo?",
-  ],
-
-  spanish: [
-    "Unidad 1: Aquí vivo",
-    "Unidad 2: Así vivo",
-    "Unidad 3: Mi comida favorita",
-  ],
-
-  chinese: [
-    "第一册 - 第一单元：个人与社会",
-    "第一册 - 第二单元：学习与工作",
-    "第一册 - 第三单元：社会与生活",
-    "第二册 - 第一单元：埃及与中国",
-    "第二册 - 第二单元：自然与科技",
-    "第二册 - 第三单元：社会与生活",
-    "第三册 - 第一单元：个人与本地社会",
-    "第三册 - 第二单元：学习与工作",
-    "第三册 - 第三单元：社会与生活",
-  ],
+  literary: {
+    arabic: [
+      "القراءة",
+      "الأدب",
+      "النصوص",
+      "البلاغة",
+      "النحو",
+      "التعبير",
+      "القصة: الأيام لطه حسين",
+    ],
+    first_language: [
+      "Unit 1: Inside the World of Care",
+      "Unit 2: The Power of Machines",
+      "Unit 3: Protect Nature, Protect Future",
+      "Unit 4: Marine Life",
+      "Unit 5: From Muscles to Mindset",
+      "Unit 6: Let's Hang Out!",
+      "Unit 7: At the Airport",
+      "Unit 8: A Journey Through Time",
+      "Unit 9: The Universe's Mysteries",
+      "Unit 10: Peoples' Hospitality and Kindness",
+      "Unit 11: Literature",
+      "Unit 12: University Life",
+      "Story: The Count of Monte Cristo",
+    ],
+    history: [
+      "الفصل الأول: الحملة الفرنسية على مصر والشام",
+      "الفصل الثاني: بناء الدولة الحديثة في مصر",
+      "الفصل الثالث: مصر منذ الثورة العرابية حتى الحرب العالمية الأولى",
+      "الفصل الرابع: مصر بعد الحرب العالمية الأولى",
+      "الفصل الخامس: التوسع الاستعماري في البلاد العربية قبل الحرب العالمية الأولى حتى الاستقلال",
+      "الفصل السادس: التوسع الاستعماري في البلاد العربية الواقعة تحت الحكم العثماني بعد الحرب العالمية الأولى وحتى الاستقلال",
+      "الفصل السابع: مصر وقضايا العالم العربي المعاصر",
+      "الفصل الثامن: ثورتا 25 يناير 2011 و30 يونيو 2013",
+    ],
+    geography: [
+      "مدخل لدراسة الجغرافيا السياسية",
+      "الوحدة الأولى: الدولة في الجغرافيا السياسية",
+      "الوحدة الثانية: المشكلات السياسية",
+      "الوحدة الثالثة: التكتلات الاقتصادية والأحلاف العسكرية",
+      "الوحدة الرابعة: العلاقات الدولية والنظام الدولي الجديد",
+    ],
+    statistics: [
+      "الوحدة الأولى: الارتباط والانحدار",
+      "الوحدة الثانية: مقاييس متقدمة في الإحصاء",
+      "الوحدة الثالثة: الاحتمال",
+      "الوحدة الرابعة: المتغيرات العشوائية والتوزيعات الاحتمالية",
+      "الوحدة الخامسة: التوزيع الطبيعي",
+    ],
+    islamic_religion: [
+      "الوحدة الأولى: دروس وعبر",
+      "الوحدة الثانية: الإسلام والتنوع",
+      "الوحدة الثالثة: التسامح في الإسلام",
+      "الوحدة الرابعة: منزلة العقل في الإسلام",
+      "الوحدة الخامسة: التكافل في الإسلام",
+      "الوحدة السادسة: الإسلام والعفة",
+    ],
+    christian_religion: [
+      "الوحدة الأولى: العقيدة",
+      "الوحدة الثانية: العبادة",
+      "الوحدة الثالثة: القضايا المعاصرة من منظور مسيحي",
+      "الوحدة الرابعة: تاريخ الكنيسة",
+      "الوحدة الخامسة: القيم والعلاقات الإنسانية",
+    ],
+    national_education: [
+      "الفصل الأول: القانون والدستور",
+      "الفصل الثاني: الديمقراطية",
+      "الفصل الثالث: الأحزاب السياسية",
+      "الفصل الرابع: المشاركة السياسية",
+    ],
+    second_language: [],
+  },
 };
+
 export const FIRST_SECONDARY_SECOND_LANGUAGE_TOPICS: Record<
   FirstSecondarySecondLanguage,
   string[]
@@ -559,10 +742,6 @@ export const FIRST_SECONDARY_SECOND_LANGUAGE_TOPICS: Record<
     "Lektion 2: Familie und Freunde",
     "Lektion 3: Essen und Trinken",
     "Lektion 4: Meine Wohnung",
-    "Lektion 5",
-    "Lektion 6",
-    "Lektion 7",
-    "Lektion 8",
   ],
 
   italian: [
@@ -583,3 +762,87 @@ export const FIRST_SECONDARY_SECOND_LANGUAGE_TOPICS: Record<
     "Unidad 6: Mi familia",
   ],
 } satisfies Record<string, string[]>;
+
+export const BACCALAUREATE_SECOND_LANGUAGE_TOPICS: Record<
+  BaccalaureateSecondLanguage,
+  string[]
+> = {
+  french: [
+    "Unité 1: Les repas et les habitudes alimentaires",
+    "Unité 2: Le look quotidien",
+    "Unité 3: Mon temps libre",
+    "Unité 4: À la découverte de mon pays",
+    "Unité 5: À la rencontre des saisons",
+    "Unité 6: La technologie dans notre vie",
+  ],
+
+  german: [
+    "Lektion 5: Freunde",
+    "Lektion 6: Einkaufen",
+    "Lektion 7: Tiere",
+    "Lektion 8: Ferien und Reisen",
+  ],
+
+  italian: [
+    "Unità 1: Dove abiti? / La mia Casa",
+    "Unità 2: Tempo libero",
+    "Unità 3: Cosa mangiamo?",
+  ],
+
+  spanish: [
+    "Unidad 1: Aquí vivo…",
+    "Unidad 2: ¡Así vivo…!",
+    "Unidad 3: Mi plato favorito…",
+  ],
+
+  chinese: [
+    "第一册 - 第一单元：个人与社会",
+    "第一册 - 第二单元：学习与工作",
+    "第一册 - 第三单元：社会与生活",
+    "第二册 - 第一单元：埃及与中国",
+    "第二册 - 第二单元：自然与科技",
+    "第二册 - 第三单元：社会与生活",
+    "第三册 - 第一单元：个人与本地社会",
+    "第三册 - 第二单元：学习与工作",
+    "第三册 - 第三单元：社会与生活",
+  ],
+};
+
+export const THIRD_SECONDARY_SECOND_LANGUAGE_TOPICS: Record<
+  Exclude<SecondLanguage, "chinese">,
+  string[]
+> = {
+  french: [
+    "Unité 1: Le Club des sportifs",
+    "Unité 2: Le Club des gourmands",
+    "Unité 3: Le Club des explorateurs",
+    "Unité 4: Le Club des voyageurs",
+  ],
+
+  german: [
+  "Lektion 1: Gesundheit",
+  "Lektion 2: In der Stadt unterwegs",
+  "Lektion 3: Der Kunde ist König",
+  "Lektion 4: Neue Kleider",
+  "Lektion 5: Feste",
+],
+
+italian: [
+  "Unità 1: Progetti extrascolastici",
+  "Unità 2: Saremo tutti delle stelle!",
+  "Unità 3: Ambiente ed ecologia",
+  "Unità 4: L'ho sentita!",
+  "Unità 5: Facciamo spese",
+  "Unità 6: Che numero porti?",
+],
+
+  spanish: [
+    "Unidad 14: En mi tiempo libre",
+    "Unidad 15: Mi personaje",
+    "Unidad 16: En internet",
+    "Unidad 17: ¿Qué voy a ser de mayor?",
+    "Unidad 18: En el centro comercial",
+    "Unidad 19: En el país del Nilo",
+    "Unidad 20: En tiempos del faraón",
+  ],
+};

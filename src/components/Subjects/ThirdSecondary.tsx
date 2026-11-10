@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import {
   SecondarySubject,
+  SecondLanguage,
   ThirdSecondarySubject,
 } from "@/src/types/StudySubjects";
 import { GeneralSecondaryTrack } from "@/src/types/StudyEducation";
@@ -51,18 +52,29 @@ const SUBJECT_ICONS: Record<ThirdSecondarySubject, LucideIcon> = {
 interface ThirdSecondaryProps {
   selectedSubjects: SecondarySubject[];
   onChange: (subject: SecondarySubject[]) => void;
+  selectedSecondLanguage?: SecondLanguage;
+  onSecondLanguageChange: (language: SecondLanguage | undefined) => void;
   academicTrack: GeneralSecondaryTrack;
 }
+
+export const SECOND_LANGUAGES = [
+  ["french", "الفرنسية"],
+  ["german", "الألمانية"],
+  ["italian", "الإيطالية"],
+  ["spanish", "الإسبانية"],
+] as const;
 export default function ThirdSecondary({
   selectedSubjects,
   onChange,
+  selectedSecondLanguage,
+  onSecondLanguageChange,
   academicTrack,
 }: ThirdSecondaryProps) {
   const { toggleItem } = useToggleSelection(selectedSubjects, onChange);
   const subjects = SECONDARY_YEAR_THREE_SUBJECTS[academicTrack];
   return (
     <section dir="rtl" className="w-full">
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 2xl:grid-cols-3">
         {subjects.map((subject) => {
           const isSelected = selectedSubjects.includes(subject.value);
           const SubjectIcon = SUBJECT_ICONS[subject.value];
@@ -71,7 +83,13 @@ export default function ThirdSecondary({
               key={subject.value}
               type="button"
               aria-pressed={isSelected}
-              onClick={() => toggleItem(subject.value)}
+              onClick={() => {
+                toggleItem(subject.value);
+
+                if (subject.value === "second_language" && isSelected) {
+                  onSecondLanguageChange(undefined);
+                }
+              }}
               className={`
                 group min-h-28 cursor-pointer space-y-4
                 rounded-[28px] border-2
@@ -116,7 +134,46 @@ export default function ThirdSecondary({
           );
         })}
       </div>
+      {selectedSubjects.includes("second_language") && (
+        <div className="mt-7 rounded-2xl border border-secondary/20 bg-[#DDF5FF]/50 p-4 lg:p-5">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+            <h3 className="text-sm font-bold text-primary">
+              اختار اللغة الأجنبية الثانية:
+            </h3>
+            <p className="text-xs text-slate-500">اختار لغة واحدة</p>
+          </div>
 
+          <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
+            {SECOND_LANGUAGES.map(([value, label]) => {
+              const isSelected = selectedSecondLanguage === value;
+
+              return (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() => onSecondLanguageChange(value)}
+                  className={`
+              flex items-center gap-3 rounded-xl border-2 p-4
+              text-right transition-all duration-300 cursor-pointer
+              ${
+                isSelected
+                  ? "border-secondary bg-white text-primary"
+                  : "border-slate-200 bg-white text-slate-500 hover:border-secondary/60"
+              }
+            `}
+                >
+                  <span className="font-bold">{label}</span>
+
+                  {isSelected && (
+                    <Check size={20} className="mr-auto text-secondary" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
       {selectedSubjects.length === 0 && (
         <p className="mt-4 text-sm text-slate-500">
           اختار مادة واحدة على الأقل عشان نكمل.

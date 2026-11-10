@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </header>
 
-          <main className="w-full p-4 sm:p-6 lg:p-8">{children}</main>
+          <main className="w-full p-4 lg:p-6">{children}</main>
         </SidebarInset>
       </div>
     </SidebarProvider>

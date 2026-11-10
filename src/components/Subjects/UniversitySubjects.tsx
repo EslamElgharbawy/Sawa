@@ -97,7 +97,7 @@ export default function UniversitySubjects({
   return (
     <section dir="rtl" className="w-full space-y-8">
       {/* Input + Add Button */}
-      <div className="flex flex-col-reverse gap-3 sm:flex-row">
+      <div className="max-xl:space-y-3 flex flex-col-reverse gap-3 sm:flex-row">
         {/* Input & Autocomplete */}
         <div className="relative flex-1">
           <BookOpen
@@ -189,7 +189,7 @@ export default function UniversitySubjects({
           disabled={!subjectInput.trim()}
           className="
             flex shrink-0 cursor-pointer items-center
-    justify-center gap-2 rounded-2xl
+    justify-center gap-2 rounded-2xl max-xl:w-full
     bg-[#17A6D1] px-6 py-3.5
     font-bold text-white transition-all text-sm
     hover:bg-[#1395BC]

@@ -46,7 +46,7 @@ const router = useRouter();
       className="border-l border-border"
     >
       <SidebarHeader className="p-5">
-        <Link href="/home" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <Image
             src={SawaLogo}
             alt="Sawa Logo"

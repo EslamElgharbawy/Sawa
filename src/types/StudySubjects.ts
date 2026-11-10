@@ -84,18 +84,19 @@ export type SubjectDatabase = Partial<
   >
 >;
 
-export type BaccalaureateSecondLanguage =
+export type SecondLanguage =
   | "french"
   | "german"
   | "italian"
   | "spanish"
   | "chinese";
-  
-  export type FirstSecondarySecondLanguage =
-  | "french"
-  | "german"
-  | "italian"
-  | "spanish";
+
+export type FirstSecondarySecondLanguage = Exclude<
+  SecondLanguage,
+  "chinese"
+>;
+
+export type BaccalaureateSecondLanguage = SecondLanguage;
 
 // Study Topics
 export type StudyTopicsMap = Partial<

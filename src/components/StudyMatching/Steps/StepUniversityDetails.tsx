@@ -120,7 +120,7 @@ export default function StepUniversityDetails({
           بتدرس في كلية إيه؟
         </h3>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 2xl:grid-cols-3">
           {FACULTY_OPTIONS.map((faculty) => {
             const Icon = faculty.icon;
             const isSelected = selectedFaculty === faculty.id;
@@ -184,7 +184,7 @@ export default function StepUniversityDetails({
             أنت في سنة كام؟
           </h3>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
             {currentFaculty.years.map((year) => {
               const isSelected = selectedYear === year.id;
 

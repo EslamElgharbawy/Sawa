@@ -20,11 +20,14 @@ import {
   FIRST_SECONDARY_SECOND_LANGUAGE_TOPICS,
   FIRST_SECONDARY_TOPICS,
   SECOND_SECONDARY_TOPICS,
-} from "@/src/app/data/study-topics";
+  THIRD_SECONDARY_SECOND_LANGUAGE_TOPICS,
+  THIRD_SECONDARY_TOPICS,
+} from "@/src/app/data/studyTopics";
 
 import {
   BACCALAUREATE_YEAR_TWO_SUBJECTS,
   FIRST_SECONDARY_SUBJECTS,
+  SECONDARY_YEAR_THREE_SUBJECTS,
   SECONDARY_YEAR_TWO_SUBJECTS,
 } from "@/src/app/data/StudyOptions";
 
@@ -55,7 +58,6 @@ export default function StudyTopics({
   selectedTopics,
   onTopicsChange,
 }: FirstSecondryProps) {
-  const [openSubject, setOpenSubject] = useState<string[]>([]);
   const [customTopics, setCustomTopics] = useState<Record<string, string>>({});
 
   const topicsMap: Partial<Record<SecondarySubject, string[]>> = (() => {
@@ -81,8 +83,23 @@ export default function StudyTopics({
       return BACCALAUREATE_YEAR_TWO_TOPICS[academicTrack as BaccalaureateTrack];
     }
 
+    if (
+      educationLevel === "high_school_3" &&
+      educationSystem === "general" &&
+      academicTrack &&
+      ["science", "mathematics", "literary"].includes(academicTrack)
+    ) {
+      return THIRD_SECONDARY_TOPICS[academicTrack as GeneralSecondaryTrack];
+    }
+
     return {};
   })();
+  const subjects = selectedSubjects.filter(
+    (subject) => topicsMap[subject] !== undefined,
+  );
+  const [openSubject, setOpenSubject] = useState<string[]>(
+    subjects.length > 0 ? [subjects[0]] : [],
+  );
 
   const subjectsOptions = (() => {
     if (educationLevel === "high_school_1") {
@@ -109,16 +126,35 @@ export default function StudyTopics({
       ];
     }
 
+    if (
+      educationLevel === "high_school_3" &&
+      educationSystem === "general" &&
+      academicTrack &&
+      ["science", "mathematics", "literary"].includes(academicTrack)
+    ) {
+      return SECONDARY_YEAR_THREE_SUBJECTS[
+        academicTrack as GeneralSecondaryTrack
+      ];
+    }
+
     return [];
   })();
 
-  const subjects = selectedSubjects.filter(
-    (subject) => topicsMap[subject] !== undefined,
-  );
-  const firstSecondaryLanguageTopics =
-    selectedSecondLanguage && selectedSecondLanguage !== "chinese"
-      ? FIRST_SECONDARY_SECOND_LANGUAGE_TOPICS[selectedSecondLanguage]
-      : [];
+  const secondLanguageTopics = (() => {
+    if (!selectedSecondLanguage || selectedSecondLanguage === "chinese") {
+      return [];
+    }
+
+    if (educationLevel === "high_school_1") {
+      return FIRST_SECONDARY_SECOND_LANGUAGE_TOPICS[selectedSecondLanguage];
+    }
+
+    if (educationLevel === "high_school_3") {
+      return THIRD_SECONDARY_SECOND_LANGUAGE_TOPICS[selectedSecondLanguage];
+    }
+
+    return BACCALAUREATE_SECOND_LANGUAGE_TOPICS[selectedSecondLanguage];
+  })();
 
   const toggleTopic = (subject: SecondarySubject, topic: string) => {
     const currentTopics = selectedTopics[subject] ?? [];
@@ -167,10 +203,8 @@ export default function StudyTopics({
           );
 
           const topics =
-            subject === "second_language" && selectedSecondLanguage
-              ? educationLevel === "high_school_1"
-                ? firstSecondaryLanguageTopics
-                : BACCALAUREATE_SECOND_LANGUAGE_TOPICS[selectedSecondLanguage]
+            subject === "second_language"
+              ? secondLanguageTopics
               : (topicsMap[subject] ?? []);
 
           const selected = selectedTopics[subject] ?? [];
