@@ -846,3 +846,132 @@ italian: [
     "Unidad 20: En tiempos del faraón",
   ],
 };
+
+
+export const SKILL_TOPICS: Record<string, string[]> = {
+  web_development: [
+    "HTML & CSS",
+    "JavaScript",
+    "TypeScript",
+    "React.js",
+    "Next.js",
+    "Node.js & Express",
+    "NestJS",
+    "Python / Django",
+    "PHP / Laravel",
+    "Tailwind CSS",
+    "REST APIs & GraphQL",
+    "PostgreSQL & MongoDB",
+  ],
+
+  mobile_development: [
+    "Flutter & Dart",
+    "React Native",
+    "Android (Kotlin)",
+    "iOS (Swift / SwiftUI)",
+    "Mobile UI & State Management",
+    "Firebase for Mobile",
+    "Mobile API Integration",
+  ],
+
+  ui_ux_design: [
+    "Figma",
+    "UI Design Fundamentals",
+    "UX Research & Personas",
+    "Wireframing & Prototyping",
+    "Design Systems & Components",
+    "Usability Testing",
+    "Mobile & Web App Design",
+  ],
+
+  graphic_design: [
+    "Adobe Photoshop",
+    "Adobe Illustrator",
+    "Branding & Visual Identity",
+    "Typography & Layout",
+    "Social Media Designs",
+    "Logo Design",
+    "Print & Packaging Design",
+  ],
+
+  artificial_intelligence: [
+    "Machine Learning Fundamentals",
+    "Deep Learning & Neural Networks",
+    "Natural Language Processing (NLP)",
+    "Computer Vision",
+    "Generative AI & LLMs",
+    "Prompt Engineering",
+    "PyTorch / TensorFlow",
+    "LangChain & AI Agents",
+  ],
+
+  data_science: [
+    "Python for Data Science",
+    "Data Analysis (Pandas & NumPy)",
+    "Data Visualization (Matplotlib & Seaborn)",
+    "SQL for Data Analysis",
+    "Power BI & Tableau",
+    "Exploratory Data Analysis (EDA)",
+    "Statistical Modeling",
+  ],
+
+  cybersecurity: [
+    "Network Security",
+    "Ethical Hacking & Penetration Testing",
+    "Web Application Security (OWASP Top 10)",
+    "Cryptography Fundamentals",
+    "Linux for Hackers",
+    "CompTIA Security+ Prep",
+  ],
+
+  digital_marketing: [
+    "Search Engine Optimization (SEO)",
+    "Social Media Marketing (SMM)",
+    "Content Marketing & Copywriting",
+    "Google Ads & PPC",
+    "Meta Ads (Facebook & Instagram)",
+    "Email Marketing & Automation",
+    "Google Analytics 4 (GA4)",
+  ],
+
+  languages: [
+    "English (General Conversation)",
+    "English (IELTS / TOEFL Prep)",
+    "Business English",
+    "German (A1 - B2)",
+    "French (A1 - B2)",
+    "Spanish (A1 - B2)",
+    "Italian (A1 - B2)",
+    "Grammar & Vocabulary Building",
+  ],
+
+  business: [
+    "Entrepreneurship Fundamentals",
+    "Business Model Canvas (BMC)",
+    "Product Management",
+    "Sales & Negotiation",
+    "Startup Pitching & Funding",
+    "Project Management (Agile / Scrum)",
+    "Business Strategy & Growth",
+  ],
+
+  finance: [
+    "Financial Accounting",
+    "Managerial Accounting",
+    "Financial Modeling & Valuation",
+    "Excel for Finance",
+    "Corporate Finance",
+    "Investment & Stock Market",
+    "CFA / CMA Prep",
+  ],
+
+  video_editing: [
+    "Adobe Premiere Pro",
+    "DaVinci Resolve",
+    "Adobe After Effects (Motion Graphics)",
+    "Color Grading & Audio Mixing",
+    "Short-form Content (Reels / TikTok)",
+    "YouTube Video Editing & Storytelling",
+    "Sound Design & SFX",
+  ],
+};

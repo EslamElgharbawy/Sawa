@@ -57,7 +57,7 @@ const PHARMACY_YEARS: YearOption[] = [
   { id: "fifth", title: "خامسة" },
 ];
 
-const FACULTY_OPTIONS: FacultyOption[] = [
+export const FACULTY_OPTIONS: FacultyOption[] = [
   {
     id: "computers",
     title: "حاسبات ومعلومات",

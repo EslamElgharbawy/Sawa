@@ -27,6 +27,8 @@ import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniv
 import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
 import SkillDevelopment from "@/src/components/Subjects/SkillDevelopment";
 import StudyTopics from "@/src/components/StudyTopics/StudyTopics";
+import UniversityStudyTopics from "@/src/components/StudyTopics/UniversityStudyTopics";
+import SkillStudyTopics from "@/src/components/StudyTopics/SkillStudyTopics";
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
@@ -41,6 +43,10 @@ export default function StudyStepper() {
     [],
   );
   const [selectedTopics, setSelectedTopics] = useState<StudyTopicsState>({});
+  const [universitySelectedTopics, setUniversitySelectedTopics] = useState<
+    Record<string, string[]>
+  >({});
+  const [skillSelectedTopics, setSkillSelectedTopics] = useState<string[]>([]);
   const [selectedSecondLanguage, setSelectedSecondLanguage] = useState<
     BaccalaureateSecondLanguage | undefined
   >(undefined);
@@ -69,9 +75,14 @@ export default function StudyStepper() {
       educationLevel === "high_school_2" ||
       educationLevel === "high_school_3";
 
-    if (isSecondary) {
+    if (
+      isSecondary ||
+      educationLevel === "university_student" ||
+      educationLevel === "skill_development"
+    ) {
       return [{ value: "topics", title: "هتذاكر إيه في كل مادة؟" }];
     }
+
     return [];
   };
   const topicsScopeKey = `${educationSystem}_${educationLevel}_${academicTrack ?? "default"}`;
@@ -96,6 +107,9 @@ export default function StudyStepper() {
 
   const previousStep = () => {
     if (currentIndex > 0) {
+      if (currentStep === "topics" && educationLevel === "skill_development") {
+        setSkillSelectedTopics([]);
+      }
       setCurrentStep(steps[currentIndex - 1].value);
     }
   };
@@ -110,6 +124,8 @@ export default function StudyStepper() {
     setSelectedSubjects([]);
     setSelectedTopics({});
     setSelectedSecondLanguage(undefined);
+    setSelectedSkills(null);
+    setSkillSelectedTopics([]);
   };
   return (
     <main dir="rtl" className="py-5 overflow-y-auto">
@@ -177,7 +193,12 @@ export default function StudyStepper() {
                   ) : educationLevel === "skill_development" ? (
                     <SkillDevelopment
                       selectedSkills={selectedSkills}
-                      onChange={setSelectedSkills}
+                      onChange={(skill) => {
+                        if (skill !== selectedSkills) {
+                          setSkillSelectedTopics([]);
+                        }
+                        setSelectedSkills(skill);
+                      }}
                     />
                   ) : (
                     <StepSubjects
@@ -193,25 +214,46 @@ export default function StudyStepper() {
                 ) : step.value === "universityDetails" ? (
                   <StepUniversityDetails
                     selectedFaculty={selectedFaculty}
-                    onFacultyChange={setSelectedFaculty}
+                    onFacultyChange={(faculty) => {
+                      setSelectedFaculty(faculty);
+                      setSelectedYear("");
+                      setUniversitySubjects([]);
+                    }}
                     selectedYear={selectedYear}
-                    onYearChange={setSelectedYear}
+                    onYearChange={(year) => {
+                      setSelectedYear(year);
+                      setUniversitySubjects([]);
+                    }}
                   />
                 ) : step.value === "topics" ? (
-                  <StudyTopics
-                    educationLevel={educationLevel!}
-                    educationSystem={educationSystem}
-                    academicTrack={academicTrack}
-                    selectedSecondLanguage={selectedSecondLanguage}
-                    selectedSubjects={selectedSubjects}
-                    selectedTopics={currentSelectedTopics}
-                    onTopicsChange={(topics) =>
-                      setSelectedTopics((prev) => ({
-                        ...prev,
-                        [topicsScopeKey]: topics,
-                      }))
-                    }
-                  />
+                  educationLevel === "university_student" ? (
+                    <UniversityStudyTopics
+                      selectedSubjects={universitySubjects}
+                      selectedTopics={universitySelectedTopics}
+                      onTopicsChange={setUniversitySelectedTopics}
+                    />
+                  ) : educationLevel === "skill_development" ? (
+                    <SkillStudyTopics
+                      selectedSkill={selectedSkills}
+                      selectedTopics={skillSelectedTopics}
+                      onTopicsChange={setSkillSelectedTopics}
+                    />
+                  ) : (
+                    <StudyTopics
+                      educationLevel={educationLevel!}
+                      educationSystem={educationSystem}
+                      academicTrack={academicTrack}
+                      selectedSecondLanguage={selectedSecondLanguage}
+                      selectedSubjects={selectedSubjects}
+                      selectedTopics={currentSelectedTopics}
+                      onTopicsChange={(topics) =>
+                        setSelectedTopics((prev) => ({
+                          ...prev,
+                          [topicsScopeKey]: topics,
+                        }))
+                      }
+                    />
+                  )
                 ) : step.value === "people" ? (
                   <StepPeople
                     peopleCount={peopleCount}
@@ -222,7 +264,21 @@ export default function StudyStepper() {
                     educationLevel={educationLevel}
                     educationSystem={educationSystem}
                     academicTrack={academicTrack}
-                    onEducationLevelChange={setEducationLevel}
+                    onEducationLevelChange={(level) => {
+                      setEducationLevel(level);
+
+                      if (level !== "university_student") {
+                        setSelectedFaculty("");
+                        setSelectedYear("");
+                        setUniversitySubjects([]);
+                        setUniversitySelectedTopics({});
+                      }
+
+                      if (level !== "skill_development") {
+                        setSelectedSkills(null);
+                        setSkillSelectedTopics([]);
+                      }
+                    }}
                     onEducationSystemChange={(system) => {
                       if (system !== educationSystem) {
                         resetSubjectSelections();
@@ -270,10 +326,19 @@ export default function StudyStepper() {
                       (currentStep === "universityDetails" &&
                         (!selectedFaculty || !selectedYear)) ||
                       (currentStep === "topics" &&
-                        !selectedSubjects.every(
-                          (subject) =>
-                            (currentSelectedTopics[subject] ?? []).length > 0,
-                        )) ||
+                        (educationLevel === "university_student"
+                          ? !universitySubjects.every(
+                              (subject) =>
+                                (universitySelectedTopics[subject] ?? [])
+                                  .length > 0,
+                            )
+                          : educationLevel === "skill_development"
+                            ? skillSelectedTopics.length === 0
+                            : !selectedSubjects.every(
+                                (subject) =>
+                                  (currentSelectedTopics[subject] ?? []).length >
+                                  0,
+                              ))) ||
                       (currentStep === "people" && peopleCount === null)
                     }
                     className="flex-1 rounded-full cursor-pointer bg-[#17a6d1] py-3.5 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"

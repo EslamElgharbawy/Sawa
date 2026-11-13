@@ -20,6 +20,7 @@ import {
   FIRST_SECONDARY_SECOND_LANGUAGE_TOPICS,
   FIRST_SECONDARY_TOPICS,
   SECOND_SECONDARY_TOPICS,
+  SKILL_TOPICS,
   THIRD_SECONDARY_SECOND_LANGUAGE_TOPICS,
   THIRD_SECONDARY_TOPICS,
 } from "@/src/app/data/studyTopics";
@@ -91,9 +92,9 @@ export default function StudyTopics({
     ) {
       return THIRD_SECONDARY_TOPICS[academicTrack as GeneralSecondaryTrack];
     }
-
     return {};
   })();
+  
   const subjects = selectedSubjects.filter(
     (subject) => topicsMap[subject] !== undefined,
   );
@@ -136,7 +137,6 @@ export default function StudyTopics({
         academicTrack as GeneralSecondaryTrack
       ];
     }
-
     return [];
   })();
 
@@ -269,7 +269,7 @@ export default function StudyTopics({
                       }
                     }}
                     placeholder="أضف موضوع مخصص..."
-                    className="min-w-0 flex-1 rounded-lg border border-[#CBD8E8] px-3 py-2 text-sm outline-none focus:border-[#17A6D1]"
+                    className="min-w-0 flex-1 rounded-2xl border border-[#CBD8E8] px-4 py-3 text-sm outline-none focus:border-[#17A6D1]"
                   />
 
                   <button
@@ -277,8 +277,8 @@ export default function StudyTopics({
                     disabled={!customTopics[subject]?.trim()}
                     onClick={() => addCustomTopic(subject)}
                     className="flex shrink-0 cursor-pointer items-center
-              justify-center gap-2 rounded-lg
-              bg-[#17A6D1] px-4 py-2
+              justify-center gap-2 rounded-2xl
+              bg-[#17A6D1] px-4 
               text-sm font-bold text-white transition-all
               hover:bg-[#1395BC]
               disabled:cursor-not-allowed
