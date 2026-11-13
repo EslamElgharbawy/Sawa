@@ -69,7 +69,7 @@ export default function UniversityStudyTopics({
   const subjects = selectedSubjects;
 
   return (
-    <div dir="rtl" className="w-full space-y-4">
+    <div dir="rtl" className="w-full">
       <Accordion
         multiple={false}
         value={openSubject}
@@ -85,7 +85,7 @@ export default function UniversityStudyTopics({
               value={subject}
               className="overflow-hidden rounded-xl border border-[#CBD8E8] bg-white px-4"
             >
-              <AccordionTrigger className="py-4 text-sm font-bold text-[#103B3E] hover:no-underline cursor-pointer">
+              <AccordionTrigger className="py-4 text-sm font-bold text-[#103B3E] hover:no-underline cursor-pointer items-center ">
                 <div className="flex flex-1 items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
                     <span className="flex size-8 items-center justify-center rounded-xl bg-[#DDF5FF] text-[#17A6D1]">
@@ -96,7 +96,7 @@ export default function UniversityStudyTopics({
                 </div>
               </AccordionTrigger>
 
-              <AccordionContent className="space-y-5 pb-4">
+              <AccordionContent className="space-y-5 pb-4 mt-2">
                 <div className="flex gap-2">
                   <input
                     type="text"

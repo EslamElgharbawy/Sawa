@@ -11,6 +11,7 @@ import {
 import StepSubjects from "@/src/components/StudyMatching/Steps/StepSubjects";
 import StepPeople from "@/src/components/StudyMatching/Steps/StepPeople";
 import StepEducation from "@/src/components/StudyMatching/Steps/StepEducation";
+import StepPreferences from "@/src/components/StudyMatching/Steps/StepPreferences";
 import {
   AcademicTrack,
   EducationLevel,
@@ -23,6 +24,7 @@ import {
   UniversityFaculty,
   UniversityYear,
 } from "@/src/types/StudySubjects";
+import { StudyStyle, StudyTime } from "@/src/types/StudyMatching";
 import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
 import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
 import SkillDevelopment from "@/src/components/Subjects/SkillDevelopment";
@@ -50,6 +52,9 @@ export default function StudyStepper() {
   const [selectedSecondLanguage, setSelectedSecondLanguage] = useState<
     BaccalaureateSecondLanguage | undefined
   >(undefined);
+
+  const [studyStyle, setStudyStyle] = useState<StudyStyle | null>(null);
+  const [studyTime, setStudyTime] = useState<StudyTime | null>(null);
 
   const [peopleCount, setPeopleCount] = useState<number | null>(null);
   const [educationLevel, setEducationLevel] = useState<EducationLevel | null>(
@@ -94,7 +99,7 @@ export default function StudyStepper() {
     ...UniversityStep(),
     { value: "subjects", title: "هتذاكر إيه؟" },
     ...TopicsStep(),
-    { value: "preferences", title: "تفضيلاتك" },
+    { value: "preferences", title: "تحب تذاكر إزاي؟" },
     { value: "people", title: "هتذاكر مع كام شخص؟" },
     { value: "complete", title: "جاهزين نبدأ؟" },
   ];
@@ -228,7 +233,7 @@ export default function StudyStepper() {
                 ) : step.value === "topics" ? (
                   educationLevel === "university_student" ? (
                     <UniversityStudyTopics
-                    selectedFaculty={selectedFaculty}
+                      selectedFaculty={selectedFaculty}
                       selectedSubjects={universitySubjects}
                       selectedTopics={universitySelectedTopics}
                       onTopicsChange={setUniversitySelectedTopics}
@@ -255,6 +260,13 @@ export default function StudyStepper() {
                       }
                     />
                   )
+                ) : step.value === "preferences" ? (
+                  <StepPreferences
+                    studyStyle={studyStyle}
+                    studyTime={studyTime}
+                    onStudyStyleChange={setStudyStyle}
+                    onStudyTimeChange={setStudyTime}
+                  />
                 ) : step.value === "people" ? (
                   <StepPeople
                     peopleCount={peopleCount}
@@ -340,6 +352,8 @@ export default function StudyStepper() {
                                   (currentSelectedTopics[subject] ?? []).length >
                                   0,
                               ))) ||
+                      (currentStep === "preferences" &&
+                        (studyStyle === null || studyTime === null)) ||
                       (currentStep === "people" && peopleCount === null)
                     }
                     className="flex-1 rounded-full cursor-pointer bg-[#17a6d1] py-3.5 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"
