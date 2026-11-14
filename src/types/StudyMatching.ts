@@ -1,4 +1,4 @@
-export type StudyGoal = "study" | "homework";
+export type StudyGoal = "study" | "revision" | "homework";
 
 export type StudyStyle = "quiet" | "discussion";
 

@@ -5,7 +5,7 @@ import { UsersRound } from "lucide-react";
 
 type StepPeopleProps = {
   peopleCount: number | null;
-  onChange: (count: number) => void;
+  onChange: (count: number | null) => void;
 };
 
 const PEOPLE_OPTIONS = [1, 2, 3, 4];
@@ -29,7 +29,7 @@ export default function StepPeople({
               key={count}
               type="button"
               aria-pressed={isSelected}
-              onClick={() => onChange(count)}
+              onClick={() => onChange(isSelected ? null : count)}
               className={`
                 flex h-[110px] cursor-pointer flex-col items-center
                 justify-center gap-2 rounded-[30px] border-2

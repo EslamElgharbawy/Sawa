@@ -24,13 +24,16 @@ import {
   UniversityFaculty,
   UniversityYear,
 } from "@/src/types/StudySubjects";
-import { StudyStyle, StudyTime } from "@/src/types/StudyMatching";
+import { StudyGoal, StudyStyle, StudyTime } from "@/src/types/StudyMatching";
 import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
 import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
 import SkillDevelopment from "@/src/components/Subjects/SkillDevelopment";
 import StudyTopics from "@/src/components/StudyTopics/StudyTopics";
 import UniversityStudyTopics from "@/src/components/StudyTopics/UniversityStudyTopics";
 import SkillStudyTopics from "@/src/components/StudyTopics/SkillStudyTopics";
+import StepGoal from "@/src/components/StudyMatching/Steps/StepGoal";
+import StepSummary from "@/src/components/StudyMatching/Steps/StepSummary";
+import { ArrowRight, Search } from "lucide-react";
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
@@ -55,6 +58,7 @@ export default function StudyStepper() {
 
   const [studyStyle, setStudyStyle] = useState<StudyStyle | null>(null);
   const [studyTime, setStudyTime] = useState<StudyTime | null>(null);
+  const [goal, setGoal] = useState<StudyGoal | null>(null);
 
   const [peopleCount, setPeopleCount] = useState<number | null>(null);
   const [educationLevel, setEducationLevel] = useState<EducationLevel | null>(
@@ -100,8 +104,9 @@ export default function StudyStepper() {
     { value: "subjects", title: "هتذاكر إيه؟" },
     ...TopicsStep(),
     { value: "preferences", title: "تحب تذاكر إزاي؟" },
+    { value: "goal", title: "إيه هدفك من المذاكرة؟" },
     { value: "people", title: "هتذاكر مع كام شخص؟" },
-    { value: "complete", title: "جاهزين نبدأ؟" },
+    { value: "complete", title: "اختياراتك" },
   ];
   const currentIndex = steps.findIndex((step) => step.value === currentStep);
   const nextStep = () => {
@@ -112,9 +117,6 @@ export default function StudyStepper() {
 
   const previousStep = () => {
     if (currentIndex > 0) {
-      if (currentStep === "topics" && educationLevel === "skill_development") {
-        setSkillSelectedTopics([]);
-      }
       setCurrentStep(steps[currentIndex - 1].value);
     }
   };
@@ -131,6 +133,12 @@ export default function StudyStepper() {
     setSelectedSecondLanguage(undefined);
     setSelectedSkills(null);
     setSkillSelectedTopics([]);
+    setUniversitySubjects([]);
+    setUniversitySelectedTopics({});
+    setStudyStyle(null);
+    setStudyTime(null);
+    setGoal(null);
+    setPeopleCount(null);
   };
   return (
     <main dir="rtl" className="py-5 overflow-y-auto">
@@ -201,6 +209,10 @@ export default function StudyStepper() {
                       onChange={(skill) => {
                         if (skill !== selectedSkills) {
                           setSkillSelectedTopics([]);
+                          setStudyStyle(null);
+                          setStudyTime(null);
+                          setGoal(null);
+                          setPeopleCount(null);
                         }
                         setSelectedSkills(skill);
                       }}
@@ -220,14 +232,28 @@ export default function StudyStepper() {
                   <StepUniversityDetails
                     selectedFaculty={selectedFaculty}
                     onFacultyChange={(faculty) => {
-                      setSelectedFaculty(faculty);
-                      setSelectedYear("");
-                      setUniversitySubjects([]);
+                      if (faculty !== selectedFaculty) {
+                        setSelectedFaculty(faculty);
+                        setSelectedYear("");
+                        setUniversitySubjects([]);
+                        setUniversitySelectedTopics({});
+                        setStudyStyle(null);
+                        setStudyTime(null);
+                        setGoal(null);
+                        setPeopleCount(null);
+                      }
                     }}
                     selectedYear={selectedYear}
                     onYearChange={(year) => {
-                      setSelectedYear(year);
-                      setUniversitySubjects([]);
+                      if (year !== selectedYear) {
+                        setSelectedYear(year);
+                        setUniversitySubjects([]);
+                        setUniversitySelectedTopics({});
+                        setStudyStyle(null);
+                        setStudyTime(null);
+                        setGoal(null);
+                        setPeopleCount(null);
+                      }
                     }}
                   />
                 ) : step.value === "topics" ? (
@@ -272,12 +298,18 @@ export default function StudyStepper() {
                     peopleCount={peopleCount}
                     onChange={setPeopleCount}
                   />
+                ) : step.value === "goal" ? (
+                  <StepGoal goal={goal} onChange={setGoal} />
                 ) : step.value === "level" ? (
                   <StepEducation
                     educationLevel={educationLevel}
                     educationSystem={educationSystem}
                     academicTrack={academicTrack}
                     onEducationLevelChange={(level) => {
+                      if (level !== educationLevel) {
+                        resetSubjectSelections();
+                        setAcademicTrack(null);
+                      }
                       setEducationLevel(level);
 
                       if (level !== "university_student") {
@@ -307,6 +339,17 @@ export default function StudyStepper() {
 
                       setAcademicTrack(track);
                     }}
+                  />
+                ) : step.value === "complete" ? (
+                  <StepSummary
+                    educationLevel={educationLevel}
+                    selectedSubjects={selectedSubjects}
+                    universitySubjects={universitySubjects}
+                    selectedSkills={selectedSkills}
+                    studyTime={studyTime}
+                    studyStyle={studyStyle}
+                    goal={goal}
+                    peopleCount={peopleCount}
                   />
                 ) : (
                   <p className="mt-2 text-slate-500">
@@ -349,18 +392,24 @@ export default function StudyStepper() {
                             ? skillSelectedTopics.length === 0
                             : !selectedSubjects.every(
                                 (subject) =>
-                                  (currentSelectedTopics[subject] ?? []).length >
-                                  0,
+                                  (currentSelectedTopics[subject] ?? [])
+                                    .length > 0,
                               ))) ||
+                      (currentStep === "goal" && goal === null) ||
                       (currentStep === "preferences" &&
                         (studyStyle === null || studyTime === null)) ||
                       (currentStep === "people" && peopleCount === null)
                     }
-                    className="flex-1 rounded-full cursor-pointer bg-[#17a6d1] py-3.5 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#17a6d1] py-3.5 font-bold text-white transition-colors hover:bg-[#1395bc] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"
                   >
-                    {currentIndex === steps.length - 1
-                      ? "دورلي على ناس"
-                      : "التالي"}
+                    {currentIndex === steps.length - 1 ? (
+                      <>
+                        <span>دورلي على ناس</span>
+                        <Search size={18} />
+                      </>
+                    ) : (
+                      "التالي"
+                    )}
                   </button>
                 </div>
               </section>

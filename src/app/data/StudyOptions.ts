@@ -491,6 +491,11 @@ export const STUDY_GOALS: {
     description: "عايز تفهم وتراجع الدروس.",
   },
   {
+    value: "revision",
+    label: "مراجعة",
+    description: "تثبيت ومراجعة وحل أسئلة على اللي ذاكرته.",
+  },
+  {
     value: "homework",
     label: "واجب",
     description: "عايز تخلص واجب محدد.",

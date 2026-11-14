@@ -16,8 +16,8 @@ import { StudyStyle, StudyTime } from "@/src/types/StudyMatching";
 interface StepPreferencesProps {
   studyStyle: StudyStyle | null;
   studyTime: StudyTime | null;
-  onStudyStyleChange: (style: StudyStyle) => void;
-  onStudyTimeChange: (time: StudyTime) => void;
+  onStudyStyleChange: (style: StudyStyle | null) => void;
+  onStudyTimeChange: (time: StudyTime | null) => void;
 }
 
 interface StyleOption {
@@ -96,7 +96,9 @@ export default function StepPreferences({
                 key={option.id}
                 type="button"
                 aria-pressed={isSelected}
-                onClick={() => onStudyStyleChange(option.id)}
+                onClick={() =>
+                  onStudyStyleChange(isSelected ? null : option.id)
+                }
                 className={`
                   relative flex min-h-[130px] cursor-pointer flex-col justify-between
                   rounded-2xl border-2 p-5 text-right transition-all duration-300
@@ -164,7 +166,9 @@ export default function StepPreferences({
                 key={option.id}
                 type="button"
                 aria-pressed={isSelected}
-                onClick={() => onStudyTimeChange(option.id)}
+                onClick={() =>
+                  onStudyTimeChange(isSelected ? null : option.id)
+                }
                 className={`
                   relative flex min-h-[120px] cursor-pointer flex-col justify-between
                   rounded-2xl border-2 p-3 text-right transition-all duration-300
