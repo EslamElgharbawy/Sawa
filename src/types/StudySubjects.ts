@@ -67,7 +67,8 @@ export type UniversityFaculty =
   | "commerce"
   | "medicine"
   | "pharmacy"
-  | "law";
+  | "law"
+  | "science";
 
 // University Years
 export type UniversityYear =

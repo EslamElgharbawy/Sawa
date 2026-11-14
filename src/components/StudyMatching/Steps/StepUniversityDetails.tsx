@@ -11,6 +11,7 @@ import {
   Stethoscope,
   Pill,
   Scale,
+  FlaskConical,
   LucideIcon,
 } from "lucide-react";
 
@@ -92,6 +93,12 @@ export const FACULTY_OPTIONS: FacultyOption[] = [
     id: "law",
     title: "حقوق",
     icon: Scale,
+    years: DEFAULT_YEARS,
+  },
+  {
+    id: "science",
+    title: "علوم",
+    icon: FlaskConical,
     years: DEFAULT_YEARS,
   },
 ];
