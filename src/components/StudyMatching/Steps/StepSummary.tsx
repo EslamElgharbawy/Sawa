@@ -4,6 +4,8 @@ import React from "react";
 import { EducationLevel } from "@/src/types/StudyEducation";
 import { SecondarySubject } from "@/src/types/StudySubjects";
 import { StudyGoal, StudyStyle, StudyTime } from "@/src/types/StudyMatching";
+import { SKILL_OPTIONS } from "@/src/components/Subjects/SkillDevelopment";
+import { SUBJECT_LABELS } from "@/src/app/data/StudyOptions";
 
 interface StepSummaryProps {
   educationLevel: EducationLevel | null;
@@ -15,34 +17,6 @@ interface StepSummaryProps {
   goal: StudyGoal | null;
   peopleCount: number | null;
 }
-
-const SUBJECT_LABELS: Record<string, string> = {
-  arabic: "اللغة العربية",
-  english: "اللغة الإنجليزية",
-  math: "الرياضيات",
-  integrated_science: "العلوم المتكاملة",
-  history: "التاريخ",
-  philosophy: "الفلسفة والمنطق",
-  islamic_religion: "التربية الدينية الإسلامية",
-  christian_religion: "التربية الدينية المسيحية",
-  second_language: "اللغة الأجنبية الثانية",
-  programming: "البرمجة والذكاء الاصطناعي",
-  physics: "فيزياء",
-  chemistry: "كيمياء",
-  biology: "أحياء",
-  geography: "جغرافيا",
-  psychology: "علم النفس والاجتماع",
-  first_language: "اللغة الإنجليزية",
-  egyptian_history: "التاريخ المصري",
-  programming_ai: "البرمجة والذكاء الاصطناعي",
-  accounting: "المحاسبة",
-  business_management: "إدارة الأعمال",
-  pure_mathematics: "الرياضيات البحتة",
-  applied_mathematics: "الرياضيات التطبيقية",
-  statistics: "الإحصاء",
-  geology: "الجيولوجيا",
-  other: "أخرى",
-};
 
 const STYLE_LABELS: Record<StudyStyle, string> = {
   discussion: "تفاعل ونقاش",
@@ -74,26 +48,24 @@ export default function StepSummary({
 }: StepSummaryProps) {
   const getSubjectText = () => {
     if (educationLevel === "university_student") {
-      return universitySubjects.length > 0
-        ? universitySubjects.join("، ")
-        : "—";
+      return universitySubjects.map((sub) => (
+        <span key={sub}>{sub}</span>
+      ));
     }
 
     if (educationLevel === "skill_development") {
-      return selectedSkills || "—";
+      const skill = SKILL_OPTIONS.find((s) => s.id === selectedSkills);
+      return skill ? skill.title : selectedSkills;
     }
 
     if (selectedSubjects.length > 0) {
-      return selectedSubjects
-        .map((sub) => SUBJECT_LABELS[sub] ?? sub)
-        .join("، ");
+      return selectedSubjects.map((sub) => (
+        <span key={sub}>{SUBJECT_LABELS[sub] ?? sub}</span>
+      ));
     }
-
-    return "—";
   };
 
   const getPeopleCountText = (count: number | null) => {
-    if (!count) return "—";
     if (count === 1) return "شخص واحد";
     if (count === 2) return "2 أشخاص";
     return `${count} أشخاص`;
@@ -106,7 +78,7 @@ export default function StepSummary({
     },
     {
       label: "الوقت",
-      value: studyTime ? TIME_LABELS[studyTime] ?? studyTime : "—",
+      value: studyTime && TIME_LABELS[studyTime],
     },
     {
       label: "عدد الأشخاص",
@@ -114,11 +86,11 @@ export default function StepSummary({
     },
     {
       label: "طريقة المذاكرة",
-      value: studyStyle ? STYLE_LABELS[studyStyle] ?? studyStyle : "—",
+      value: studyStyle && STYLE_LABELS[studyStyle],
     },
     {
       label: "الهدف",
-      value: goal ? GOAL_LABELS[goal] ?? goal : "—",
+      value: goal && GOAL_LABELS[goal],
     },
   ];
 
@@ -128,14 +100,14 @@ export default function StepSummary({
         {summaryItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center justify-between px-6 py-4 transition-colors hover:bg-slate-50/50"
+            className="flex items-center justify-between px-6 py-4 "
           >
             <span className="text-sm font-medium text-slate-400 sm:text-base">
               {item.label}
             </span>
-             <span className="text-sm font-bold text-[#103B3E] sm:text-base">
+            <div className="flex flex-col items-end gap-1 text-sm font-bold text-[#103B3E] sm:text-base">
               {item.value}
-            </span>
+            </div>
           </div>
         ))}
       </div>

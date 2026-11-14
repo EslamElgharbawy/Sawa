@@ -503,3 +503,32 @@ export const STUDY_GOALS: {
 ];
 
 export const PEOPLE_COUNT_OPTIONS = [1, 2, 3, 4] as const;
+
+export const SUBJECT_LABELS: Record<string, string> = {
+  arabic: "اللغة العربية",
+  english: "اللغة الإنجليزية",
+  math: "الرياضيات",
+  integrated_science: "العلوم المتكاملة",
+  history: "التاريخ",
+  philosophy: "الفلسفة والمنطق",
+  islamic_religion: "التربية الدينية الإسلامية",
+  christian_religion: "التربية الدينية المسيحية",
+  second_language: "اللغة الأجنبية الثانية",
+  programming: "البرمجة والذكاء الاصطناعي",
+  physics: "فيزياء",
+  chemistry: "كيمياء",
+  biology: "أحياء",
+  geography: "جغرافيا",
+  psychology: "علم النفس والاجتماع",
+  first_language: "اللغة الإنجليزية",
+  egyptian_history: "التاريخ المصري",
+  programming_ai: "البرمجة والذكاء الاصطناعي",
+  accounting: "المحاسبة",
+  business_management: "إدارة الأعمال",
+  pure_mathematics: "الرياضيات البحتة",
+  applied_mathematics: "الرياضيات التطبيقية",
+  statistics: "الإحصاء",
+  geology: "الجيولوجيا",
+  national_education: "التربية الوطنية",
+  other: "أخرى",
+};

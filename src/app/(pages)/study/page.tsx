@@ -362,7 +362,7 @@ export default function StudyStepper() {
                     <button
                       type="button"
                       onClick={previousStep}
-                      className="flex-1 rounded-full cursor-pointer border border-slate-200 py-3.5 font-bold text-slate-600"
+                      className="flex-1 rounded-full cursor-pointer border border-slate-200 py-3.5 font-bold text-slate-600 transition-all duration-200 hover:bg-slate-100 hover:text-slate-900"
                     >
                       السابق
                     </button>

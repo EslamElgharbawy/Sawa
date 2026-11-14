@@ -25,7 +25,7 @@ interface SkillDevelopmentProps {
   onChange: (skills: string | null) => void;
 }
 
-const SKILL_OPTIONS = [
+export const SKILL_OPTIONS = [
   {
     id: "web_development",
     title: "Web Development",
