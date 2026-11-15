@@ -334,7 +334,8 @@ export default function OnBoarding() {
 
               {/* Submit */}
               <div className="space-y-3 pt-3">
-                <button
+                <Link
+                  href={"/"}
                   type="submit"
                   // disabled={isSubmitting}
                   className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-sky-700 px-6 text-sm font-bold text-white shadow-sm transition duration-300 hover:bg-sky-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-700/20 disabled:cursor-not-allowed disabled:opacity-60"
@@ -347,7 +348,7 @@ export default function OnBoarding() {
                   <ArrowLeft size={17} />
                   {/* </>
                   )} */}
-                </button>
+                </Link>
 
                 <button
                   type="button"

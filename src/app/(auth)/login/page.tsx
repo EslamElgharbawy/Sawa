@@ -145,7 +145,8 @@ export default function LoginPage() {
               سجل دخولك أو أنشئ حسابك بأمان وسرعة وبضغطة واحدة عبر Google.
             </p>
 
-            <button
+            <Link
+            href={"/onBoarding"}
               type="button"
               className="flex min-h-13 mt-3 cursor-pointer w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm xl:text-base font-semibold leading-6 text-slate-700 shadow-sm transition hover:bg-slate-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-100 disabled:cursor-not-allowed disabled:opacity-60"
             >
@@ -173,7 +174,7 @@ export default function LoginPage() {
                   d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z"
                 />
               </svg>
-            </button>
+            </Link>
 
             <div className="mt-5 xl:mt-7 2xl:mt-10 flex items-center justify-center gap-2 text-xs text-slate-400 xl:text-sm">
               <ShieldCheck className="size-5 shrink-0 text-emerald-500" />

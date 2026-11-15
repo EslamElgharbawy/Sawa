@@ -1,6 +1,7 @@
 import { RecommendedSessionCard } from "@/src/components/Sessions/RecommendedSessionCard";
 import { SessionCard } from "@/src/components/Sessions/SessionCard";
-import { CalendarClock, Sparkles } from "lucide-react";
+import { RecentSessionCard } from "@/src/components/Sessions/RecentSessionCard";
+import { BookOpen, CalendarClock, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 const stats = [
@@ -8,12 +9,36 @@ const stats = [
   { value: 3, label: "جلسة خلصناها" },
   { value: 2, label: "قناة مشترك فيها" },
 ];
+
+const recentSessions = [
+  {
+    subject: "كيمياء",
+    time: "الأحد - 6:00 م",
+    attendees: "ملك، عمر",
+    rating: 4,
+    progress: 80,
+  },
+  {
+    subject: "English",
+    time: "السبت - 4:00 م",
+    attendees: "سارة، آدم، نور",
+    rating: 5,
+    progress: 100,
+  },
+  {
+    subject: "رياضيات",
+    time: "الخميس - 8:00 م",
+    attendees: "أحمد",
+    rating: 3,
+    progress: 60,
+  },
+];
 export default function Home() {
   return (
     <>
-      <section
+        <section
         dir="rtl"
-        className="relative flex min-h-80 flex-col-reverse justify-between gap-8 overflow-hidden rounded-4xl bg-linear-to-tl from-[#005966] to-[#0D383A] p-6 text-white shadow-[0_20px_50px_rgba(15,40,45,0.12)] sm:p-8 lg:flex-row lg:items-center lg:p-9 lg:mx-30"
+        className="relative flex min-h-80 flex-col-reverse justify-between gap-8 overflow-hidden rounded-4xl bg-linear-to-tl from-[#005966] to-[#0D383A] p-6 text-white shadow-[0_20px_50px_rgba(15,40,45,0.12)] sm:p-8 xl:flex-row xl:items-center xl:p-9 2xl:mx-30"
       >
         {/* المحتوى الرئيسي */}
         <div className="flex flex-1 flex-col items-start justify-center gap-4">
@@ -59,11 +84,11 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className="mt-10 mx-30">
+      <section className="mt-14 2xl:mx-30">
         <h2 className="flex items-center gap-3 text-xl font-bold text-primary mb-5">
           <CalendarClock size={22} className="text-secondary" /> جلساتك القادمة
         </h2>
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
           <SessionCard
             subject="رياضيات"
             time="اليوم - 7:00 م"
@@ -84,14 +109,24 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="mt-10 mx-30">
+      <section className="mt-14 2xl:mx-30">
         <h2 className="flex items-center gap-3 text-xl font-bold text-primary mb-5">
           <Sparkles size={22} className="text-secondary" /> اقتراحات لك
         </h2>
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
           <RecommendedSessionCard />
 
           <RecommendedSessionCard />
+        </div>
+      </section>
+      <section className="mt-14 2xl:mx-30">
+        <h2 className="flex items-center gap-3 text-xl font-bold text-primary mb-5">
+          <BookOpen size={22} className="text-secondary" /> آخر جلساتك
+        </h2>
+        <div className="flex flex-col gap-4">
+          {recentSessions.map((session, index) => (
+            <RecentSessionCard key={index} {...session} />
+          ))}
         </div>
       </section>
     </>
