@@ -27,13 +27,48 @@ import {
 import { StudyGoal, StudyStyle, StudyTime } from "@/src/types/StudyMatching";
 import StepUniversityDetails from "@/src/components/StudyMatching/Steps/StepUniversityDetails";
 import UniversitySubjects from "@/src/components/Subjects/UniversitySubjects";
-import SkillDevelopment from "@/src/components/Subjects/SkillDevelopment";
+import SkillDevelopment, {
+  SKILL_OPTIONS,
+} from "@/src/components/Subjects/SkillDevelopment";
 import StudyTopics from "@/src/components/StudyTopics/StudyTopics";
 import UniversityStudyTopics from "@/src/components/StudyTopics/UniversityStudyTopics";
 import SkillStudyTopics from "@/src/components/StudyTopics/SkillStudyTopics";
 import StepGoal from "@/src/components/StudyMatching/Steps/StepGoal";
 import StepSummary from "@/src/components/StudyMatching/Steps/StepSummary";
-import { ArrowRight, Search } from "lucide-react";
+import { SUBJECT_LABELS } from "@/src/app/data/StudyOptions";
+import {
+  ArrowRight,
+  Search,
+  Sparkles,
+  UsersRound,
+  Check,
+  Clock,
+  BookOpen,
+  Zap,
+  Mic,
+  MessageSquare,
+  Bookmark,
+  Play,
+  VolumeX,
+  FlaskConical,
+} from "lucide-react";
+
+interface MatchedStudent {
+  id: string;
+  name: string;
+  avatarLetter: string;
+  avatarBg: string;
+  grade: string;
+  matchRate: number;
+  sameSubject: boolean;
+  sameGoal: boolean;
+  sameTime?: boolean;
+  silentStudy?: boolean;
+  audioPreference: string;
+  audioIcon: "mic" | "mic-cam" | "chat";
+  availability: string;
+  isReadyNow: boolean;
+}
 
 export default function StudyStepper() {
   const [currentStep, setCurrentStep] = useState("level");
@@ -70,6 +105,10 @@ export default function StudyStepper() {
   const [academicTrack, setAcademicTrack] = useState<AcademicTrack | null>(
     null,
   );
+
+  const [isMatching, setIsMatching] = useState(false);
+  const [matchingDone, setMatchingDone] = useState(false);
+  const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
 
   const UniversityStep = () => {
     if (educationLevel === "university_student") {
@@ -140,6 +179,426 @@ export default function StudyStepper() {
     setGoal(null);
     setPeopleCount(null);
   };
+
+  const handleMatching = () => {
+    setIsMatching(true);
+    setMatchingDone(false);
+
+    setTimeout(() => {
+      const count = peopleCount ?? 1;
+      const initialIds = ["student-1", "student-2", "student-3", "student-4"].slice(
+        0,
+        count,
+      );
+      setSelectedStudentIds(initialIds);
+      setIsMatching(false);
+      setMatchingDone(true);
+    }, 2500);
+  };
+
+  // Helper texts for selected choices
+  const getSubjectDisplay = () => {
+  const subjects =
+    educationLevel === "university_student"
+      ? universitySubjects
+      : selectedSubjects.map((s) => SUBJECT_LABELS[s] ?? s);
+
+  if (subjects.length === 0) return "مذاكرة عامة";
+  if (subjects.length === 1) return subjects[0];
+  if (subjects.length === 2) return `${subjects[0]}، ${subjects[1]}`;
+  return `${subjects[0]} + ${subjects.length - 1} مواد أخرى`;
+};
+
+  const getEducationLevelLabel = () => {
+    switch (educationLevel) {
+      case "high_school_1":
+        return "الصف الأول الثانوي";
+      case "high_school_2":
+        return "الصف الثاني الثانوي";
+      case "high_school_3":
+        return "الصف الثالث الثانوي";
+      case "university_student":
+        return selectedFaculty ? `جامعي - ${selectedFaculty}` : "طالب جامعي";
+      case "skill_development":
+        return "تطوير مهارات";
+      default:
+        return "الصف الأول الثانوي";
+    }
+  };
+
+  const getStyleLabel = () => {
+    return studyStyle === "quiet" ? "هدوء وتركيز" : "تفاعل ونقاش";
+  };
+
+  const getGoalLabel = () => {
+    switch (goal) {
+      case "homework":
+        return "واجب";
+      case "revision":
+        return "مراجعة";
+      default:
+        return "مذاكرة";
+    }
+  };
+
+  const getTimeLabel = () => {
+    switch (studyTime) {
+      case "morning":
+        return "الصبح";
+      case "afternoon":
+        return "بعد الظهر";
+      case "night":
+        return "بالليل";
+      default:
+        return "دلوقتي";
+    }
+  };
+
+  const getPeopleCountLabel = () => {
+    if (peopleCount === 1) return "شخص واحد";
+    if (peopleCount === 2) return "شخصين";
+    if (peopleCount) return `${peopleCount} أشخاص`;
+    return "شخصين";
+  };
+
+  // Mock matched students list matching the design
+  const matchedStudents: MatchedStudent[] = [
+    {
+      id: "student-1",
+      name: "ملك",
+      avatarLetter: "م",
+      avatarBg: "bg-[#103b3e]",
+      grade: getEducationLevelLabel(),
+      matchRate: 95,
+      sameSubject: true,
+      sameGoal: true,
+      audioPreference: "مايك وكاميرا مفتوحين",
+      audioIcon: "mic-cam",
+      availability: "جاهزة لبدء الجلسة الآن",
+      isReadyNow: true,
+    },
+    {
+      id: "student-2",
+      name: "يوسف عمر",
+      avatarLetter: "ي",
+      avatarBg: "bg-[#0b6b88]",
+      grade: getEducationLevelLabel(),
+      matchRate: 91,
+      sameSubject: true,
+      sameGoal: true,
+      sameTime: true,
+      audioPreference: "مايك فقط",
+      audioIcon: "mic",
+      availability: "جاهز لبدء الجلسة الآن",
+      isReadyNow: true,
+    },
+    {
+      id: "student-3",
+      name: "ندى أحمد",
+      avatarLetter: "ن",
+      avatarBg: "bg-[#713f12]",
+      grade: getEducationLevelLabel(),
+      matchRate: 84,
+      sameSubject: true,
+      sameGoal: false,
+      silentStudy: true,
+      audioPreference: "شات فقط",
+      audioIcon: "chat",
+      availability: "متاحة خلال 5 دقائق",
+      isReadyNow: false,
+    },
+    {
+      id: "student-4",
+      name: "أحمد محمود",
+      avatarLetter: "أ",
+      avatarBg: "bg-[#0e5c68]",
+      grade: getEducationLevelLabel(),
+      matchRate: 88,
+      sameSubject: true,
+      sameGoal: true,
+      audioPreference: "مايك فقط",
+      audioIcon: "mic",
+      availability: "جاهز لبدء الجلسة الآن",
+      isReadyNow: true,
+    },
+  ];
+
+  // 1. شاشة جاري المطابقة (Loading State)
+  if (isMatching) {
+    return (
+      <main
+        dir="rtl"
+        className="flex min-h-[75vh] items-center justify-center py-10 px-4"
+      >
+        <div className="w-full max-w-lg rounded-4xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
+          {/* Animated radar effect */}
+          <div className="relative mx-auto mb-6 flex size-24 items-center justify-center">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#17a6d1]/20 duration-1000" />
+            <span className="absolute inline-flex size-20 rounded-full bg-[#ddf5ff]" />
+            <div className="relative flex size-14 items-center justify-center rounded-full bg-[#17a6d1] text-white shadow-md">
+              <Search className="size-7 animate-pulse" />
+            </div>
+          </div>
+
+          <span className="inline-flex rounded-full bg-[#fff1c7] px-4 py-1.5 text-xs font-bold text-[#34545a]">
+            جاري المطابقة
+          </span>
+
+          <h2 className="mt-4 text-2xl font-black text-[#103b3e] sm:text-3xl">
+            بندور على ناس تناسبك...
+          </h2>
+
+          <p className="mt-2 text-sm text-slate-500 sm:text-base leading-relaxed">
+            ثواني وبنطابق اختياراتك مع أفضل الزملاء المناسبين لأهدافك ومواعيدك.
+          </p>
+
+          <div className="mt-8 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+            <div className="h-full w-2/3 animate-[pulse_1.5s_ease-in-out_infinite] rounded-full bg-[#17a6d1]" />
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // 2. شاشة تم العثور على الطلبة المناسبين (Matched State - المطابقة للتصميم المرفق)
+  if (matchingDone) {
+    const count = peopleCount ?? 1;
+    const displayedStudents = matchedStudents.slice(0, count);
+
+    const toggleStudent = (id: string) => {
+      setSelectedStudentIds((prev) =>
+        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+      );
+    };
+
+    return (
+      <main
+        dir="rtl"
+        className="py-4 overflow-y-auto flex flex-col justify-center items-center relative"
+      >
+        <div className="w-full max-w-3xl">
+          {/* Top Return link */}
+          <button
+            type="button"
+            onClick={() => {
+              setMatchingDone(false);
+              setIsMatching(false);
+            }}
+            className="flex items-center justify-center mb-4 gap-2 text-sm font-bold text-[#103b3e] transition-colors hover:text-[#17a6d1] cursor-pointer"
+          >
+            <ArrowRight size={17} className="mt-0.5" />
+            <span>تعديل الاختيارات</span>
+          </button>
+
+          {/* Header */}
+          <header className="text-center mb-10">
+            <h1 className="text-2xl sm:text-3xl font-black text-[#103b3e] flex items-center justify-center gap-2">
+              <span className="text-[#f59e0b]">✨</span>
+              <span>
+                {count === 1
+                  ? "لقينا 1 من الطلبة المناسبين"
+                  : `لقينا ${count} من الطلبة المناسبين`}
+              </span>
+            </h1>
+
+            {/* Filter tags pills */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              {/* Subject Tag */}
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-[#17a6d1]/20 bg-[#ddf5ff] px-3.5 py-1.5 text-xs font-bold text-[#103b3e]">
+                <FlaskConical size={14} className="text-[#17a6d1]" />
+                <span>{getSubjectDisplay()}</span>
+              </div>
+
+              {/* People Count Tag */}
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-[#17a6d1]/20 bg-[#ddf5ff] px-3.5 py-1.5 text-xs font-bold text-[#103b3e]">
+                <UsersRound size={14} className="text-[#17a6d1]" />
+                <span>{getPeopleCountLabel()}</span>
+              </div>
+
+              {/* Study Style Tag */}
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-[#17a6d1]/20 bg-[#ddf5ff] px-3.5 py-1.5 text-xs font-bold text-[#103b3e]">
+                <MessageSquare size={14} className="text-[#17a6d1]" />
+                <span>{getStyleLabel()}</span>
+              </div>
+
+              {/* Goal Tag */}
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-[#17a6d1]/20 bg-[#ddf5ff] px-3.5 py-1.5 text-xs font-bold text-[#103b3e]">
+                <BookOpen size={14} className="text-[#17a6d1]" />
+                <span>{getGoalLabel()}</span>
+              </div>
+
+              {/* Time Tag */}
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-[#17a6d1]/20 bg-[#ddf5ff] px-3.5 py-1.5 text-xs font-bold text-[#103b3e]">
+                <Clock size={14} className="text-[#17a6d1]" />
+                <span>{getTimeLabel()}</span>
+              </div>
+            </div>
+          </header>
+
+          {/* Cards List */}
+          <div className="space-y-4">
+            {displayedStudents.map((student) => {
+              const isSelected = selectedStudentIds.includes(student.id);
+
+              return (
+                <div
+                  key={student.id}
+                  onClick={() => toggleStudent(student.id)}
+                  className={`group relative cursor-pointer rounded-3xl border-2 p-5 sm:p-6 transition-all duration-300 ${
+                    isSelected
+                      ? "border-[#17a6d1] bg-white shadow-sm"
+                      : "border-slate-200 bg-white hover:border-[#17a6d1]/60 "
+                  }`}
+                >
+                  {/* Selection Radio Circle */}
+                  <div
+                    className={`absolute -top-3 -left-3 z-10 flex size-8 items-center justify-center rounded-full shadow-sm transition-all duration-200 ${
+                      isSelected
+                        ? "bg-[#17a6d1] text-white border-2 border-white ring-2 ring-[#17a6d1]"
+                        : "border-2 border-slate-300 bg-white group-hover:border-[#17a6d1]/60"
+                    }`}
+                  >
+                    {isSelected && (
+                      <Check size={18} strokeWidth={3} className="text-white" />
+                    )}
+                  </div>
+
+                  {/* Main Info Row */}
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:pl-10">
+                    {/* User Profile */}
+                    <div className="flex items-center gap-3.5">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h2 className="text-lg font-black text-[#103b3e]">
+                            {student.name}
+                          </h2>
+                          <span className="size-2 rounded-full bg-emerald-500" />
+                        </div>
+                        <p className="mt-0.5 text-xs font-semibold text-slate-400">
+                          {student.grade}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Badges */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      {/* Match Rate */}
+                      <div className="inline-flex items-center gap-1 rounded-full bg-[#e7faef] px-3 py-1 text-xs font-bold text-[#16a34a]">
+                        <Sparkles size={13} />
+                        <span>نسبة التوافق {student.matchRate}%</span>
+                      </div>
+
+                      {/* Same Subject */}
+                      {student.sameSubject && (
+                        <div className="inline-flex items-center gap-1 rounded-full bg-[#e7faef] px-3 py-1 text-xs font-bold text-[#16a34a]">
+                          <Check size={13} strokeWidth={2.5} />
+                          <span>نفس المادة</span>
+                        </div>
+                      )}
+
+                      {/* Same Goal */}
+                      {student.sameGoal && (
+                        <div className="inline-flex items-center gap-1 rounded-full bg-[#e7faef] px-3 py-1 text-xs font-bold text-[#16a34a]">
+                          <Check size={13} strokeWidth={2.5} />
+                          <span>نفس الهدف</span>
+                        </div>
+                      )}
+
+                      {/* Same Time */}
+                      {student.sameTime && (
+                        <div className="inline-flex items-center gap-1 rounded-full bg-[#e7faef] px-3 py-1 text-xs font-bold text-[#16a34a]">
+                          <Clock size={13} />
+                          <span>نفس التوقيت</span>
+                        </div>
+                      )}
+
+                      {/* Silent Study */}
+                      {student.silentStudy && (
+                        <div className="inline-flex items-center gap-1 rounded-full bg-[#e0efff] px-3 py-1 text-xs font-bold text-[#2563eb]">
+                          <VolumeX size={13} />
+                          <span>مذاكرة صامتة</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Bottom details row */}
+                  <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-slate-100 pt-3 text-xs gap-2">
+                    {/* Audio Preference */}
+                    <div className="flex items-center gap-1.5 text-slate-500 font-medium">
+                      <span>تفضيل الصوت: {student.audioPreference}</span>
+                      {student.audioIcon === "chat" ? (
+                        <MessageSquare size={14} className="text-slate-400" />
+                      ) : (
+                        <Mic size={14} className="text-slate-400" />
+                      )}
+                    </div>
+
+                    {/* Availability */}
+                    <div className="flex items-center gap-1.5">
+                      {student.isReadyNow ? (
+                        <div className="inline-flex items-center gap-1 font-bold text-[#17a6d1]">
+                          <Zap size={14} className="fill-[#17a6d1]" />
+                          <span>{student.availability}</span>
+                        </div>
+                      ) : (
+                        <div className="inline-flex items-center gap-1 font-medium text-slate-500">
+                          <Clock size={14} />
+                          <span>{student.availability}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Bottom Action Bar */}
+          <div className="mt-8 flex items-center justify-between rounded-full border border-[#cbd8e8] bg-white px-5 py-3 shadow-sm sm:px-6 sm:py-3.5">
+            {/* Right side in RTL: Status text */}
+            <div className="flex items-center gap-2 text-[#103b3e]">
+              <UsersRound className="size-5 text-[#17a6d1]" />
+              <span className="text-base font-bold">
+                {selectedStudentIds.length === 0
+                  ? "لم تختر أي زميل بعد"
+                  : selectedStudentIds.length === 1
+                    ? `اخترت: ${displayedStudents.find((s) => s.id === selectedStudentIds[0])?.name ?? "زميل واحد"}${count > 1 ? ` (1 من ${count})` : ""}`
+                    : selectedStudentIds.length === count
+                      ? `اكتملت المجموعة (${count} من ${count})`
+                      : `اخترت ${selectedStudentIds.length} من ${count} زملاء`}
+              </span>
+            </div>
+
+            {/* Left side in RTL: Action buttons */}
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                className="flex items-center gap-1.5 rounded-full border border-[#cbd8e8] bg-[#f3f7fd] px-5 py-3 text-xs sm:text-sm font-bold text-[#103b3e] transition hover:bg-[#e5effb] hover:text-[#0c2e30] cursor-pointer"
+              >
+                <Bookmark size={15} />
+                <span>احفظها لبعدين</span>
+              </button>
+
+              <button
+                type="button"
+                disabled={selectedStudentIds.length === 0}
+                className="flex items-center gap-2 rounded-full bg-[#17a6d1] px-6 py-3 text-xs sm:text-sm font-bold text-white transition hover:bg-[#1395bc] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60 cursor-pointer shadow-sm"
+              >
+                <Play size={14} className="fill-current" />
+                <span>
+                  {selectedStudentIds.length === 1
+                    ? `ابدأ الجلسة مع ${displayedStudents.find((s) => s.id === selectedStudentIds[0])?.name ?? "الزميل"}`
+                    : `ابدأ الجلسة مع المجموعة (${selectedStudentIds.length})`}
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // 3. شاشة الخطوات (Stepper)
   return (
     <main dir="rtl" className="py-5 overflow-y-auto">
       <div className="mx-auto w-full max-w-190">
@@ -370,7 +829,11 @@ export default function StudyStepper() {
 
                   <button
                     type="button"
-                    onClick={nextStep}
+                    onClick={
+                      currentIndex === steps.length - 1
+                        ? handleMatching
+                        : nextStep
+                    }
                     disabled={
                       (currentStep === "level" && isLevelStepDisabled) ||
                       (currentStep === "subjects" &&
