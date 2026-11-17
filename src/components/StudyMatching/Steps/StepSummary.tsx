@@ -76,21 +76,17 @@ export default function StepSummary({
       label: "المادة",
       value: getSubjectText(),
     },
-    {
-      label: "الوقت",
-      value: studyTime && TIME_LABELS[studyTime],
-    },
-    {
-      label: "عدد الأشخاص",
-      value: getPeopleCountText(peopleCount),
+   {
+      label: "الهدف",
+      value: goal && GOAL_LABELS[goal],
     },
     {
       label: "طريقة المذاكرة",
       value: studyStyle && STYLE_LABELS[studyStyle],
     },
-    {
-      label: "الهدف",
-      value: goal && GOAL_LABELS[goal],
+     {
+      label: "عدد الأشخاص",
+      value: getPeopleCountText(peopleCount),
     },
   ];
 

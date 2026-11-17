@@ -9,7 +9,6 @@ import {
   StepperList,
 } from "@/components/ui/stepper";
 import StepSubjects from "@/src/components/StudyMatching/Steps/StepSubjects";
-import StepPeople from "@/src/components/StudyMatching/Steps/StepPeople";
 import StepEducation from "@/src/components/StudyMatching/Steps/StepEducation";
 import StepPreferences from "@/src/components/StudyMatching/Steps/StepPreferences";
 import {
@@ -33,7 +32,6 @@ import SkillDevelopment, {
 import StudyTopics from "@/src/components/StudyTopics/StudyTopics";
 import UniversityStudyTopics from "@/src/components/StudyTopics/UniversityStudyTopics";
 import SkillStudyTopics from "@/src/components/StudyTopics/SkillStudyTopics";
-import StepGoal from "@/src/components/StudyMatching/Steps/StepGoal";
 import StepSummary from "@/src/components/StudyMatching/Steps/StepSummary";
 import { SUBJECT_LABELS } from "@/src/app/data/StudyOptions";
 import {
@@ -143,8 +141,6 @@ export default function StudyStepper() {
     { value: "subjects", title: "هتذاكر إيه؟" },
     ...TopicsStep(),
     { value: "preferences", title: "تحب تذاكر إزاي؟" },
-    { value: "goal", title: "إيه هدفك من المذاكرة؟" },
-    { value: "people", title: "هتذاكر مع كام شخص؟" },
     { value: "complete", title: "اختياراتك" },
   ];
   const currentIndex = steps.findIndex((step) => step.value === currentStep);
@@ -185,12 +181,7 @@ export default function StudyStepper() {
     setMatchingDone(false);
 
     setTimeout(() => {
-      const count = peopleCount ?? 1;
-      const initialIds = ["student-1", "student-2", "student-3", "student-4"].slice(
-        0,
-        count,
-      );
-      setSelectedStudentIds(initialIds);
+      setSelectedStudentIds([]);
       setIsMatching(false);
       setMatchingDone(true);
     }, 2500);
@@ -198,16 +189,16 @@ export default function StudyStepper() {
 
   // Helper texts for selected choices
   const getSubjectDisplay = () => {
-  const subjects =
-    educationLevel === "university_student"
-      ? universitySubjects
-      : selectedSubjects.map((s) => SUBJECT_LABELS[s] ?? s);
+    const subjects =
+      educationLevel === "university_student"
+        ? universitySubjects
+        : selectedSubjects.map((s) => SUBJECT_LABELS[s] ?? s);
 
-  if (subjects.length === 0) return "مذاكرة عامة";
-  if (subjects.length === 1) return subjects[0];
-  if (subjects.length === 2) return `${subjects[0]}، ${subjects[1]}`;
-  return `${subjects[0]} + ${subjects.length - 1} مواد أخرى`;
-};
+    if (subjects.length === 0) return "مذاكرة عامة";
+    if (subjects.length === 1) return subjects[0];
+    if (subjects.length === 2) return `${subjects[0]} ، ${subjects[1]}`;
+    return `${subjects[0]} + ${subjects.length - 1} مواد أخرى`;
+  };
 
   const getEducationLevelLabel = () => {
     switch (educationLevel) {
@@ -321,6 +312,20 @@ export default function StudyStepper() {
       availability: "جاهز لبدء الجلسة الآن",
       isReadyNow: true,
     },
+    {
+      id: "student-5",
+      name: "سارة علي",
+      avatarLetter: "س",
+      avatarBg: "bg-[#103b3e]",
+      grade: getEducationLevelLabel(),
+      matchRate: 86,
+      sameSubject: true,
+      sameGoal: true,
+      audioPreference: "مايك فقط",
+      audioIcon: "mic",
+      availability: "جاهزة لبدء الجلسة الآن",
+      isReadyNow: true,
+    },
   ];
 
   // 1. شاشة جاري المطابقة (Loading State)
@@ -362,14 +367,24 @@ export default function StudyStepper() {
 
   // 2. شاشة تم العثور على الطلبة المناسبين (Matched State - المطابقة للتصميم المرفق)
   if (matchingDone) {
-    const count = peopleCount ?? 1;
-    const displayedStudents = matchedStudents.slice(0, count);
+    const targetCount = peopleCount ?? 1;
 
     const toggleStudent = (id: string) => {
-      setSelectedStudentIds((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
-      );
+      setSelectedStudentIds((prev) => {
+        if (prev.includes(id)) {
+          return prev.filter((item) => item !== id);
+        }
+        if (prev.length >= targetCount) {
+          if (targetCount === 1) {
+            return [id];
+          }
+          return prev;
+        }
+        return [...prev, id];
+      });
     };
+
+    const isComplete = selectedStudentIds.length === targetCount;
 
     return (
       <main
@@ -393,13 +408,17 @@ export default function StudyStepper() {
           {/* Header */}
           <header className="text-center mb-10">
             <h1 className="text-2xl sm:text-3xl font-black text-[#103b3e] flex items-center justify-center gap-2">
+              <span>لقينا {matchedStudents.length} من الطلبة المناسبين</span>
               <span className="text-[#f59e0b]">✨</span>
-              <span>
-                {count === 1
-                  ? "لقينا 1 من الطلبة المناسبين"
-                  : `لقينا ${count} من الطلبة المناسبين`}
-              </span>
             </h1>
+
+            <p className="mt-2 text-sm font-medium text-slate-500">
+              اختر{" "}
+              {targetCount === 1
+                ? "زميلاً واحداً"
+                : `${targetCount} من الزملاء`}{" "}
+              لبدء جلسة المذاكرة معاهم.
+            </p>
 
             {/* Filter tags pills */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -437,7 +456,7 @@ export default function StudyStepper() {
 
           {/* Cards List */}
           <div className="space-y-4">
-            {displayedStudents.map((student) => {
+            {matchedStudents.map((student) => {
               const isSelected = selectedStudentIds.includes(student.id);
 
               return (
@@ -560,12 +579,10 @@ export default function StudyStepper() {
               <UsersRound className="size-5 text-[#17a6d1]" />
               <span className="text-base font-bold">
                 {selectedStudentIds.length === 0
-                  ? "لم تختر أي زميل بعد"
-                  : selectedStudentIds.length === 1
-                    ? `اخترت: ${displayedStudents.find((s) => s.id === selectedStudentIds[0])?.name ?? "زميل واحد"}${count > 1 ? ` (1 من ${count})` : ""}`
-                    : selectedStudentIds.length === count
-                      ? `اكتملت المجموعة (${count} من ${count})`
-                      : `اخترت ${selectedStudentIds.length} من ${count} زملاء`}
+                  ? `لم تختر أي زميل بعد (مطلوب: ${targetCount})`
+                  : isComplete
+                    ? `اكتمل العدد (${targetCount} من ${targetCount}) 🎉`
+                    : `اخترت ${selectedStudentIds.length} من ${targetCount} (باقي ${targetCount - selectedStudentIds.length})`}
               </span>
             </div>
 
@@ -573,22 +590,14 @@ export default function StudyStepper() {
             <div className="flex items-center gap-2.5">
               <button
                 type="button"
-                className="flex items-center gap-1.5 rounded-full border border-[#cbd8e8] bg-[#f3f7fd] px-5 py-3 text-xs sm:text-sm font-bold text-[#103b3e] transition hover:bg-[#e5effb] hover:text-[#0c2e30] cursor-pointer"
-              >
-                <Bookmark size={15} />
-                <span>احفظها لبعدين</span>
-              </button>
-
-              <button
-                type="button"
-                disabled={selectedStudentIds.length === 0}
+                disabled={!isComplete}
                 className="flex items-center gap-2 rounded-full bg-[#17a6d1] px-6 py-3 text-xs sm:text-sm font-bold text-white transition hover:bg-[#1395bc] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60 cursor-pointer shadow-sm"
               >
                 <Play size={14} className="fill-current" />
                 <span>
-                  {selectedStudentIds.length === 1
-                    ? `ابدأ الجلسة مع ${displayedStudents.find((s) => s.id === selectedStudentIds[0])?.name ?? "الزميل"}`
-                    : `ابدأ الجلسة مع المجموعة (${selectedStudentIds.length})`}
+                  {targetCount === 1
+                    ? "ابدأ الجلسة مع الزميل"
+                    : "ابدأ الجلسة مع المجموعة"}
                 </span>
               </button>
             </div>
@@ -748,17 +757,12 @@ export default function StudyStepper() {
                 ) : step.value === "preferences" ? (
                   <StepPreferences
                     studyStyle={studyStyle}
-                    studyTime={studyTime}
-                    onStudyStyleChange={setStudyStyle}
-                    onStudyTimeChange={setStudyTime}
-                  />
-                ) : step.value === "people" ? (
-                  <StepPeople
+                    goal={goal}
                     peopleCount={peopleCount}
-                    onChange={setPeopleCount}
+                    onStudyStyleChange={setStudyStyle}
+                    onGoalChange={setGoal}
+                    onPeopleCountChange={setPeopleCount}
                   />
-                ) : step.value === "goal" ? (
-                  <StepGoal goal={goal} onChange={setGoal} />
                 ) : step.value === "level" ? (
                   <StepEducation
                     educationLevel={educationLevel}
@@ -858,10 +862,10 @@ export default function StudyStepper() {
                                   (currentSelectedTopics[subject] ?? [])
                                     .length > 0,
                               ))) ||
-                      (currentStep === "goal" && goal === null) ||
                       (currentStep === "preferences" &&
-                        (studyStyle === null || studyTime === null)) ||
-                      (currentStep === "people" && peopleCount === null)
+                        (studyStyle === null ||
+                          goal === null ||
+                          peopleCount === null))
                     }
                     className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#17a6d1] py-3.5 font-bold text-white transition-colors hover:bg-[#1395bc] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60"
                   >
