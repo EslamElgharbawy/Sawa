@@ -86,9 +86,8 @@ export default function StepPreferences({
   return (
     <div dir="rtl" className="w-full space-y-8">
       {/* 1. Study Style Section */}
-      <div className="space-y-3">
+      <div className="space-y-6">
         <div className="flex items-center gap-2">
-          <span className="size-2 rounded-full bg-[#17A6D1]" />
           <h3 className="text-base font-bold text-[#103B3E] sm:text-lg">
             طريقة المذاكرة
           </h3>
@@ -155,9 +154,8 @@ export default function StepPreferences({
       </div>
 
       {/* 2. Study Goal Section */}
-      <div className="space-y-3 border-t border-slate-100 pt-6">
+      <div className="space-y-6 border-t border-slate-100 pt-8">
         <div className="flex items-center gap-2">
-          <span className="size-2 rounded-full bg-[#17A6D1]" />
           <h3 className="text-base font-bold text-[#103B3E] sm:text-lg">
             إيه هدفك من المذاكرة؟
           </h3>
@@ -222,9 +220,8 @@ export default function StepPreferences({
       </div>
 
       {/* 3. People Count Section */}
-      <div className="space-y-3 border-t border-slate-100 pt-6">
+      <div className="space-y-6 border-t border-slate-100 pt-8">
         <div className="flex items-center gap-2">
-          <span className="size-2 rounded-full bg-[#17A6D1]" />
           <h3 className="text-base font-bold text-[#103B3E] sm:text-lg">
             هتذاكر مع كام شخص؟
           </h3>
@@ -252,12 +249,12 @@ export default function StepPreferences({
                 `}
               >
                 <UsersRound
-                  size={24}
+                  size={22}
                   strokeWidth={2}
                   className={isSelected ? "text-[#17A6D1]" : "text-slate-400"}
                 />
 
-                <span className="text-2xl font-black">{count}</span>
+                <span className="text-xl font-black">{count}</span>
               </button>
             );
           })}

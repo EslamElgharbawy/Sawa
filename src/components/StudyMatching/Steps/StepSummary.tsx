@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
 import { EducationLevel } from "@/src/types/StudyEducation";
 import { SecondarySubject } from "@/src/types/StudySubjects";
-import { StudyGoal, StudyStyle, StudyTime } from "@/src/types/StudyMatching";
+import { StudyGoal, StudyStyle } from "@/src/types/StudyMatching";
 import { SKILL_OPTIONS } from "@/src/components/Subjects/SkillDevelopment";
 import { SUBJECT_LABELS } from "@/src/app/data/StudyOptions";
 
@@ -12,22 +11,17 @@ interface StepSummaryProps {
   selectedSubjects: SecondarySubject[];
   universitySubjects: string[];
   selectedSkills: string | null;
-  studyTime: StudyTime | null;
   studyStyle: StudyStyle | null;
   goal: StudyGoal | null;
-  peopleCount: number | null;
+  peopleCount?: number | null;
+  selectedTopics?: Partial<Record<SecondarySubject, string[]>> | Record<string, string[]>;
+  universitySelectedTopics?: Record<string, string[]>;
+  skillSelectedTopics?: string[];
 }
 
 const STYLE_LABELS: Record<StudyStyle, string> = {
   discussion: "تفاعل ونقاش",
   quiet: "هدوء",
-};
-
-const TIME_LABELS: Record<StudyTime, string> = {
-  morning: "الصبح (صباحاً)",
-  afternoon: "بعد الظهر",
-  night: "بالليل (مساءً)",
-  anytime: "أي وقت مناسب",
 };
 
 const GOAL_LABELS: Record<StudyGoal, string> = {
@@ -41,34 +35,47 @@ export default function StepSummary({
   selectedSubjects,
   universitySubjects,
   selectedSkills,
-  studyTime,
   studyStyle,
   goal,
-  peopleCount,
+  selectedTopics,
+  universitySelectedTopics,
+  skillSelectedTopics,
 }: StepSummaryProps) {
   const getSubjectText = () => {
     if (educationLevel === "university_student") {
-      return universitySubjects.map((sub) => (
-        <span key={sub}>{sub}</span>
-      ));
+      if (universitySubjects.length === 0) return "مذاكرة عامة";
+      return universitySubjects.join(" ، ");
     }
 
     if (educationLevel === "skill_development") {
       const skill = SKILL_OPTIONS.find((s) => s.id === selectedSkills);
-      return skill ? skill.title : selectedSkills;
+      return skill ? skill.title : selectedSkills ?? "تطوير مهارات";
     }
 
     if (selectedSubjects.length > 0) {
-      return selectedSubjects.map((sub) => (
-        <span key={sub}>{SUBJECT_LABELS[sub] ?? sub}</span>
-      ));
+      return selectedSubjects
+        .map((sub) => SUBJECT_LABELS[sub] ?? sub)
+        .join(" ، ");
     }
+
+    return "مذاكرة عامة";
   };
 
-  const getPeopleCountText = (count: number | null) => {
-    if (count === 1) return "شخص واحد";
-    if (count === 2) return "2 أشخاص";
-    return `${count} أشخاص`;
+  const getTopicsText = () => {
+    let topics: string[] = [];
+
+    if (educationLevel === "university_student" && universitySelectedTopics) {
+      topics = Object.values(universitySelectedTopics).flat();
+    } else if (educationLevel === "skill_development" && skillSelectedTopics) {
+      topics = skillSelectedTopics;
+    } else if (selectedTopics) {
+      topics = Object.values(selectedTopics).flat();
+    }
+
+    if (topics.length === 0) return "كل الدروس والمواضيع";
+    if (topics.length === 1) return topics[0];
+    if (topics.length === 2) return `${topics[0]} ، ${topics[1]}`;
+    return `${topics[0]} + ${topics.length - 1} مواضيع أخرى`;
   };
 
   const summaryItems = [
@@ -76,17 +83,17 @@ export default function StepSummary({
       label: "المادة",
       value: getSubjectText(),
     },
-   {
-      label: "الهدف",
-      value: goal && GOAL_LABELS[goal],
+    {
+      label: "الدروس / المواضيع",
+      value: getTopicsText(),
     },
     {
       label: "طريقة المذاكرة",
-      value: studyStyle && STYLE_LABELS[studyStyle],
+      value: (studyStyle && STYLE_LABELS[studyStyle]) || "غير محدد",
     },
-     {
-      label: "عدد الأشخاص",
-      value: getPeopleCountText(peopleCount),
+    {
+      label: "الهدف",
+      value: (goal && GOAL_LABELS[goal]) || "مذاكرة",
     },
   ];
 
@@ -96,12 +103,12 @@ export default function StepSummary({
         {summaryItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center justify-between px-6 py-4 "
+            className="flex items-center justify-between px-6 py-4"
           >
             <span className="text-sm font-medium text-slate-400 sm:text-base">
               {item.label}
             </span>
-            <div className="flex flex-col items-end gap-1 text-sm font-bold text-[#103B3E] sm:text-base">
+            <div className="flex flex-col items-end gap-1 text-sm font-bold text-[#103B3E] sm:text-base text-left">
               {item.value}
             </div>
           </div>

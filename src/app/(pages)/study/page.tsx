@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Stepper,
   StepperContent,
@@ -69,6 +70,7 @@ interface MatchedStudent {
 }
 
 export default function StudyStepper() {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState("level");
   const [selectedFaculty, setSelectedFaculty] = useState<
     UniversityFaculty | ""
@@ -90,7 +92,6 @@ export default function StudyStepper() {
   >(undefined);
 
   const [studyStyle, setStudyStyle] = useState<StudyStyle | null>(null);
-  const [studyTime, setStudyTime] = useState<StudyTime | null>(null);
   const [goal, setGoal] = useState<StudyGoal | null>(null);
 
   const [peopleCount, setPeopleCount] = useState<number | null>(null);
@@ -170,10 +171,6 @@ export default function StudyStepper() {
     setSkillSelectedTopics([]);
     setUniversitySubjects([]);
     setUniversitySelectedTopics({});
-    setStudyStyle(null);
-    setStudyTime(null);
-    setGoal(null);
-    setPeopleCount(null);
   };
 
   const handleMatching = () => {
@@ -229,19 +226,6 @@ export default function StudyStepper() {
         return "مراجعة";
       default:
         return "مذاكرة";
-    }
-  };
-
-  const getTimeLabel = () => {
-    switch (studyTime) {
-      case "morning":
-        return "الصبح";
-      case "afternoon":
-        return "بعد الظهر";
-      case "night":
-        return "بالليل";
-      default:
-        return "دلوقتي";
     }
   };
 
@@ -389,9 +373,9 @@ export default function StudyStepper() {
     return (
       <main
         dir="rtl"
-        className="py-4 overflow-y-auto flex flex-col justify-center items-center relative"
+        className="py-4 overflow-y-auto flex flex-col items-center relative"
       >
-        <div className="w-full max-w-3xl">
+        <div className="w-full px-12 lg:px-20 mb-4 flex justify-start">
           {/* Top Return link */}
           <button
             type="button"
@@ -399,12 +383,13 @@ export default function StudyStepper() {
               setMatchingDone(false);
               setIsMatching(false);
             }}
-            className="flex items-center justify-center mb-4 gap-2 text-sm font-bold text-[#103b3e] transition-colors hover:text-[#17a6d1] cursor-pointer"
+            className="flex items-center justify-center gap-2 text-sm font-bold text-[#103b3e] transition-colors duration-300 hover:text-[#17a6d1] cursor-pointer"
           >
             <ArrowRight size={17} className="mt-0.5" />
             <span>تعديل الاختيارات</span>
           </button>
-
+        </div>
+        <div className="w-full max-w-3xl">
           {/* Header */}
           <header className="text-center mb-10">
             <h1 className="text-2xl sm:text-3xl font-black text-[#103b3e] flex items-center justify-center gap-2">
@@ -444,12 +429,6 @@ export default function StudyStepper() {
               <div className="inline-flex items-center gap-1.5 rounded-full border border-[#17a6d1]/20 bg-[#ddf5ff] px-3.5 py-1.5 text-xs font-bold text-[#103b3e]">
                 <BookOpen size={14} className="text-[#17a6d1]" />
                 <span>{getGoalLabel()}</span>
-              </div>
-
-              {/* Time Tag */}
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-[#17a6d1]/20 bg-[#ddf5ff] px-3.5 py-1.5 text-xs font-bold text-[#103b3e]">
-                <Clock size={14} className="text-[#17a6d1]" />
-                <span>{getTimeLabel()}</span>
               </div>
             </div>
           </header>
@@ -523,14 +502,6 @@ export default function StudyStepper() {
                         </div>
                       )}
 
-                      {/* Same Time */}
-                      {student.sameTime && (
-                        <div className="inline-flex items-center gap-1 rounded-full bg-[#e7faef] px-3 py-1 text-xs font-bold text-[#16a34a]">
-                          <Clock size={13} />
-                          <span>نفس التوقيت</span>
-                        </div>
-                      )}
-
                       {/* Silent Study */}
                       {student.silentStudy && (
                         <div className="inline-flex items-center gap-1 rounded-full bg-[#e0efff] px-3 py-1 text-xs font-bold text-[#2563eb]">
@@ -579,10 +550,10 @@ export default function StudyStepper() {
               <UsersRound className="size-5 text-[#17a6d1]" />
               <span className="text-base font-bold">
                 {selectedStudentIds.length === 0
-                  ? `لم تختر أي زميل بعد (مطلوب: ${targetCount})`
+                  ? `اختر ${targetCount === 1 ? "شخص يذاكر معاك" : `${targetCount} يذاكروا معاك`}`
                   : isComplete
-                    ? `اكتمل العدد (${targetCount} من ${targetCount}) 🎉`
-                    : `اخترت ${selectedStudentIds.length} من ${targetCount} (باقي ${targetCount - selectedStudentIds.length})`}
+                    ? `كده كملنا العدد (${targetCount} من ${targetCount})`
+                    : `اخترت ${selectedStudentIds.length} من ${targetCount} (فاضل ${targetCount - selectedStudentIds.length})`}
               </span>
             </div>
 
@@ -591,14 +562,19 @@ export default function StudyStepper() {
               <button
                 type="button"
                 disabled={!isComplete}
+                onClick={() => {
+                  const query = new URLSearchParams({
+                    students: selectedStudentIds.join(","),
+                    subject: getSubjectDisplay(),
+                    goal: getGoalLabel(),
+                    style: getStyleLabel(),
+                  }).toString();
+                  router.push(`/MeetingRoom?${query}`);
+                }}
                 className="flex items-center gap-2 rounded-full bg-[#17a6d1] px-6 py-3 text-xs sm:text-sm font-bold text-white transition hover:bg-[#1395bc] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:opacity-60 cursor-pointer shadow-sm"
               >
                 <Play size={14} className="fill-current" />
-                <span>
-                  {targetCount === 1
-                    ? "ابدأ الجلسة مع الزميل"
-                    : "ابدأ الجلسة مع المجموعة"}
-                </span>
+                <span>بدء الجلسة</span>
               </button>
             </div>
           </div>
@@ -642,7 +618,19 @@ export default function StudyStepper() {
                 value={step.value}
                 className="flex-none"
               >
-                <div aria-label={step.title} className="pointer-events-none">
+                <div
+                  aria-label={step.title}
+                  onClick={() => {
+                    if (index < currentIndex) {
+                      setCurrentStep(step.value);
+                    }
+                  }}
+                  className={
+                    index < currentIndex
+                      ? "cursor-pointer py-2"
+                      : "pointer-events-none py-2"
+                  }
+                >
                   <StepperIndicator
                     className={`h-2 min-h-0 rounded-full border-0 p-0 transition-all duration-300 ${
                       index === currentIndex
@@ -678,7 +666,7 @@ export default function StudyStepper() {
                         if (skill !== selectedSkills) {
                           setSkillSelectedTopics([]);
                           setStudyStyle(null);
-                          setStudyTime(null);
+                          null;
                           setGoal(null);
                           setPeopleCount(null);
                         }
@@ -706,7 +694,7 @@ export default function StudyStepper() {
                         setUniversitySubjects([]);
                         setUniversitySelectedTopics({});
                         setStudyStyle(null);
-                        setStudyTime(null);
+                        null;
                         setGoal(null);
                         setPeopleCount(null);
                       }
@@ -718,7 +706,7 @@ export default function StudyStepper() {
                         setUniversitySubjects([]);
                         setUniversitySelectedTopics({});
                         setStudyStyle(null);
-                        setStudyTime(null);
+                        null;
                         setGoal(null);
                         setPeopleCount(null);
                       }
@@ -809,10 +797,12 @@ export default function StudyStepper() {
                     selectedSubjects={selectedSubjects}
                     universitySubjects={universitySubjects}
                     selectedSkills={selectedSkills}
-                    studyTime={studyTime}
                     studyStyle={studyStyle}
                     goal={goal}
                     peopleCount={peopleCount}
+                    selectedTopics={currentSelectedTopics}
+                    universitySelectedTopics={universitySelectedTopics}
+                    skillSelectedTopics={skillSelectedTopics}
                   />
                 ) : (
                   <p className="mt-2 text-slate-500">
