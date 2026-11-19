@@ -47,7 +47,7 @@ export default function MeetingStage({
               key={participant.id}
               className={`flex items-center justify-center transition-all duration-300 ${
                 participants.length <= 2
-                  ? "aspect-[4/3] sm:aspect-video max-h-[62vh] w-full"
+                  ? "aspect-4/3 sm:aspect-video max-h-[62vh] w-full"
                   : isThirdInThree
                     ? "aspect-video max-h-[33vh] sm:max-h-[35vh] w-full md:col-span-2 md:w-[calc(50%-0.5rem)] md:mx-auto"
                     : "aspect-video max-h-[33vh] sm:max-h-[35vh] w-full"

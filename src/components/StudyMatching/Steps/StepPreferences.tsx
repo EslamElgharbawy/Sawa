@@ -73,7 +73,12 @@ const GOAL_OPTIONS: GoalOption[] = [
   },
 ];
 
-const PEOPLE_OPTIONS = [1, 2, 3, 4];
+const PEOPLE_OPTIONS = [
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3" },
+  { value: 4, label: "3 أو أكثر" },
+];
 
 export default function StepPreferences({
   studyStyle,
@@ -228,18 +233,18 @@ export default function StepPreferences({
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-          {PEOPLE_OPTIONS.map((count) => {
-            const isSelected = peopleCount === count;
+          {PEOPLE_OPTIONS.map((option) => {
+            const isSelected = peopleCount === option.value;
 
             return (
               <button
-                key={count}
+                key={option.value}
                 type="button"
                 aria-pressed={isSelected}
-                onClick={() => onPeopleCountChange(isSelected ? null : count)}
+                onClick={() => onPeopleCountChange(isSelected ? null : option.value)}
                 className={`
                   flex h-[110px] cursor-pointer flex-col items-center
-                  justify-center gap-2 rounded-2xl border-2
+                  justify-center gap-2 rounded-2xl border-2 px-2 text-center
                   transition-all duration-200
                   ${
                     isSelected
@@ -254,7 +259,15 @@ export default function StepPreferences({
                   className={isSelected ? "text-[#17A6D1]" : "text-slate-400"}
                 />
 
-                <span className="text-xl font-black">{count}</span>
+                <span
+                  className={
+                    option.value === 4
+                      ? "text-base font-extrabold leading-tight "
+                      : "text-xl font-extrabold"
+                  }
+                >
+                  {option.label}
+                </span>
               </button>
             );
           })}

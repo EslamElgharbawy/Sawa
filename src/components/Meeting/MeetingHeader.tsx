@@ -20,7 +20,7 @@ export default function MeetingHeader({
   return (
     <header
       dir="rtl"
-      className={`relative flex items-center justify-between px-6 py-4 text-white select-none ${className}`}
+      className={`relative flex items-center justify-between px-8 py-4 text-white select-none ${className}`}
     >
       {/* 1. Right Side (in RTL): Sawa Logo */}
       <div className="flex items-center gap-2">

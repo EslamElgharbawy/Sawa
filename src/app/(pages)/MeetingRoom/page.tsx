@@ -47,15 +47,19 @@ function MeetingRoomContent() {
 
   // 2. Dynamic Participants based on actual user selection
   const studentIdsParam = searchParams.get("students");
-  const selectedIds = studentIdsParam ? studentIdsParam.split(",") : ["student-1"];
+  const selectedIds = studentIdsParam
+    ? studentIdsParam.split(",")
+    : ["student-1"];
 
   const matchedChosenStudents = MATCHED_STUDENTS.filter((s) =>
-    selectedIds.includes(s.id)
+    selectedIds.includes(s.id),
   );
 
   // If none matched, fallback to the first student
   const otherParticipants: Participant[] = (
-    matchedChosenStudents.length > 0 ? matchedChosenStudents : [MATCHED_STUDENTS[0]]
+    matchedChosenStudents.length > 0
+      ? matchedChosenStudents
+      : [MATCHED_STUDENTS[0]]
   ).map((student) => ({
     id: student.id,
     name: student.name,
@@ -83,7 +87,7 @@ function MeetingRoomContent() {
   const participants: Participant[] = [...otherParticipants, localParticipant];
 
   const handleEndMeeting = () => {
-    router.push("/study");
+    router.push("/MeetingFeedback");
   };
 
   return (

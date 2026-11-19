@@ -33,7 +33,6 @@ const mainLinks = [
   // { title: "القنوات", url: "/channels", icon: Radio },
   // { title: "الجلسات", url: "/rooms", icon: UsersRound },
   // { title: "حسابي", url: "/profile", icon: UserRound },
-  { title: "القنوات", url: "/channels", icon: Radio, comingSoon: true },
   { title: "الجلسات", url: "/rooms", icon: UsersRound, comingSoon: true },
   { title: "حسابي", url: "/profile", icon: UserRound, comingSoon: true },
 ];
