@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Participant } from "@/src/types/Meeting";
@@ -12,48 +13,54 @@ export default function MeetingStage({
   participants,
   className = "",
 }: MeetingStageProps) {
-  // Grid layout adapts dynamically to the exact number of participants
   const getGridConfig = (count: number) => {
     switch (count) {
       case 1:
         return "grid-cols-1 max-w-4xl";
+
       case 2:
         return "grid-cols-1 md:grid-cols-2 max-w-7xl";
+
       case 3:
-        return "grid-cols-1 md:grid-cols-2 max-w-4xl"; // حجم متناسق للسطرين
+        return "grid-cols-1 md:grid-cols-2 max-w-5xl";
+
       case 4:
-        return "grid-cols-1 sm:grid-cols-2 max-w-5xl";
+        return "grid-cols-1 sm:grid-cols-2 max-w-6xl";
+
       default:
-        return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl";
+        return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl";
     }
   };
 
   return (
     <div
       dir="rtl"
-      className={`flex flex-1 size-full items-center justify-center p-2 sm:p-4 overflow-hidden ${className}`}
+      className={`flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden px-2 py-2 sm:p-4 ${className}`}
     >
       <div
-        className={`grid size-full gap-3 sm:gap-4 items-center justify-center ${getGridConfig(
-          participants.length,
+        className={`grid h-full min-h-0 w-full content-center items-center justify-items-center gap-3 sm:gap-5 ${getGridConfig(
+          participants.length
         )}`}
       >
         {participants.map((participant, index) => {
-          // لو 3 أشخاص (اتنين معاك): الكارت التالت ينزل في  التاني في المنتصف
-          const isThirdInThree = participants.length === 3 && index === 2;
+          const isThirdInThree =
+            participants.length === 3 && index === 2;
 
           return (
             <div
               key={participant.id}
-              className={`flex items-center justify-center transition-all duration-300 ${
+              className={`flex w-full items-center justify-center transition-all duration-300 ${
                 participants.length <= 2
-                  ? "aspect-4/3 sm:aspect-video max-h-[62vh] w-full"
+                  ? "aspect-4/3 sm:aspect-video max-h-[62vh]"
                   : isThirdInThree
-                    ? "aspect-video max-h-[33vh] sm:max-h-[35vh] w-full md:col-span-2 md:w-[calc(50%-0.5rem)] md:mx-auto"
-                    : "aspect-video max-h-[33vh] sm:max-h-[35vh] w-full"
+                    ? "aspect-video max-h-[35vh] md:col-span-2 md:w-[calc(50%-0.625rem)] md:mx-auto"
+                    : "aspect-video max-h-[35vh]"
               }`}
             >
-              <ParticipantVideo participant={participant} className="size-full" />
+              <ParticipantVideo
+                participant={participant}
+                className="size-full"
+              />
             </div>
           );
         })}

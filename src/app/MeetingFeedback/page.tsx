@@ -60,16 +60,6 @@ function MeetingFeedbackContent() {
         onSubmit={handleSubmit}
         className="w-full max-w-[600px] rounded-[32px] border border-[#dce5eb] bg-white px-6 py-9 shadow-[0_18px_45px_rgba(15,50,54,0.10)] sm:px-9 sm:py-10"
       >
-        {/* 1. Official Sawa Logo */}
-        <div className="mb-6 flex justify-center">
-          <Image
-            src={SawaLogo}
-            alt="منصة ساوا التعليمية"
-            className="h-12 w-auto object-contain"
-            priority
-          />
-        </div>
-
         {/* 2. Success Icon */}
         <div className="mb-4 flex justify-center">
           <div className="flex size-16 items-center justify-center rounded-full bg-[#fff3cd] text-[#10383b] shadow-xs">

@@ -42,41 +42,51 @@ export default function StepSummary({
   skillSelectedTopics,
 }: StepSummaryProps) {
   const getSubjectText = () => {
-    if (educationLevel === "university_student") {
-      if (universitySubjects.length === 0) return "مذاكرة عامة";
-      return universitySubjects.join(" ، ");
-    }
+  let subjects: string[] = [];
 
-    if (educationLevel === "skill_development") {
-      const skill = SKILL_OPTIONS.find((s) => s.id === selectedSkills);
-      return skill ? skill.title : selectedSkills ?? "تطوير مهارات";
-    }
+  if (educationLevel === "university_student") {
+    subjects = universitySubjects;
+  } else if (educationLevel === "skill_development") {
+    const skill = SKILL_OPTIONS.find(
+      (s) => s.id === selectedSkills
+    );
 
-    if (selectedSubjects.length > 0) {
-      return selectedSubjects
-        .map((sub) => SUBJECT_LABELS[sub] ?? sub)
-        .join(" ، ");
-    }
+    return skill?.title ?? selectedSkills ?? "تطوير مهارات";
+  } else {
+    subjects = selectedSubjects.map(
+      (sub) => SUBJECT_LABELS[sub] ?? sub
+    );
+  }
 
-    return "مذاكرة عامة";
-  };
+  if (subjects.length === 0) return "مذاكرة عامة";
+  if (subjects.length === 1) return subjects[0];
+  if (subjects.length === 2) {
+    return `${subjects[0]} ، ${subjects[1]}`;
+  }
 
-  const getTopicsText = () => {
-    let topics: string[] = [];
+  return `${subjects[0]} + ${subjects.length - 1} مواد أخرى`;
+};
+ const getTopicsText = () => {
+  let topics: string[] = [];
 
-    if (educationLevel === "university_student" && universitySelectedTopics) {
-      topics = Object.values(universitySelectedTopics).flat();
-    } else if (educationLevel === "skill_development" && skillSelectedTopics) {
-      topics = skillSelectedTopics;
-    } else if (selectedTopics) {
-      topics = Object.values(selectedTopics).flat();
-    }
+  if (educationLevel === "university_student") {
+    topics = universitySubjects.flatMap(
+      (subject) => universitySelectedTopics?.[subject] ?? []
+    );
+  } else if (educationLevel === "skill_development") {
+    topics = skillSelectedTopics ?? [];
+  } else {
+    topics = selectedSubjects.flatMap(
+      (subject) => selectedTopics?.[subject] ?? []
+    );
+  }
 
-    if (topics.length === 0) return "كل الدروس والمواضيع";
-    if (topics.length === 1) return topics[0];
-    if (topics.length === 2) return `${topics[0]} ، ${topics[1]}`;
-    return `${topics[0]} + ${topics.length - 1} مواضيع أخرى`;
-  };
+  if (topics.length === 0) return "كل الدروس والمواضيع";
+
+  if (topics.length === 1) return topics[0];
+
+  return `${topics[0]} + ${topics.length - 1} مواضيع أخرى`;
+};
 
   const summaryItems = [
     {

@@ -44,7 +44,7 @@ export default function MeetingControls({
   return (
     <div
       dir="rtl"
-      className={`flex items-center justify-center gap-2.5 py-3 select-none ${className}`}
+      className={`flex items-center justify-center gap-2.5 py-4 select-none ${className}`}
     >
       {/* 1. Mic Button (Cyan by default when ON, dark or red when muted) */}
       <ControlButton

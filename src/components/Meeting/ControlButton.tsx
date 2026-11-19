@@ -47,7 +47,7 @@ export default function ControlButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className={`flex size-11 sm:size-12 items-center justify-center rounded-full transition-all duration-200  cursor-pointer ${getButtonStyles()} ${className}`}
+      className={`flex size-11 sm:size-13 items-center justify-center rounded-full transition-all duration-200  cursor-pointer ${getButtonStyles()} ${className}`}
     >
       <Icon size={20} />
     </button>

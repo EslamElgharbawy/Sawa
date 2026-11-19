@@ -1,14 +1,16 @@
 "use client";
 
-import { Moon } from "lucide-react";
+import { Hand } from "lucide-react";
 import Image from "next/image";
 import SawaLogo from "@/src/assets/images/sawa-logo 2.svg";
+import { Participant } from "@/src/types/Meeting";
 
 export interface MeetingHeaderProps {
   title?: string;
   subtitle?: string;
   timer?: string;
   className?: string;
+  raisedHandParticipants?: Participant[];
 }
 
 export default function MeetingHeader({
@@ -16,6 +18,7 @@ export default function MeetingHeader({
   subtitle = "مذاكرة • تفاعل ونقاش",
   timer = "00:04",
   className = "",
+  raisedHandParticipants = [],
 }: MeetingHeaderProps) {
   return (
     <header
@@ -24,22 +27,34 @@ export default function MeetingHeader({
     >
       {/* 1. Right Side (in RTL): Sawa Logo */}
       <div className="flex items-center gap-2">
-        <Image
-          src={SawaLogo}
-          alt="سوا"
-          className="size-16 object-contain"
-        />
+        <Image src={SawaLogo} alt="سوا" className="size-20 object-contain" />
       </div>
 
       {/* 2. Center: Session Title & Subtitle */}
       <div className="absolute left-1/2 -translate-x-1/2 text-center">
-        <h1 className="text-sm sm:text-base font-bold text-white">{title}</h1>
-        <p className="mt-0.5 text-xs text-slate-400">{subtitle}</p>
+        <h1 className="text-sm sm:text-lg font-bold text-white">{title}</h1>
+        <p className="mt-0.5 text-sm text-slate-400">{subtitle}</p>
       </div>
 
-      {/* 3. Left Side (in RTL): White Timer Pill */}
-      <div className="flex items-center">
-        <span className="rounded-full bg-[#fff3ce] px-3 py-1 text-xs font-semibold text-[#0e3236] shadow-sm">
+      {/* 3. Left Side (in RTL): Google Meet Raised Hand Badge & White Timer Pill */}
+      <div className="flex items-center gap-3">
+        {raisedHandParticipants.length > 0 && (
+          <div className="flex items-center gap-1.5 rounded-full text-xs font-medium text-white shadow-md transition-all duration-300">
+            {/* <span className="flex size-5 items-center justify-center rounded-full bg-white/20 text-[11px] font-bold text-white">
+              {raisedHandParticipants.length}
+            </span> */}
+            {/* Mint Green Pill (Name + Hand icon) */}
+            <div className="flex items-center gap-1 rounded-full bg-[#81c995] px-3 py-1 text-sm font-semibold text-[#062e19]">
+              <Hand size={12} className="fill-current shrink-0" />
+              <span>
+                {raisedHandParticipants[0].name}
+                {raisedHandParticipants[0].isLocal && " (أنت)"}
+              </span>
+            </div>
+          </div>
+        )}
+
+        <span className="rounded-full bg-[#fff3ce] px-3 py-1 text-sm font-semibold text-[#0e3236] shadow-sm">
           {timer}
         </span>
       </div>

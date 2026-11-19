@@ -55,6 +55,17 @@ function MeetingRoomContent() {
     selectedIds.includes(s.id),
   );
 
+  // التحكم بحالة التحدث للتجربة الحية (مفعلة للمستخدم المحلي افتراضياً)
+  const [speakingIds, setSpeakingIds] = useState<string[]>([
+    "participant-local",
+  ]);
+
+  const toggleParticipantSpeaking = (id: string) => {
+    setSpeakingIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+    );
+  };
+
   // If none matched, fallback to the first student
   const otherParticipants: Participant[] = (
     matchedChosenStudents.length > 0
@@ -67,11 +78,13 @@ function MeetingRoomContent() {
     avatarBg: student.avatarBg,
     isMuted: false,
     isVideoOff: true,
-    isSpeaking: false,
+    isSpeaking: speakingIds.includes(student.id),
     isLocal: false,
   }));
 
   // Combine with Local User ("مي (أنت)")
+  const isLocalSpeaking = speakingIds.includes("participant-local") && !isMuted;
+
   const localParticipant: Participant = {
     id: "participant-local",
     name: "مي",
@@ -79,7 +92,7 @@ function MeetingRoomContent() {
     avatarBg: "bg-[#17a6d1]",
     isMuted: isMuted,
     isVideoOff: isVideoOff,
-    isSpeaking: false,
+    isSpeaking: isLocalSpeaking,
     isLocal: true,
     isHandRaised: isHandRaised,
   };
@@ -90,20 +103,35 @@ function MeetingRoomContent() {
     router.push("/MeetingFeedback");
   };
 
+  const handleToggleMute = () => {
+    setIsMuted((prev) => {
+      const next = !prev;
+      if (next) {
+        setSpeakingIds((ids) => ids.filter((id) => id !== "participant-local"));
+      } else {
+        setSpeakingIds((ids) => [...ids, "participant-local"]);
+      }
+      return next;
+    });
+  };
+
   return (
     <div
       dir="rtl"
-      className="fixed inset-0 z-50 flex flex-col justify-between bg-[#0e3236] text-white select-none overflow-hidden"
+      className="flex h-dvh flex-col justify-between bg-[#0e3236] text-white select-none overflow-hidden"
     >
       {/* 1. Header (Timer, Title, Sawa Logo) */}
       <MeetingHeader
         title={sessionTitle}
         subtitle={sessionSubtitle}
         timer={formatTimer(seconds)}
+        raisedHandParticipants={participants.filter((p) => p.isHandRaised)}
       />
 
       {/* 2. Stage (Video Tiles dynamically rendered based on participant count) */}
-      <MeetingStage participants={participants} />
+      <MeetingStage
+        participants={participants}
+      />
 
       {/* 3. Controls (Mic, Video, Hand, Chat, ScreenShare, EndMeeting) */}
       <MeetingControls
@@ -112,7 +140,7 @@ function MeetingRoomContent() {
         isHandRaised={isHandRaised}
         isChatOpen={isChatOpen}
         isScreenSharing={isScreenSharing}
-        onToggleMute={() => setIsMuted((prev) => !prev)}
+        onToggleMute={handleToggleMute}
         onToggleVideo={() => setIsVideoOff((prev) => !prev)}
         onToggleHandRaise={() => setIsHandRaised((prev) => !prev)}
         onToggleChat={() => setIsChatOpen((prev) => !prev)}
