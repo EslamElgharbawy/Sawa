@@ -7,7 +7,7 @@ import Link from "next/link";
 const stats = [
   { value: 2, label: "جلسة قادمة" },
   { value: 3, label: "جلسة خلصناها" },
-  { value: 2, label: "قناة مشترك فيها" },
+  // { value: 2, label: "قناة مشترك فيها" },
 ];
 
 const recentSessions = [
@@ -36,7 +36,7 @@ const recentSessions = [
 export default function Home() {
   return (
     <>
-        <section
+      <section
         dir="rtl"
         className="relative flex min-h-80 flex-col-reverse justify-between gap-8 overflow-hidden rounded-4xl bg-linear-to-tl from-[#005966] to-[#0D383A] p-6 text-white shadow-[0_20px_50px_rgba(15,40,45,0.12)] sm:p-8 xl:flex-row xl:items-center xl:p-9 2xl:mx-30"
       >
@@ -58,8 +58,7 @@ export default function Home() {
           </p>
 
           <Link
-            type="button"
-            href="/study"    
+            href="/study"
             className="mt-3 inline-flex h-14 cursor-pointer items-center justify-center gap-3 rounded-3xl bg-[#FFCA32] px-8 text-base font-bold text-[#123C3E] transition hover:bg-[#FFD65C] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFCA32]"
           >
             <Sparkles className="size-5" />

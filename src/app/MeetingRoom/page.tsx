@@ -20,14 +20,15 @@ function MeetingRoomContent() {
   const [isScreenSharing, setIsScreenSharing] = useState(false);
 
   // Timer state
-  const [seconds, setSeconds] = useState(4); // Starts at 00:04 like in screenshot
+  const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
+      setSeconds(0);
     const interval = setInterval(() => {
       setSeconds((prev) => prev + 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [searchParams]);
 
   const formatTimer = (totalSeconds: number) => {
     const mins = Math.floor(totalSeconds / 60)
@@ -129,9 +130,7 @@ function MeetingRoomContent() {
       />
 
       {/* 2. Stage (Video Tiles dynamically rendered based on participant count) */}
-      <MeetingStage
-        participants={participants}
-      />
+      <MeetingStage participants={participants} />
 
       {/* 3. Controls (Mic, Video, Hand, Chat, ScreenShare, EndMeeting) */}
       <MeetingControls

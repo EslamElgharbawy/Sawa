@@ -16,9 +16,21 @@ function MeetingFeedbackContent() {
 
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [goalProgress, setGoalProgress] = useState(80);
+  const [goalProgress, setGoalProgress] = useState(30);
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const finishMeeting = () => {
+    setRating(0);
+    setHoverRating(0);
+    setGoalProgress(30);
+    setNotes("");
+    setIsSubmitting(false);
+ if (typeof window !== "undefined") {
+    sessionStorage.setItem("resetStudyFlow", "true");
+  }    
+    router.push("/");
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,14 +51,13 @@ function MeetingFeedbackContent() {
 
     console.log("Meeting feedback:", feedback);
 
-    // توجيه المستخدم لصفحة المذاكرة بعد إرسال التقييم
     setTimeout(() => {
-      router.push("/study");
+      finishMeeting();
     }, 400);
   };
 
   const handleSkip = () => {
-    router.push("/study");
+    finishMeeting();
   };
 
   const activeRating = hoverRating || rating;
@@ -176,7 +187,7 @@ function MeetingFeedbackContent() {
           <button
             type="submit"
             disabled={rating === 0 || isSubmitting}
-            className="order-2 min-h-11 cursor-pointer rounded-2xl bg-[#17a6d1] px-5 font-bold text-white shadow-md shadow-[#17a6d1]/20 transition hover:bg-[#1195bd] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#10383b] sm:order-2"
+            className="order-2 min-h-11 cursor-pointer rounded-2xl bg-[#17a6d1] px-5 font-bold text-white shadow-md shadow-[#17a6d1]/20 transition hover:bg-[#1195bd] disabled:cursor-not-allowed disabled:bg-[#17a6d1] disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#10383b] sm:order-2"
           >
             {isSubmitting ? "جاري الإرسال..." : "إرسال التقييم"}
           </button>
@@ -185,8 +196,6 @@ function MeetingFeedbackContent() {
     </main>
   );
 }
-
-
 
 export default function MeetingFeedback() {
   return (
