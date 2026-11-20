@@ -4,6 +4,8 @@ export type StudyStyle = "quiet" | "discussion";
 
 export type StudyTime = "morning" | "afternoon" | "night" | "anytime";
 
+export type MediaPreference = "mic_and_cam" | "mic_only";
+
 export type StudySubject =
   | "arabic"
   | "english"
@@ -41,4 +43,5 @@ export interface StudyMatchingFormData {
   studyStyle: StudyStyle | null;
   studyTime: StudyTime | null;
   goal: StudyGoal | null;
+  mediaPreference?: MediaPreference | null;
 }

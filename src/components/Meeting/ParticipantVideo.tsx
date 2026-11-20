@@ -8,11 +8,13 @@ import { Mic, MicOff } from "lucide-react";
 export interface ParticipantVideoProps {
   participant: Participant;
   className?: string;
+  isQuietSession?: boolean;
 }
 
 export default function ParticipantVideo({
   participant,
   className = "",
+  isQuietSession = false,
 }: ParticipantVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -82,7 +84,7 @@ export default function ParticipantVideo({
         />
 
         {/* Right */}
-        {participant.isMuted && (
+        {!isQuietSession && participant.isMuted && (
           <div className="flex items-center justify-center text-white/80 bg-[#17a6d1]/25 rounded-full size-7 ">
             <MicOff size={18} />
           </div>

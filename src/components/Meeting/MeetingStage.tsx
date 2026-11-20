@@ -7,11 +7,13 @@ import ParticipantVideo from "./ParticipantVideo";
 export interface MeetingStageProps {
   participants: Participant[];
   className?: string;
+  isQuietSession?: boolean;
 }
 
 export default function MeetingStage({
   participants,
   className = "",
+  isQuietSession = false,
 }: MeetingStageProps) {
   const getGridConfig = (count: number) => {
     switch (count) {
@@ -60,6 +62,7 @@ export default function MeetingStage({
               <ParticipantVideo
                 participant={participant}
                 className="size-full"
+                isQuietSession={isQuietSession}
               />
             </div>
           );

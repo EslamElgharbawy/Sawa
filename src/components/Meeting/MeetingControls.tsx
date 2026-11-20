@@ -15,6 +15,8 @@ import EndMeetingButton from "./EndMeetingButton";
 export interface MeetingControlsProps {
   isMuted?: boolean;
   isVideoOff?: boolean;
+  isMicDisabled?: boolean;
+  isVideoDisabled?: boolean;
   isHandRaised?: boolean;
   isChatOpen?: boolean;
   isScreenSharing?: boolean;
@@ -30,6 +32,8 @@ export interface MeetingControlsProps {
 export default function MeetingControls({
   isMuted = false,
   isVideoOff = false,
+  isMicDisabled = false,
+  isVideoDisabled = false,
   isHandRaised = false,
   isChatOpen = false,
   isScreenSharing = false,
@@ -46,19 +50,33 @@ export default function MeetingControls({
       dir="rtl"
       className={`flex items-center justify-center gap-2.5 py-4 select-none ${className}`}
     >
-      {/* 1. Mic Button (Cyan by default when ON, dark or red when muted) */}
+      {/* 1. Mic Button */}
       <ControlButton
         icon={isMuted ? MicOff : Mic}
-        label={isMuted ? "إلغاء كتم الصوت" : "كتم الصوت"}
-        onClick={onToggleMute}
+        label={
+          isMicDisabled
+            ? "المايك مغلق في هذه الجلسة"
+            : isMuted
+              ? "إلغاء كتم الصوت"
+              : "كتم الصوت"
+        }
+        onClick={isMicDisabled ? undefined : onToggleMute}
+        disabled={isMicDisabled}
         variant={isMuted ? "secondary" : "primary"}
       />
 
-      {/* 2. Camera Button (Cyan by default when ON, dark or red when off) */}
+      {/* 2. Camera Button */}
       <ControlButton
         icon={isVideoOff ? VideoOff : Video}
-        label={isVideoOff ? "تشغيل الكاميرا" : "إيقاف الكاميرا"}
-        onClick={onToggleVideo}
+        label={
+          isVideoDisabled
+            ? "الكاميرا مغلقة في هذه الجلسة"
+            : isVideoOff
+              ? "تشغيل الكاميرا"
+              : "إيقاف الكاميرا"
+        }
+        onClick={isVideoDisabled ? undefined : onToggleVideo}
+        disabled={isVideoDisabled}
         variant={isVideoOff ? "secondary" : "primary"}
       />
 

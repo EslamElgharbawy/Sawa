@@ -1,5 +1,6 @@
 "use client";
 
+import { GoalOption, MediaOption, StepPreferencesProps, StyleOption } from "@/src/types/StudyPreferences";
 import {
   Check,
   Circle,
@@ -9,34 +10,10 @@ import {
   Target,
   FileCheck2,
   UsersRound,
-  LucideIcon,
+  Video,
+  Mic,
 } from "lucide-react";
-import { StudyGoal, StudyStyle, StudyTime } from "@/src/types/StudyMatching";
 
-interface StepPreferencesProps {
-  studyStyle: StudyStyle | null;
-  goal: StudyGoal | null;
-  peopleCount: number | null;
-  onStudyStyleChange: (style: StudyStyle | null) => void;
-  onGoalChange: (goal: StudyGoal | null) => void;
-  onPeopleCountChange: (count: number | null) => void;
-  studyTime?: StudyTime | null;
-  onStudyTimeChange?: (time: StudyTime | null) => void;
-}
-
-interface StyleOption {
-  id: StudyStyle;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-}
-
-interface GoalOption {
-  id: StudyGoal;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-}
 const STYLE_OPTIONS: StyleOption[] = [
   {
     id: "discussion",
@@ -80,13 +57,30 @@ const PEOPLE_OPTIONS = [
   { value: 4, label: "4 أو أكثر" },
 ];
 
+const MEDIA_OPTIONS: MediaOption[] = [
+  {
+    id: "mic_and_cam",
+    title: "كاميرا ومايك",
+    description: "تفاعل كامل بالصوت والصورة أثناء الجلسة.",
+    icon: Video,
+  },
+  {
+    id: "mic_only",
+    title: "مايك فقط",
+    description: "تواصل صوتي ومناقشة بدون فتح الكاميرا.",
+    icon: Mic,
+  },
+];
+
 export default function StepPreferences({
   studyStyle,
   goal,
   peopleCount,
+  mediaPreference,
   onStudyStyleChange,
   onGoalChange,
   onPeopleCountChange,
+  onMediaPreferenceChange,
 }: StepPreferencesProps) {
   return (
     <div dir="rtl" className="w-full space-y-8">
@@ -108,9 +102,13 @@ export default function StepPreferences({
                 key={option.id}
                 type="button"
                 aria-pressed={isSelected}
-                onClick={() =>
-                  onStudyStyleChange(isSelected ? null : option.id)
-                }
+                onClick={() => {
+                  const nextStyle = isSelected ? null : option.id;
+                  onStudyStyleChange(nextStyle);
+                  if (nextStyle !== "discussion") {
+                    onMediaPreferenceChange?.(null);
+                  }
+                }}
                 className={`
                   relative flex min-h-[130px] cursor-pointer flex-col justify-between
                   rounded-2xl border-2 p-5 text-right transition-all duration-300
@@ -156,6 +154,79 @@ export default function StepPreferences({
             );
           })}
         </div>
+
+        {/* Media Preferences (Conditional on discussion) */}
+        {studyStyle === "discussion" && (
+          <div className="rounded-2xl border border-[#17A6D1]/20 bg-[#DDF5FF]/50 p-4 lg:p-5 transition-all duration-300">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <h4 className="text-sm font-bold text-[#103B3E]">
+                حدد وسيلة التواصل:
+              </h4>
+              <p className="text-xs text-slate-500">
+                اختار الطريقة المناسبة ليك في النقاش
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {MEDIA_OPTIONS.map((option) => {
+                const Icon = option.icon;
+                const isSelected = mediaPreference === option.id;
+
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() =>
+                      onMediaPreferenceChange?.(isSelected ? null : option.id)
+                    }
+                    className={`
+                      relative flex min-h-30 cursor-pointer flex-col justify-between
+                      rounded-xl border-2 p-4 text-right transition-all duration-300 bg-white 
+                      ${
+                        isSelected
+                          ? "border-[#17A6D1] shadow-xs"
+                          : "border-slate-200 hover:border-secondary/60"
+                      }
+                    `}
+                  >
+                    <div className="flex w-full items-center justify-between">
+                      <span
+                        className={
+                          isSelected ? "text-[#17A6D1]" : "text-[#17A6D1]/80"
+                        }
+                      >
+                        <Icon size={22} strokeWidth={1.8} />
+                      </span>
+                      <span className="flex size-5 items-center justify-center">
+                        {isSelected ? (
+                          <span className="flex size-5 items-center justify-center rounded-full bg-[#17A6D1] text-white">
+                            <Check size={12} strokeWidth={3} />
+                          </span>
+                        ) : (
+                          <Circle
+                            size={18}
+                            className="text-slate-300"
+                            strokeWidth={1.8}
+                          />
+                        )}
+                      </span>
+                    </div>
+
+                    <div className="mt-2">
+                      <h5 className="text-base font-bold text-[#103B3E]">
+                        {option.title}
+                      </h5>
+                      <p className="mt-0.5 text-[13px] leading-4 text-slate-500">
+                        {option.description}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 2. Study Goal Section */}

@@ -24,12 +24,12 @@ export default function ControlButton({
 }: ControlButtonProps) {
   const getButtonStyles = () => {
     if (disabled) {
-      return "bg-[#163f47]/50 text-slate-500 cursor-not-allowed";
+      return "bg-[#163f47]/40 text-slate-400 cursor-not-allowed opacity-60";
     }
 
     if (variant === "primary" || isActive) {
       // Cyan matching design
-      return "bg-[#17a6d1] ext-white shadow-sm";
+      return "bg-[#17a6d1] text-white shadow-sm";
     }
 
     if (variant === "danger") {
@@ -43,11 +43,13 @@ export default function ControlButton({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       disabled={disabled}
       aria-label={label}
       title={label}
-      className={`flex size-11 sm:size-13 items-center justify-center rounded-full transition-all duration-200  cursor-pointer ${getButtonStyles()} ${className}`}
+      className={`flex size-11 sm:size-13 items-center justify-center rounded-full transition-all duration-200 ${
+        disabled ? "cursor-not-allowed" : "cursor-pointer"
+      } ${getButtonStyles()} ${className}`}
     >
       <Icon size={20} />
     </button>

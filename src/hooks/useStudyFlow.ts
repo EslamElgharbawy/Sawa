@@ -15,7 +15,7 @@ import {
   UniversityYear,
 } from "@/src/types/StudySubjects";
 
-import { StudyGoal, StudyStyle } from "@/src/types/StudyMatching";
+import { StudyGoal, StudyStyle, MediaPreference } from "@/src/types/StudyMatching";
 
 export default function useStudyFlow() {
   const [currentStep, setCurrentStep] = useState("level");
@@ -46,6 +46,7 @@ export default function useStudyFlow() {
   const [studyStyle, setStudyStyle] = useState<StudyStyle | null>(null);
   const [goal, setGoal] = useState<StudyGoal | null>(null);
   const [peopleCount, setPeopleCount] = useState<number | null>(null);
+  const [mediaPreference, setMediaPreference] = useState<MediaPreference | null>(null);
 
   const [educationLevel, setEducationLevel] =
     useState<EducationLevel | null>(null);
@@ -85,6 +86,7 @@ export default function useStudyFlow() {
     setStudyStyle(null);
     setGoal(null);
     setPeopleCount(null);
+    setMediaPreference(null);
 
     setEducationLevel(null);
     setSelectedSkills(null);
@@ -167,6 +169,9 @@ export default function useStudyFlow() {
 
     peopleCount,
     setPeopleCount,
+
+    mediaPreference,
+    setMediaPreference,
 
     educationLevel,
     setEducationLevel,

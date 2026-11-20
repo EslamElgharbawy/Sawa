@@ -2,7 +2,7 @@
 
 import { EducationLevel } from "@/src/types/StudyEducation";
 import { SecondarySubject } from "@/src/types/StudySubjects";
-import { StudyGoal, StudyStyle } from "@/src/types/StudyMatching";
+import { StudyGoal, StudyStyle, MediaPreference } from "@/src/types/StudyMatching";
 import { SKILL_OPTIONS } from "@/src/components/Subjects/SkillDevelopment";
 import { SUBJECT_LABELS } from "@/src/app/data/StudyOptions";
 
@@ -14,6 +14,7 @@ interface StepSummaryProps {
   studyStyle: StudyStyle | null;
   goal: StudyGoal | null;
   peopleCount?: number | null;
+  mediaPreference?: MediaPreference | null;
   selectedTopics?: Partial<Record<SecondarySubject, string[]>> | Record<string, string[]>;
   universitySelectedTopics?: Record<string, string[]>;
   skillSelectedTopics?: string[];
@@ -30,6 +31,11 @@ const GOAL_LABELS: Record<StudyGoal, string> = {
   revision: "مراجعة",
 };
 
+const MEDIA_LABELS: Record<MediaPreference, string> = {
+  mic_and_cam: "كاميرا ومايك",
+  mic_only: "مايك فقط",
+};
+
 export default function StepSummary({
   educationLevel,
   selectedSubjects,
@@ -37,6 +43,7 @@ export default function StepSummary({
   selectedSkills,
   studyStyle,
   goal,
+  mediaPreference,
   selectedTopics,
   universitySelectedTopics,
   skillSelectedTopics,
@@ -88,6 +95,15 @@ export default function StepSummary({
   return `${topics[0]} + ${topics.length - 1} مواضيع أخرى`;
 };
 
+  const getStudyStyleText = () => {
+    if (!studyStyle) return "غير محدد";
+    const baseStyle = STYLE_LABELS[studyStyle];
+    if (studyStyle === "discussion" && mediaPreference) {
+      return `${baseStyle} (${MEDIA_LABELS[mediaPreference]})`;
+    }
+    return baseStyle;
+  };
+
   const summaryItems = [
     {
       label: "المادة",
@@ -99,7 +115,7 @@ export default function StepSummary({
     },
     {
       label: "طريقة المذاكرة",
-      value: (studyStyle && STYLE_LABELS[studyStyle]) || "غير محدد",
+      value: getStudyStyleText(),
     },
     {
       label: "الهدف",

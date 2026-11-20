@@ -12,9 +12,26 @@ function MeetingRoomContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // 1. Dynamic Subject & Subtitle from selection
+  const subjectParam = searchParams.get("subject") || "كيمياء";
+  const goalParam = searchParams.get("goal") || "مذاكرة";
+  const styleParam = searchParams.get("style") || "تفاعل ونقاش";
+  const styleIdParam = searchParams.get("styleId");
+  const mediaParam = searchParams.get("media");
+
+  const sessionTitle = `جلسة ${subjectParam}`;
+  const sessionSubtitle = `${goalParam} • ${styleParam}`;
+
+  // Session rules (Disabled & Locked state)
+  const isQuietSession = styleIdParam === "quiet" || styleParam.includes("هدوء");
+  const isMicOnly = mediaParam === "mic_only";
+
+  const isMicDisabled = isQuietSession;
+  const isVideoDisabled = isQuietSession || isMicOnly;
+
   // Local user media states
-  const [isMuted, setIsMuted] = useState(false);
-  const [isVideoOff, setIsVideoOff] = useState(false);
+  const [isMuted, setIsMuted] = useState(isMicDisabled);
+  const [isVideoOff, setIsVideoOff] = useState(isVideoDisabled);
   const [isHandRaised, setIsHandRaised] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
@@ -23,13 +40,19 @@ function MeetingRoomContent() {
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-      setSeconds(0);
+    setSeconds(0);
+    setIsHandRaised(false);
+    setIsChatOpen(false);
+    setIsScreenSharing(false);
+    setIsMuted(isMicDisabled);
+    setIsVideoOff(isVideoDisabled);
+    setSpeakingIds(isMicDisabled ? [] : ["participant-local"]);
+
     const interval = setInterval(() => {
       setSeconds((prev) => prev + 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [searchParams]);
-
+  }, [searchParams, isMicDisabled, isVideoDisabled]);
   const formatTimer = (totalSeconds: number) => {
     const mins = Math.floor(totalSeconds / 60)
       .toString()
@@ -37,14 +60,6 @@ function MeetingRoomContent() {
     const secs = (totalSeconds % 60).toString().padStart(2, "0");
     return `${mins}:${secs}`;
   };
-
-  // 1. Dynamic Subject & Subtitle from selection
-  const subjectParam = searchParams.get("subject") || "كيمياء";
-  const goalParam = searchParams.get("goal") || "مذاكرة";
-  const styleParam = searchParams.get("style") || "تفاعل ونقاش";
-
-  const sessionTitle = `جلسة ${subjectParam}`;
-  const sessionSubtitle = `${goalParam} • ${styleParam}`;
 
   // 2. Dynamic Participants based on actual user selection
   const studentIdsParam = searchParams.get("students");
@@ -56,10 +71,10 @@ function MeetingRoomContent() {
     selectedIds.includes(s.id),
   );
 
-  // التحكم بحالة التحدث للتجربة الحية (مفعلة للمستخدم المحلي افتراضياً)
-  const [speakingIds, setSpeakingIds] = useState<string[]>([
-    "participant-local",
-  ]);
+  // التحكم بحالة التحدث للتجربة الحية
+  const [speakingIds, setSpeakingIds] = useState<string[]>(
+    isMicDisabled ? [] : ["participant-local"],
+  );
 
   const toggleParticipantSpeaking = (id: string) => {
     setSpeakingIds((prev) =>
@@ -77,9 +92,9 @@ function MeetingRoomContent() {
     name: student.name,
     avatarLetter: student.avatarLetter,
     avatarBg: student.avatarBg,
-    isMuted: false,
-    isVideoOff: true,
-    isSpeaking: speakingIds.includes(student.id),
+    isMuted: isQuietSession ? true : false,
+    isVideoOff: isQuietSession || isMicOnly ? true : false,
+    isSpeaking: isQuietSession ? false : speakingIds.includes(student.id),
     isLocal: false,
   }));
 
@@ -101,10 +116,14 @@ function MeetingRoomContent() {
   const participants: Participant[] = [...otherParticipants, localParticipant];
 
   const handleEndMeeting = () => {
+    setIsHandRaised(false);
+    setIsChatOpen(false);
+    setIsScreenSharing(false);
     router.push("/MeetingFeedback");
   };
 
   const handleToggleMute = () => {
+    if (isMicDisabled) return;
     setIsMuted((prev) => {
       const next = !prev;
       if (next) {
@@ -114,6 +133,11 @@ function MeetingRoomContent() {
       }
       return next;
     });
+  };
+
+  const handleToggleVideo = () => {
+    if (isVideoDisabled) return;
+    setIsVideoOff((prev) => !prev);
   };
 
   return (
@@ -130,17 +154,22 @@ function MeetingRoomContent() {
       />
 
       {/* 2. Stage (Video Tiles dynamically rendered based on participant count) */}
-      <MeetingStage participants={participants} />
+      <MeetingStage
+        participants={participants}
+        isQuietSession={isQuietSession}
+      />
 
       {/* 3. Controls (Mic, Video, Hand, Chat, ScreenShare, EndMeeting) */}
       <MeetingControls
         isMuted={isMuted}
         isVideoOff={isVideoOff}
+        isMicDisabled={isMicDisabled}
+        isVideoDisabled={isVideoDisabled}
         isHandRaised={isHandRaised}
         isChatOpen={isChatOpen}
         isScreenSharing={isScreenSharing}
         onToggleMute={handleToggleMute}
-        onToggleVideo={() => setIsVideoOff((prev) => !prev)}
+        onToggleVideo={handleToggleVideo}
         onToggleHandRaise={() => setIsHandRaised((prev) => !prev)}
         onToggleChat={() => setIsChatOpen((prev) => !prev)}
         onToggleScreenShare={() => setIsScreenSharing((prev) => !prev)}
