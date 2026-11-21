@@ -110,7 +110,7 @@ export default function StepPreferences({
                   }
                 }}
                 className={`
-                  relative flex min-h-[130px] cursor-pointer flex-col justify-between
+                  relative flex min-h-32.5 cursor-pointer flex-col justify-between
                   rounded-2xl border-2 p-5 text-right transition-all duration-300
                   ${
                     isSelected
